@@ -8,7 +8,7 @@ public class Product {
     private String typeno;
     private String cbId;
     private String img;
-    private String desc;
+    private String descr;
     private String remark;
 
     public Product() {
@@ -16,12 +16,12 @@ public class Product {
 
     public Product(String proId, String typeno,
                    String cbId, String img,
-                   String desc, String remark) {
+                   String descr, String remark) {
         this.proId = proId;
         this.typeno = typeno;
         this.cbId = cbId;
         this.img = img;
-        this.desc = desc;
+        this.descr = descr;
         this.remark = remark;
     }
 
@@ -58,12 +58,12 @@ public class Product {
         this.img = img;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescr() {
+        return descr;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescr(String descr) {
+        this.descr = descr;
     }
 
     public String getRemark() {
@@ -81,7 +81,7 @@ public class Product {
                 ", typeno='" + typeno + '\'' +
                 ", cbId='" + cbId + '\'' +
                 ", img='" + img + '\'' +
-                ", desc='" + desc + '\'' +
+                ", descr='" + descr + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

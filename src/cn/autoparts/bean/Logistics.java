@@ -6,17 +6,17 @@ package cn.autoparts.bean;
 public class Logistics {
     private String name;
     private String phone;
-    private String add;
+    private String address;
     private String remark;
 
     public Logistics() {
     }
 
     public Logistics(String name, String phone,
-                     String add, String remark) {
+                     String address, String remark) {
         this.name = name;
         this.phone = phone;
-        this.add = add;
+        this.address = address;
         this.remark = remark;
     }
 
@@ -36,12 +36,12 @@ public class Logistics {
         this.phone = phone;
     }
 
-    public String getAdd() {
-        return add;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdd(String add) {
-        this.add = add;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getRemark() {
@@ -57,7 +57,7 @@ public class Logistics {
         return "Logistics{" +
                 "name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
-                ", add='" + add + '\'' +
+                ", address='" + address + '\'' +
                 ", remark='" + remark + '\'' +
                 '}';
     }

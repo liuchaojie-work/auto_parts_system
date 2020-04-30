@@ -18,7 +18,7 @@ public class User {
     private String name;
     private String gender;
     private Integer iden;
-    private String add;
+    private String address;
     private String receiverAdd;
     private String logName;
     private String remark;
@@ -30,7 +30,7 @@ public class User {
                 String email, String activeCode, String activeStatus,
                 String password, Timestamp regTime, String img,
                 String name, String gender, Integer iden,
-                String add, String receiverAdd, String logName, String remark) {
+                String address, String receiverAdd, String logName, String remark) {
         this.userId = userId;
         this.username = username;
         this.phone = phone;
@@ -43,7 +43,7 @@ public class User {
         this.name = name;
         this.gender = gender;
         this.iden = iden;
-        this.add = add;
+        this.address = address;
         this.receiverAdd = receiverAdd;
         this.logName = logName;
         this.remark = remark;
@@ -145,12 +145,12 @@ public class User {
         this.iden = iden;
     }
 
-    public String getAdd() {
-        return add;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdd(String add) {
-        this.add = add;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getReceiverAdd() {
@@ -192,7 +192,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", iden=" + iden +
-                ", add='" + add + '\'' +
+                ", address='" + address + '\'' +
                 ", receiverAdd='" + receiverAdd + '\'' +
                 ", logName='" + logName + '\'' +
                 ", remark='" + remark + '\'' +

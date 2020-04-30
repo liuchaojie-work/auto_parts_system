@@ -99,7 +99,7 @@
                     <ul class="treeview-menu">
 
                         <li id="brand">
-                            <a href="product-manage.jsp">
+                            <a href="${pageContext.request.contextPath}/brand/findAll">
                                 <i class="fa fa-circle-o"></i> 品牌
                             </a>
                         </li>

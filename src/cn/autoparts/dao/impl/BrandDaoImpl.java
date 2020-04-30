@@ -32,7 +32,7 @@ public class BrandDaoImpl implements IBrandDao {
      */
     @Override
     public List<Brand> findByCondition(String condition) throws SQLException {
-        String sql = "select * from tab_brand where b_name like ? or b_factory like ? or b_place like ? or b_remark like ?";
+        String sql = "select * from tab_brand where name like ? or factory like ? or place like ? or remark like ?";
         Object[] params = {"%"+condition+"%", "%"+condition+"%", "%"+condition+"%", "%"+condition+"%"};
         return runner.query(sql, new BeanListHandler<Brand>(Brand.class),params);
     }
@@ -45,7 +45,7 @@ public class BrandDaoImpl implements IBrandDao {
      */
     @Override
     public Brand findByName(String name) throws SQLException {
-        String sql = "select * from tab_brand where b_name = ?";
+        String sql = "select * from tab_brand where name = ?";
         return runner.query(sql, new BeanHandler<Brand>(Brand.class), name);
     }
 
@@ -57,7 +57,7 @@ public class BrandDaoImpl implements IBrandDao {
      */
     @Override
     public boolean add(Brand brand) throws SQLException {
-        String sql = "insert into tab_brand(b_name, b_factory, b_place, b_remark) values(?,?,?,?)";
+        String sql = "insert into tab_brand(name, factory, place, remark) values(?,?,?,?)";
         Object[] params = {brand.getName(), brand.getFactory(), brand.getPlace(), brand.getRemark()};
         return 1 == runner.update(sql, params);
     }
@@ -70,7 +70,7 @@ public class BrandDaoImpl implements IBrandDao {
      */
     @Override
     public boolean change(Brand brand) throws SQLException {
-        String sql = "update tab_brand set b_factory = ?, b_place = ?, b_remark = ? where b_name = ? ";
+        String sql = "update tab_brand set factory = ?, place = ?, remark = ? where name = ? ";
         Object[] params = {brand.getFactory(), brand.getPlace(), brand.getRemark(), brand.getName()};
         return 1 == runner.update(sql, params);
     }
@@ -83,7 +83,7 @@ public class BrandDaoImpl implements IBrandDao {
      */
     @Override
     public boolean deleteByName(String name) throws SQLException {
-        String sql = "delete from tab_brand where b_name = ?";
+        String sql = "delete from tab_brand where name = ?";
         return 1 == runner.update(sql, name);
     }
 
@@ -96,7 +96,7 @@ public class BrandDaoImpl implements IBrandDao {
     @Override
     public boolean deleteByNames(String names) throws SQLException {
         StringBuilder sb = new StringBuilder();
-        sb.append("delete from tab_brand where b_name in (");
+        sb.append("delete from tab_brand where name in (");
         Object[] params = names.split(",");
         int len = params.length;
         for(int i = 0; i < len; i++){
