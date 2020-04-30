@@ -126,7 +126,7 @@
                                         <td>${brand.place}</td>
                                         <td>${brand.remark}</td>
                                         <td class="text-center">
-                                            <input type="button" class="btn btn-info btn-xs" onclick="changeBrand('${brand.name}')" value="修改"/>
+                                            <input type="button" class="btn btn-info btn-xs" onclick="findByName('${brand.name}')" value="修改"/>
                                             <input type="button" class="btn btn-danger btn-xs" onclick="deleteBrand('${brand.name}')" value="删除"/>
                                         </td>
                                     </tr>
@@ -205,7 +205,6 @@
                         <form class="form-horizontal" action="${pageContext.request.contextPath}/brand/add" method="post">
                         <div class="box-body">
 
-
                             <div class="col-sm-6 form-group">
                                 <label for="inputBrandName" class="col-sm-3 control-label">产品品牌：</label>
 
@@ -214,7 +213,6 @@
                                     <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
-
 
                             <div class="col-sm-6 form-group">
                                 <label for="inputBrandFactory" class="col-sm-3 control-label">产品厂家：</label>
@@ -233,7 +231,6 @@
                                     <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
-
 
                             <div class="col-sm-6 form-group">
                                 <label for="inputBrandRemark" class="col-sm-3 control-label">备注：</label>
@@ -284,14 +281,15 @@
                             <h3 class="box-title">品牌修改</h3>
                         </div>
                         <!-- 数据表单 -->
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" action="${pageContext.request.contextPath}/brand/change" method="post">
                             <div class="box-body">
 
                                 <div class="col-sm-6 form-group">
                                     <label for="inputBrandName" class="col-sm-3 control-label">产品品牌：</label>
+                                    <input type="hidden" class="form-control" name="name" value="${brand.name}" placeholder="请输入品牌名...">
 
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="b_name" placeholder="请输入品牌名...">${brand.name}
+                                        <input type="text" class="form-control" name="name" value="${brand.name}" disabled placeholder="请输入品牌名...">
                                         <span class="help-block small msg-info">Help block with success</span>
                                     </div>
                                 </div>
@@ -301,7 +299,7 @@
                                     <label for="inputBrandFactory" class="col-sm-3 control-label">产品厂家：</label>
 
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="b_factory" placeholder="请输入厂家...">${brand.factory}
+                                        <input type="text" class="form-control" name="factory" value="${brand.factory}" placeholder="请输入厂家...">
                                         <span class="help-block small msg-info" >Help block with success</span>
                                     </div>
                                 </div>
@@ -310,7 +308,7 @@
                                     <label for="inputBrandPlace" class="col-sm-3 control-label">产品产地：</label>
 
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="b_place" placeholder="请输入产地...">${brand.place}
+                                        <input type="text" class="form-control" name="place" value="${brand.place}" placeholder="请输入产地...">
                                         <span class="help-block small msg-info">Help block with success</span>
                                     </div>
                                 </div>
@@ -320,7 +318,7 @@
                                     <label for="inputBrandRemark" class="col-sm-3 control-label">备注：</label>
 
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="b_remark" placeholder="请输入备注...">${brand.remark}
+                                        <input type="text" class="form-control" name="remark" value="${brand.remark}" placeholder="请输入备注...">
                                         <span class="help-block small msg-info" >Help block with success</span>
                                     </div>
                                 </div>

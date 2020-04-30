@@ -56,7 +56,7 @@ public class BrandServlet extends BaseServlet {
             List<Brand> brands = brandService.findByCondition(condition);
             request.setAttribute("brands", brands);
             //跳转findAll页面
-            request.getRequestDispatcher("/product-manage.jsp#showAllBrand").forward(request, response);
+            request.getRequestDispatcher("/product-manage.jsp?#showAllBrand").forward(request, response);
         } catch (BrandException e) {
             e.printStackTrace();
         }
@@ -109,7 +109,7 @@ public class BrandServlet extends BaseServlet {
                     request.setAttribute(BrandConstant.BRAND_SUCCESS_MSG,"添加成功！");
                 }
                 //跳转add页面
-                request.getRequestDispatcher("/product-manage.jsp?#showAllBrand").forward(request, response);
+                request.getRequestDispatcher("/product-manage.jsp?#addBrand").forward(request, response);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
