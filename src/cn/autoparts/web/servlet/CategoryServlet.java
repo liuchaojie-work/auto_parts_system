@@ -19,9 +19,9 @@ import java.util.Map;
 /**
  * 有关类别的Servlet
  */
-@WebServlet("/Category/*")
+@WebServlet("/category/*")
 public class CategoryServlet extends BaseServlet {
-    private ICategoryService CategoryService = new CategoryServiceImpl();
+    private ICategoryService categoryService = new CategoryServiceImpl();
 
     /**
      * 查找所有
@@ -32,8 +32,8 @@ public class CategoryServlet extends BaseServlet {
      */
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try {
-            List<Category> Categorys = CategoryService.findAll();
-            writeValue(Categorys,response);
+            List<Category> categorys = categoryService.findAll();
+            writeValue(categorys,response);
         } catch (CategoryException e) {
             e.printStackTrace();
         }
@@ -49,8 +49,8 @@ public class CategoryServlet extends BaseServlet {
     public void findByCondition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String condition = request.getParameter("condition");
         try {
-            List<Category> Categorys = CategoryService.findByCondition(condition);
-            writeValue(Categorys,response);
+            List<Category> categorys = categoryService.findByCondition(condition);
+            writeValue(categorys,response);
         } catch (CategoryException e) {
             e.printStackTrace();
         }
@@ -66,7 +66,7 @@ public class CategoryServlet extends BaseServlet {
     public void findByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String name = request.getParameter("name");
         try {
-            Category byName = CategoryService.findByName(name);
+            Category byName = categoryService.findByName(name);
             writeValue(byName,response);
         } catch (CategoryException e) {
             e.printStackTrace();
@@ -83,10 +83,10 @@ public class CategoryServlet extends BaseServlet {
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         request.setCharacterEncoding("UTF-8");
         Map<String, String[]> params = request.getParameterMap();
-        Category Category = new Category();
+        Category category = new Category();
         try {
-            BeanUtils.populate(Category, params);
-            boolean flag = CategoryService.add(Category);
+            BeanUtils.populate(category, params);
+            boolean flag = categoryService.add(category);
             writeValue(flag, response);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -108,10 +108,10 @@ public class CategoryServlet extends BaseServlet {
     public void change(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         request.setCharacterEncoding("UTF-8");
         Map<String, String[]> params = request.getParameterMap();
-        Category Category = new Category();
+        Category category = new Category();
         try {
-            BeanUtils.populate(Category, params);
-            boolean flag = CategoryService.change(Category);
+            BeanUtils.populate(category, params);
+            boolean flag = categoryService.change(category);
             writeValue(flag, response);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
@@ -133,7 +133,7 @@ public class CategoryServlet extends BaseServlet {
     public void deleteByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String name = request.getParameter("name");
         try {
-            boolean flag = CategoryService.deleteByName(name);
+            boolean flag = categoryService.deleteByName(name);
             writeValue(flag, response);
         } catch (CategoryException e) {
             e.printStackTrace();
@@ -151,7 +151,7 @@ public class CategoryServlet extends BaseServlet {
     public void deleteByNames(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String names = request.getParameter("names");
         try {
-            boolean flag = CategoryService.deleteByNames(names);
+            boolean flag = categoryService.deleteByNames(names);
             writeValue(flag, response);
         } catch (CategoryException e) {
             e.printStackTrace();

@@ -39,6 +39,7 @@ public class BrandServlet extends BaseServlet {
         }
     }
 
+
     /**
      * 根据某条件查询
      * @param request

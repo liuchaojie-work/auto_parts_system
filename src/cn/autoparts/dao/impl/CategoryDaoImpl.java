@@ -31,9 +31,9 @@ public class CategoryDaoImpl implements ICategoryDao {
      */
     @Override
     public List<Category> findByCondition(String condition) throws SQLException {
-        String sql = "select * from tab_category where c_name like ? or c_unit like ? or c_remark like ?";
+        String sql = "select * from tab_category where name like ? or unit like ? or remark like ?";
         Object[] params = {"%"+ condition +"%","%"+ condition +"%","%"+ condition +"%"};
-        return runner.query(sql, new BeanListHandler<Category>(Category.class));
+        return runner.query(sql, new BeanListHandler<Category>(Category.class), params);
     }
 
     /**
@@ -44,8 +44,8 @@ public class CategoryDaoImpl implements ICategoryDao {
      */
     @Override
     public Category findByName(String name) throws SQLException {
-        String sql = "select * from tab_category where c_name = ?";
-        return runner.query(sql, new BeanHandler<Category>(Category.class));
+        String sql = "select * from tab_category where name = ?";
+        return runner.query(sql, new BeanHandler<Category>(Category.class), name);
     }
 
     /**
@@ -56,7 +56,7 @@ public class CategoryDaoImpl implements ICategoryDao {
      */
     @Override
     public boolean add(Category category) throws SQLException {
-        String sql = "insert into tab_category(c_name, c_unit, c_remark) values(?,?,?)";
+        String sql = "insert into tab_category(name, unit, remark) values(?,?,?)";
         Object[] params = {category.getName(), category.getUnit(), category.getRemark()};
         return 1 == runner.update(sql, params);
     }
@@ -69,7 +69,7 @@ public class CategoryDaoImpl implements ICategoryDao {
      */
     @Override
     public boolean change(Category category) throws SQLException {
-        String sql = "update tab_category set c_unit = ?, c_remark = ? where c_name = ?";
+        String sql = "update tab_category set unit = ?, remark = ? where name = ?";
         Object[] params = {category.getUnit(), category.getRemark(), category.getName()};
         return 1 == runner.update(sql, params);
     }
@@ -82,7 +82,7 @@ public class CategoryDaoImpl implements ICategoryDao {
      */
     @Override
     public boolean deleteByName(String name) throws SQLException {
-        String sql = "delete from tab_category where c_name = ?";
+        String sql = "delete from tab_category where name = ?";
         return 1 == runner.update(sql,name);
     }
 
@@ -95,7 +95,7 @@ public class CategoryDaoImpl implements ICategoryDao {
     @Override
     public boolean deleteByNames(String names) throws SQLException {
         StringBuilder sb = new StringBuilder();
-        sb.append("delete from tab_category where c_name in (");
+        sb.append("delete from tab_category where name in (");
         Object[] params = names.split(",");
         int len = params.length;
         for(int i = 0; i < len; i++){

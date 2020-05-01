@@ -91,10 +91,10 @@
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                                    <input type="text" id="categorySearch" name="table_search" class="form-control pull-right" placeholder="Search">
 
                                     <div class="input-group-btn">
-                                        <button type="submit" id="search" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        <button type="submit" id="search" class="btn btn-default" onclick="categorySearch()"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -363,23 +363,27 @@
                 checkedArr.push($(this).val());
             });
             var names = checkedArr.join(",");
-            $.post("Category/deleteByNames",{"names":names},function (data) {
+            $.post("category/deleteByNames",{"names":names},function (data) {
                 if(data){
                     $(function (){
-                        alert("批量删除成功！")
+                        alert("批量删除成功！");
                     });
                     findAllCategory();
                 }else{
                     $(function () {
-                        alert("批量删除失败！")
+                        alert("批量删除失败！");
                     });
                 }
             });
         }
     }
     function findAllCategory() {
-        $.post("Category/findAll",{},function (data) {
-            var str;
+        $.post("category/findAll",{},function (data) {
+            if(null == data){
+                $("#category-list tbody").html("");
+                return;
+            }
+            var str="";
             for(var i = 0; i < data.length; i++){
                 var tr = '<tr>\n' +
                     '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
@@ -397,11 +401,40 @@
             $("#category-list tbody").html(str);
         });
     }
+
+    function categorySearch() {
+        var search = $("#categorySearch").val();
+        alert(search);
+        $.post("category/findByCondition",{"condition":search},function (data) {
+            if(null == data){
+                $("#category-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].name+'</td>\n' +
+                    '                                        <td>'+data[i].unit+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findCategoryByName(\''+data[i].name+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteCategoryByName(\''+data[i].name+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#category-list tbody").html(str);
+        });
+
+    }
+
     function findCategoryByName(name) {
         $("#showAllCategory").attr("hidden","hidden");
         $("#addCategory").attr("hidden","hidden");
         $("#changeCategory").removeAttr("hidden");
-        $.post("Category/findByName?name="+name,{},function (data) {
+        $.post("category/findByName?name="+name,{},function (data) {
             var str=
                 '\n' +
                 '                                <div class="col-sm-12 form-group"  style="text-align: center">\n' +
@@ -422,7 +455,7 @@
                 '                                    <label for="inputCategoryFactory" class="col-sm-3 control-label">单位：</label>\n' +
                 '\n' +
                 '                                    <div class="col-sm-9">\n' +
-                '                                        <input type="text" class="form-control" name="factory" value="'+data.unit+'" placeholder="请输入单位...">\n' +
+                '                                        <input type="text" class="form-control" name="unit" value="'+data.unit+'" placeholder="请输入单位...">\n' +
                 '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
@@ -443,7 +476,7 @@
     function deleteCategoryByName(name) {
         var result = confirm("确定删除吗？");
         if(result){
-            $.post("Category/deleteByName",{"name":name},function (data) {
+            $.post("category/deleteByName",{"name":name},function (data) {
                 if(data){
                     $(function (){
                         alert("删除成功！")
@@ -463,7 +496,7 @@
         $("#addCategory").removeAttr("hidden");
     }
     function addCategory(){
-        $.post("Category/add",$("#addCategoryForm").serialize(),function (data) {
+        $.post("category/add",$("#addCategoryForm").serialize(),function (data) {
             if(data){
                 $("#addCategoryMsg").html("添加成功！");
                 $("#addCategoryMsg").css("color","green");
@@ -471,10 +504,11 @@
                 $("#addCategoryMsg").html("已存在！添加失败！");
                 $("#addCategoryMsg").css("color","red");
             }
+            gotoAddCategory();
         });
     }
     function changeCategorySubmit() {
-        $.post("Category/change",$("#changeCategoryForm").serialize(), function (data) {
+        $.post("category/change",$("#changeCategoryForm").serialize(), function (data) {
             if(data){
                 $("#changeCategoryMsg").html("修改成功！");
                 $("#changeCategoryMsg").css("color","green");
@@ -491,7 +525,6 @@
         $("#changeCategory").attr("hidden","hidden");
     }
 </script>
-<%--<script src="all-javascript.jsp" type="text/javascript"></script>--%>
 </body>
 
 </html>

@@ -91,10 +91,10 @@
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                                    <input type="text" id="brandSearch" name="table_search" class="form-control pull-right" placeholder="Search">
 
                                     <div class="input-group-btn">
-                                        <button type="submit" id="search" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        <button type="submit" id="search" class="btn btn-default" onclick="brandSearch()"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -389,7 +389,11 @@
     }
     function findAllBrand() {
         $.post("brand/findAll",{},function (data) {
-            var str;
+            if(null == data){
+                $("#brand-list tbody").html("");
+                return;
+            }
+            var str = "";
             for(var i = 0; i < data.length; i++){
                 var tr = '<tr>\n' +
                     '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
@@ -408,11 +412,39 @@
             $("#brand-list tbody").html(str);
         });
     }
+
+    function brandSearch() {
+        var search = $("#brandSearch").val();
+        $.post("brand/findByCondition",{"condition":search},function (data) {
+            if(null == data){
+                $("#brand-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].name+'</td>\n' +
+                    '                                        <td>'+data[i].factory+'</td>\n' +
+                    '                                        <td>'+data[i].place+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findBrandByName(\''+data[i].name+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteBrandByName(\''+data[i].name+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#brand-list tbody").html(str);
+        });
+
+    }
     function findBrandByName(name) {
         $("#showAllBrand").attr("hidden","hidden");
         $("#addBrand").attr("hidden","hidden");
         $("#changeBrand").removeAttr("hidden");
-        $.post("brand/findByName?name="+name,{},function (data) {
+        $.post("brand/findByName?",{"name":name},function (data) {
             var str=
                 '\n' +
                 '                                <div class="col-sm-12 form-group"  style="text-align: center">\n' +
@@ -464,15 +496,15 @@
     function deleteBrandByName(name) {
         var result = confirm("确定删除吗？");
         if(result){
-            $.post("brand/deleteByName",{"name":name},function (data) {
+            $.post("brand/deleteByName?",{"name":name},function (data) {
                 if(data){
                     $(function (){
-                        alert("删除成功！")
+                        alert("删除成功！");
                     });
                     findAllBrand();
                 }else{
                     $(function () {
-                        alert("删除失败！")
+                        alert("删除失败！");
                     });
                 }
             });
@@ -493,6 +525,7 @@
                 $("#addBrandMsg").css("color","red");
             }
         });
+
     }
     function changeBrandSubmit() {
         $.post("brand/change",$("#changeBrandForm").serialize(), function (data) {
