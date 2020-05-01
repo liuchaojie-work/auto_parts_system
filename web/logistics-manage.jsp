@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>(单独)汽配销售系统产品类别管理页面</title>
+    <title>(单独)汽配销售系统产品管理页面</title>
     <meta name="description" content="汽配销售">
     <meta name="keywords" content="汽配销售">
 
@@ -46,32 +46,32 @@
 <body class="hold-transition skin-purple sidebar-mini">
 
 <div class="wrapper">
-    <jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="header.jsp"></jsp:include>
     <!-- 内容区域 -->
 
     <div class="content-wrapper">
 
-        <%--    类别展示    --%>
-        <div id="showAllCategory">
-            <!-- 类别内容头部 -->
+        <%--    物流展示    --%>
+        <div id="showAllLogistics">
+            <!-- 物流内容头部 -->
             <section class="content-header">
                 <h1>
-                    类别展示
+                    物流展示
                     <small>数据列表</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">类别展示</a></li>
+                    <li><a href="#">物流展示</a></li>
                     <li class="active">数据列表</li>
                 </ol>
             </section>
-            <!-- 类别内容头部 /-->
-            <!-- 类别正文区域 -->
+            <!-- 物流内容头部 /-->
+            <!-- 物流正文区域 -->
             <section class="content row">
                 <!-- .box-body -->
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">类别列表</h3>
+                        <h3 class="box-title">物流列表</h3>
                     </div>
 
                     <div class="box-body">
@@ -83,33 +83,34 @@
                             <div class="pull-left">
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-success" title="新增" onclick="gotoAddCategory()"><i class="fa fa-file-o"></i> 新增</button>
-                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllCategoryByNames()"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllCategory()"><i class="fa fa-refresh"></i> 刷新</button>
+                                        <button type="button" class="btn btn-default btn-success" title="新增" onclick="gotoAddLogistics()"><i class="fa fa-file-o"></i> 新增</button>
+                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllBrandByNames()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllBrand()"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" id="categorySearch" name="table_search" class="form-control pull-right" placeholder="Search">
+                                    <input type="text" id="brandSearch" name="table_search" class="form-control pull-right" placeholder="Search">
 
                                     <div class="input-group-btn">
-                                        <button type="submit" id="search" class="btn btn-default" onclick="categorySearch()"><i class="fa fa-search"></i></button>
+                                        <button type="submit" id="search" class="btn btn-default" onclick="brandSearch()"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>
                             <!--工具栏/-->
 
                             <!--数据列表-->
-                            <table id="category-list" class="table table-bordered table-striped table-hover dataTable">
+                            <table id="brand-list" class="table table-bordered table-striped table-hover dataTable">
                                 <thead>
                                 <tr>
                                     <th class="" style="padding-right:0px;">
-                                        <input id="category-selall" type="checkbox">
+                                        <input id="brand-selall" type="checkbox">
                                     </th>
                                     <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">类别名</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单位</th>
+                                    <th class="sorting_desc">物流名</th>
+                                    <th class="sorting_asc sorting_asc_disabled">厂家</th>
+                                    <th class="sorting_desc sorting_desc_disabled">产地</th>
                                     <th class="sorting">备注</th>
                                     <th class="text-center">操作</th>
                                 </tr>
@@ -117,7 +118,7 @@
                                 <tbody>
 
                                 </tbody>
-                            </table>
+                             </table>
                             <!--数据列表/-->
                         </div>
                         <!-- 数据表格 /-->
@@ -161,62 +162,71 @@
                     <!-- /.box-footer-->
                 </div>
             </section>
-            <!-- 类别正文区域 /-->
+            <!-- 物流正文区域 /-->
         </div>
 
-        <%--   类别新增    --%>
-        <div id="addCategory" hidden="hidden">
-            <!-- 类别新增内容头部 -->
-            <section class="content-header">
-                <h1>
-                    类别新增
-                    <small>提交表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">类别</a></li>
-                    <li class="active">类别新增</li>
-                </ol>
-            </section>
-            <!-- 类别内容头部 /-->
-            <!-- 类别正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">类别新增</h3>
-                    </div>
-                    <!-- 数据表单 -->
-                    <form id="addCategoryForm" class="form-horizontal">
+        <%--   物流新增    --%>
+        <div id="addBrand" hidden="hidden">
+                <!-- 物流新增内容头部 -->
+                <section class="content-header">
+                    <h1>
+                        物流新增
+                        <small>提交表单</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
+                        <li><a href="#">物流</a></li>
+                        <li class="active">物流新增</li>
+                    </ol>
+                </section>
+                <!-- 物流内容头部 /-->
+                <!-- 物流正文区域 -->
+                <section class="content row">
+                    <!-- .box-body -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">物流新增</h3>
+                        </div>
+                        <!-- 数据表单 -->
+                        <form id="addBrandForm" class="form-horizontal">
                         <div class="box-body">
 
                             <div class="col-sm-12 form-group"  style="text-align: center">
-                                <label id="addCategoryMsg"></label>
+                                <label id="addBrandMsg"></label>
                             </div>
 
                             <div class="col-sm-6 form-group">
-                                <label for="inputCategoryName" class="col-sm-3 control-label">产品类别：</label>
+                                <label for="inputBrandName" class="col-sm-3 control-label">产品物流：</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputCategoryName" name="name" placeholder="请输入类别名...">
+                                    <input type="text" class="form-control" id="inputBrandName" name="name" placeholder="请输入物流名...">
                                     <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 form-group">
-                                <label for="inputCategoryUnit" class="col-sm-3 control-label">单位：</label>
+                                <label for="inputBrandFactory" class="col-sm-3 control-label">产品厂家：</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputCategoryUnit" name="unit" placeholder="请输入单位...">
+                                    <input type="text" class="form-control" id="inputBrandFactory" name="factory" placeholder="请输入厂家...">
                                     <span class="help-block small msg-info" >Help block with success</span>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 form-group">
-                                <label for="inputCategoryRemark" class="col-sm-3 control-label">备注：</label>
+                                <label for="inputBrandPlace" class="col-sm-3 control-label">产品产地：</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputCategoryRemark" name="remark" placeholder="请输入备注...">
+                                    <input type="text" class="form-control" id="inputBrandPlace" name="place" placeholder="请输入产地...">
+                                    <span class="help-block small msg-info">Help block with success</span>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                                <label for="inputBrandRemark" class="col-sm-3 control-label">备注：</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="inputBrandRemark" name="remark" placeholder="请输入备注...">
                                     <span class="help-block small msg-info" >Help block with success</span>
                                 </div>
                             </div>
@@ -224,68 +234,68 @@
                         </div>
                         <div class="box-footer">
                             <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="addCategory()" value="提交" />
+                                <input type="button" class="btn btn-success col-sm-2" onclick="addBrand()" value="提交" />
                                 <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackCategory()" value="返回"/>
+                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackBrand()" value="返回"/>
                             </div>
                         </div>
-                    </form>
+                        </form>
 
-                    <!-- 数据表单 /-->
-                </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 类别正文区域 /-->
-        </div>
-
-        <%--   类别修改    --%>
-        <div id="changeCategory" hidden="hidden">
-            <!-- 类别修改内容头部 -->
-            <section class="content-header">
-                <h1>
-                    类别修改
-                    <small>修改表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">类别</a></li>
-                    <li class="active">类别修改</li>
-                </ol>
-            </section>
-            <!-- 类别内容头部 /-->
-            <!-- 类别正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">类别修改</h3>
+                        <!-- 数据表单 /-->
                     </div>
-                    <!-- 数据表单 -->
-                    <form id="changeCategoryForm" class="form-horizontal">
-                        <div class="box-body">
+                    <!-- /.box-body -->
+                </section>
+                <!-- 物流正文区域 /-->
+            </div>
 
+        <%--   物流修改    --%>
+        <div id="changeBrand" hidden="hidden">
+                <!-- 物流修改内容头部 -->
+                <section class="content-header">
+                    <h1>
+                        物流修改
+                        <small>修改表单</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
+                        <li><a href="#">物流</a></li>
+                        <li class="active">物流修改</li>
+                    </ol>
+                </section>
+                <!-- 物流内容头部 /-->
+                <!-- 物流正文区域 -->
+                <section class="content row">
+                    <!-- .box-body -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">物流修改</h3>
                         </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="changeCategorySubmit()" value="提交"/>
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackCategory()" value="返回"/>
+                        <!-- 数据表单 -->
+                        <form id="changeBrandForm" class="form-horizontal">
+                            <div class="box-body">
+
                             </div>
-                        </div>
-                    </form>
+                            <div class="box-footer">
+                                <div class="col-sm-offset-4 col-sm-8" >
+                                    <input type="button" class="btn btn-success col-sm-2" onclick="changeBrandSubmit()" value="提交"/>
+                                    <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
+                                    <input type="button" class="btn btn-danger col-sm-1" onclick="goBackBrand()" value="返回"/>
+                                </div>
+                            </div>
+                        </form>
 
-                    <!-- 数据表单 /-->
-                </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 类别正文区域 /-->
-        </div>
+                        <!-- 数据表单 /-->
+                    </div>
+                    <!-- /.box-body -->
+                </section>
+                <!-- 物流正文区域 /-->
+            </div>
 
     </div>
     <!-- @@close -->
     <!-- 内容区域 /-->
     <!-- /.col -->
-    <jsp:include page="footer.jsp"></jsp:include>
+<jsp:include page="footer.jsp"></jsp:include>
 </div>
 <!-- 内容区域 /-->
 
@@ -339,10 +349,10 @@
 <script>
     $(function () {
 
-        if(!$("showAllCategory").attr("hidden")){
-            findAllCategory();
+        if(!$("showAllBrand").attr("hidden")){
+            findAllBrand();
         }
-        selectAllOrNone("#category-selall","#category-list");
+        selectAllOrNone("#brand-selall","#brand-list");
     });
     //全选全不选
     function selectAllOrNone(checkId,tabId) {
@@ -350,10 +360,10 @@
             $(tabId+" tr td input[type='checkbox']").prop("checked",$(checkId).prop("checked"));
         });
     }
-    function deleteAllCategoryByNames() {
+    function deleteAllBrandByNames() {
         var result = confirm("确定删除所选吗？");
         if(result){
-            var checks = $("#category-list tbody tr td input[type='checkbox']:checked");
+            var checks = $("#brand-list tbody tr td input[type='checkbox']:checked");
             if(0 == checks.length){
                 alert("未选种任何一条!");
                 return false;
@@ -363,51 +373,24 @@
                 checkedArr.push($(this).val());
             });
             var names = checkedArr.join(",");
-            $.post("category/deleteByNames",{"names":names},function (data) {
+            $.post("brand/deleteByNames",{"names":names},function (data) {
                 if(data){
                     $(function (){
-                        alert("批量删除成功！");
+                        alert("批量删除成功！")
                     });
-                    findAllCategory();
+                    findAllBrand();
                 }else{
                     $(function () {
-                        alert("批量删除失败！");
+                        alert("批量删除失败！")
                     });
                 }
             });
         }
     }
-    function findAllCategory() {
-        $.post("category/findAll",{},function (data) {
+    function findAllBrand() {
+        $.post("brand/findAll",{},function (data) {
             if(null == data){
-                $("#category-list tbody").html("");
-                return;
-            }
-            var str="";
-            for(var i = 0; i < data.length; i++){
-                var tr = '<tr>\n' +
-                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
-                    '                                        <td>'+(i+1)+'</td>\n' +
-                    '                                        <td>'+data[i].name+'</td>\n' +
-                    '                                        <td>'+data[i].unit+'</td>\n' +
-                    '                                        <td>'+data[i].remark+'</td>\n' +
-                    '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findCategoryByName(\''+data[i].name+'\')" value="修改"/>\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteCategoryByName(\''+data[i].name+'\')" value="删除"/>\n' +
-                    '                                        </td>\n' +
-                    '                                    </tr>';
-                str +=tr;
-            }
-            $("#category-list tbody").html(str);
-        });
-    }
-
-    function categorySearch() {
-        var search = $("#categorySearch").val();
-        alert(search);
-        $.post("category/findByCondition",{"condition":search},function (data) {
-            if(null == data){
-                $("#category-list tbody").html("");
+                $("#brand-list tbody").html("");
                 return;
             }
             var str = "";
@@ -416,52 +399,89 @@
                     '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
                     '                                        <td>'+(i+1)+'</td>\n' +
                     '                                        <td>'+data[i].name+'</td>\n' +
-                    '                                        <td>'+data[i].unit+'</td>\n' +
+                    '                                        <td>'+data[i].factory+'</td>\n' +
+                    '                                        <td>'+data[i].place+'</td>\n' +
                     '                                        <td>'+data[i].remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findCategoryByName(\''+data[i].name+'\')" value="修改"/>\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteCategoryByName(\''+data[i].name+'\')" value="删除"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findBrandByName(\''+data[i].name+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteBrandByName(\''+data[i].name+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
                 str +=tr;
             }
-            $("#category-list tbody").html(str);
+            $("#brand-list tbody").html(str);
+        });
+    }
+
+    function brandSearch() {
+        var search = $("#brandSearch").val();
+        $.post("brand/findByCondition",{"condition":search},function (data) {
+            if(null == data){
+                $("#brand-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].name+'</td>\n' +
+                    '                                        <td>'+data[i].factory+'</td>\n' +
+                    '                                        <td>'+data[i].place+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findBrandByName(\''+data[i].name+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteBrandByName(\''+data[i].name+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#brand-list tbody").html(str);
         });
 
     }
-
-    function findCategoryByName(name) {
-        $("#showAllCategory").attr("hidden","hidden");
-        $("#addCategory").attr("hidden","hidden");
-        $("#changeCategory").removeAttr("hidden");
-        $.post("category/findByName?name="+name,{},function (data) {
+    function findBrandByName(name) {
+        $("#showAllBrand").attr("hidden","hidden");
+        $("#addBrand").attr("hidden","hidden");
+        $("#changeBrand").removeAttr("hidden");
+        $.post("brand/findByName?",{"name":name},function (data) {
             var str=
                 '\n' +
                 '                                <div class="col-sm-12 form-group"  style="text-align: center">\n' +
-                '                                    <label id="changeCategoryMsg"></label>\n' +
+                '                                    <label id="changeBrandMsg"></label>\n' +
                 '                                </div>\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputCategoryName" class="col-sm-3 control-label">产品类别：</label>\n' +
-                '                                    <input type="hidden" class="form-control" name="name" value="'+data.name+'" placeholder="请输入类别名...">\n' +
+                '                                    <label for="inputBrandName" class="col-sm-3 control-label">产品物流：</label>\n' +
+                '                                    <input type="hidden" class="form-control" name="name" value="'+data.name+'" placeholder="请输入物流名...">\n' +
                 '\n' +
                 '                                    <div class="col-sm-9">\n' +
-                '                                        <input type="text" class="form-control" name="name" value="'+data.name+'" disabled placeholder="请输入类别名...">\n' +
+                '                                        <input type="text" class="form-control" name="name" value="'+data.name+'" disabled placeholder="请输入物流名...">\n' +
                 '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputCategoryFactory" class="col-sm-3 control-label">单位：</label>\n' +
+                '                                    <label for="inputBrandFactory" class="col-sm-3 control-label">产品厂家：</label>\n' +
                 '\n' +
                 '                                    <div class="col-sm-9">\n' +
-                '                                        <input type="text" class="form-control" name="unit" value="'+data.unit+'" placeholder="请输入单位...">\n' +
+                '                                        <input type="text" class="form-control" name="factory" value="'+data.factory+'" placeholder="请输入厂家...">\n' +
                 '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputCategoryRemark" class="col-sm-3 control-label">备注：</label>\n' +
+                '                                    <label for="inputBrandPlace" class="col-sm-3 control-label">产品产地：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-9">\n' +
+                '                                        <input type="text" class="form-control" name="place" value="'+data.place+'" placeholder="请输入产地...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputBrandRemark" class="col-sm-3 control-label">备注：</label>\n' +
                 '\n' +
                 '                                    <div class="col-sm-9">\n' +
                 '                                        <input type="text" class="form-control" name="remark" value="'+data.remark+'" placeholder="请输入备注...">\n' +
@@ -469,60 +489,60 @@
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' ;
-            $("#changeCategoryForm .box-body").html(str);
+            $("#changeBrandForm .box-body").html(str);
         });
 
     }
-    function deleteCategoryByName(name) {
+    function deleteBrandByName(name) {
         var result = confirm("确定删除吗？");
         if(result){
-            $.post("category/deleteByName",{"name":name},function (data) {
+            $.post("brand/deleteByName?",{"name":name},function (data) {
                 if(data){
                     $(function (){
-                        alert("删除成功！")
+                        alert("删除成功！");
                     });
-                    findAllCategory();
+                    findAllBrand();
                 }else{
                     $(function () {
-                        alert("删除失败！")
+                        alert("删除失败！");
                     });
                 }
             });
         }
     }
-    function gotoAddCategory() {
-        $("#showAllCategory").attr("hidden","hidden");
-        $("#changeCategory").attr("hidden","hidden");
-        $("#addCategory").removeAttr("hidden");
+    function gotoAddBrand() {
+        $("#showAllBrand").attr("hidden","hidden");
+        $("#changeBrand").attr("hidden","hidden");
+        $("#addBrand").removeAttr("hidden");
     }
-    function addCategory(){
-        $.post("category/add",$("#addCategoryForm").serialize(),function (data) {
+    function addBrand(){
+        $.post("brand/add",$("#addBrandForm").serialize(),function (data) {
             if(data){
-                $("#addCategoryMsg").html("添加成功！");
-                $("#addCategoryMsg").css("color","green");
+                $("#addBrandMsg").html("添加成功！");
+                $("#addBrandMsg").css("color","green");
             }else{
-                $("#addCategoryMsg").html("已存在！添加失败！");
-                $("#addCategoryMsg").css("color","red");
-            }
-            gotoAddCategory();
-        });
-    }
-    function changeCategorySubmit() {
-        $.post("category/change",$("#changeCategoryForm").serialize(), function (data) {
-            if(data){
-                $("#changeCategoryMsg").html("修改成功！");
-                $("#changeCategoryMsg").css("color","green");
-            }else{
-                $("#changeCategoryMsg").html("修改失败！");
-                $("#changeCategoryMsg").css("color","red");
+                $("#addBrandMsg").html("已存在！添加失败！");
+                $("#addBrandMsg").css("color","red");
             }
         });
+
     }
-    function goBackCategory() {
-        findAllCategory();
-        $("#showAllCategory").removeAttr("hidden","hidden");
-        $("#addCategory").attr("hidden","hidden");
-        $("#changeCategory").attr("hidden","hidden");
+    function changeBrandSubmit() {
+        $.post("brand/change",$("#changeBrandForm").serialize(), function (data) {
+            if(data){
+                $("#changeBrandMsg").html("修改成功！");
+                $("#changeBrandMsg").css("color","green");
+            }else{
+                $("#changeBrandMsg").html("修改失败！");
+                $("#changeBrandMsg").css("color","red");
+            }
+        });
+    }
+    function goBackBrand() {
+        findAllBrand();
+        $("#showAllBrand").removeAttr("hidden","hidden");
+        $("#addBrand").attr("hidden","hidden");
+        $("#changeBrand").attr("hidden","hidden");
     }
 </script>
 </body>

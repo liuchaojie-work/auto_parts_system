@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>(单独)汽配销售系统产品管理页面</title>
+    <title>(单独)汽配销售系统产品品牌和类别关联页面</title>
     <meta name="description" content="汽配销售">
     <meta name="keywords" content="汽配销售">
 
