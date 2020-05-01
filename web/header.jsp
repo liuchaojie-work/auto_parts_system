@@ -99,25 +99,25 @@
                     <ul class="treeview-menu">
 
                         <li id="brand">
-                            <a href="${pageContext.request.contextPath}/brand/findAll">
+                            <a href="brand-manage.jsp?#showAllBrand" onclick="findAllBrand();">
                                 <i class="fa fa-circle-o"></i> 品牌
                             </a>
                         </li>
 
                         <li id="category">
-                            <a href="product-manage.jsp">
+                            <a href="category-manage.jsp?#showAllCategory" onclick="findAllCategory();">
                                 <i class="fa fa-circle-o"></i> 类别
                             </a>
                         </li>
 
-                        <li id="brand-category">
-                            <a href="product-manage.jsp">
+                        <li id="category-brand">
+                            <a href="category-brand-manage.jsp?#showAllCategoryBrand" onclick="findAllCategoryBrand();">
                                 <i class="fa fa-circle-o"></i> 品牌和类别关联
                             </a>
                         </li>
 
                         <li id="product">
-                            <a href="product-manage.jsp">
+                            <a href="product-manage.jsp?#showAllProduct" onclick="findAllProduct();">
                                 <i class="fa fa-circle-o"></i> 产品
                             </a>
                         </li>

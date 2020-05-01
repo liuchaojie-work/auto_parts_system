@@ -1,9 +1,9 @@
 package cn.autoparts.web.servlet;
 
-import cn.autoparts.bean.Brand;
-import cn.autoparts.exception.BrandException;
-import cn.autoparts.service.IBrandService;
-import cn.autoparts.service.impl.BrandServiceImpl;
+import cn.autoparts.bean.Category;
+import cn.autoparts.exception.CategoryException;
+import cn.autoparts.service.ICategoryService;
+import cn.autoparts.service.impl.CategoryServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
@@ -17,11 +17,11 @@ import java.util.Map;
 
 
 /**
- * 有关品牌的Servlet
+ * 有关类别的Servlet
  */
-@WebServlet("/brand/*")
-public class BrandServlet extends BaseServlet {
-    private IBrandService brandService = new BrandServiceImpl();
+@WebServlet("/Category/*")
+public class CategoryServlet extends BaseServlet {
+    private ICategoryService CategoryService = new CategoryServiceImpl();
 
     /**
      * 查找所有
@@ -32,9 +32,9 @@ public class BrandServlet extends BaseServlet {
      */
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try {
-            List<Brand> brands = brandService.findAll();
-            writeValue(brands,response);
-        } catch (BrandException e) {
+            List<Category> Categorys = CategoryService.findAll();
+            writeValue(Categorys,response);
+        } catch (CategoryException e) {
             e.printStackTrace();
         }
     }
@@ -49,15 +49,15 @@ public class BrandServlet extends BaseServlet {
     public void findByCondition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String condition = request.getParameter("condition");
         try {
-            List<Brand> brands = brandService.findByCondition(condition);
-            writeValue(brands,response);
-        } catch (BrandException e) {
+            List<Category> Categorys = CategoryService.findByCondition(condition);
+            writeValue(Categorys,response);
+        } catch (CategoryException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * 根据品牌名查找
+     * 根据类别名查找
      * @param request
      * @param response
      * @throws ServletException
@@ -66,9 +66,9 @@ public class BrandServlet extends BaseServlet {
     public void findByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String name = request.getParameter("name");
         try {
-            Brand byName = brandService.findByName(name);
+            Category byName = CategoryService.findByName(name);
             writeValue(byName,response);
-        } catch (BrandException e) {
+        } catch (CategoryException e) {
             e.printStackTrace();
         }
     }
@@ -83,16 +83,16 @@ public class BrandServlet extends BaseServlet {
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         request.setCharacterEncoding("UTF-8");
         Map<String, String[]> params = request.getParameterMap();
-        Brand brand = new Brand();
+        Category Category = new Category();
         try {
-            BeanUtils.populate(brand, params);
-            boolean flag = brandService.add(brand);
+            BeanUtils.populate(Category, params);
+            boolean flag = CategoryService.add(Category);
             writeValue(flag, response);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-        } catch (BrandException e) {
+        } catch (CategoryException e) {
             e.printStackTrace();
         }
 
@@ -108,23 +108,23 @@ public class BrandServlet extends BaseServlet {
     public void change(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         request.setCharacterEncoding("UTF-8");
         Map<String, String[]> params = request.getParameterMap();
-        Brand brand = new Brand();
+        Category Category = new Category();
         try {
-            BeanUtils.populate(brand, params);
-            boolean flag = brandService.change(brand);
+            BeanUtils.populate(Category, params);
+            boolean flag = CategoryService.change(Category);
             writeValue(flag, response);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
-        } catch (BrandException e) {
+        } catch (CategoryException e) {
             e.printStackTrace();
         }
 
     }
 
     /**
-     * 根据品牌名删除品牌
+     * 根据类别名删除类别
      * @param request
      * @param response
      * @throws ServletException
@@ -133,16 +133,16 @@ public class BrandServlet extends BaseServlet {
     public void deleteByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String name = request.getParameter("name");
         try {
-            boolean flag = brandService.deleteByName(name);
+            boolean flag = CategoryService.deleteByName(name);
             writeValue(flag, response);
-        } catch (BrandException e) {
+        } catch (CategoryException e) {
             e.printStackTrace();
         }
 
     }
 
     /**
-     * 根据品牌名拼接的字符串批量删除品牌
+     * 根据类别名拼接的字符串批量删除类别
      * @param request
      * @param response
      * @throws ServletException
@@ -151,9 +151,9 @@ public class BrandServlet extends BaseServlet {
     public void deleteByNames(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String names = request.getParameter("names");
         try {
-            boolean flag = brandService.deleteByNames(names);
+            boolean flag = CategoryService.deleteByNames(names);
             writeValue(flag, response);
-        } catch (BrandException e) {
+        } catch (CategoryException e) {
             e.printStackTrace();
         }
     }
