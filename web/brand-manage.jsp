@@ -545,7 +545,6 @@
         $("#changeBrand").attr("hidden","hidden");
     }
 </script>
-<%--<script src="all-javascript.jsp" type="text/javascript"></script>--%>
 </body>
 
 </html>

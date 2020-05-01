@@ -51,547 +51,8 @@
 
     <div class="content-wrapper">
 
-        <%--    品牌展示    --%>
-        <div id="showAllBrand">
-            <!-- 品牌内容头部 -->
-            <section class="content-header">
-                <h1>
-                    品牌展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">品牌展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 品牌内容头部 /-->
-            <!-- 品牌正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">品牌列表</h3>
-                    </div>
-
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-success" title="新增" onclick="gotoAddBrand()"><i class="fa fa-file-o"></i> 新增</button>
-                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllBrandByNames()"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllBrand()"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" id="search" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="brand-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="brand-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">品牌名</th>
-                                    <th class="sorting_asc sorting_asc_disabled">厂家</th>
-                                    <th class="sorting_desc sorting_desc_disabled">产地</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                             </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 品牌正文区域 /-->
-        </div>
-
-        <%--   品牌新增    --%>
-        <div id="addBrand" hidden="hidden">
-                <!-- 品牌新增内容头部 -->
-                <section class="content-header">
-                    <h1>
-                        品牌新增
-                        <small>提交表单</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                        <li><a href="#">品牌</a></li>
-                        <li class="active">品牌新增</li>
-                    </ol>
-                </section>
-                <!-- 品牌内容头部 /-->
-                <!-- 品牌正文区域 -->
-                <section class="content row">
-                    <!-- .box-body -->
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">品牌新增</h3>
-                        </div>
-                        <!-- 数据表单 -->
-                        <form id="addBrandForm" class="form-horizontal">
-                        <div class="box-body">
-
-                            <div class="col-sm-12 form-group"  style="text-align: center">
-                                <label id="addBrandMsg"></label>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputBrandName" class="col-sm-3 control-label">产品品牌：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBrandName" name="name" placeholder="请输入品牌名...">
-                                    <span class="help-block small msg-info">Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputBrandFactory" class="col-sm-3 control-label">产品厂家：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBrandFactory" name="factory" placeholder="请输入厂家...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputBrandPlace" class="col-sm-3 control-label">产品产地：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBrandPlace" name="place" placeholder="请输入产地...">
-                                    <span class="help-block small msg-info">Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputBrandRemark" class="col-sm-3 control-label">备注：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBrandRemark" name="remark" placeholder="请输入备注...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="addBrand()" value="提交" />
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackBrand()" value="返回"/>
-                            </div>
-                        </div>
-                        </form>
-
-                        <!-- 数据表单 /-->
-                    </div>
-                    <!-- /.box-body -->
-                </section>
-                <!-- 品牌正文区域 /-->
-            </div>
-
-        <%--   品牌修改    --%>
-        <div id="changeBrand" hidden="hidden">
-                <!-- 品牌修改内容头部 -->
-                <section class="content-header">
-                    <h1>
-                        品牌修改
-                        <small>修改表单</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                        <li><a href="#">品牌</a></li>
-                        <li class="active">品牌修改</li>
-                    </ol>
-                </section>
-                <!-- 品牌内容头部 /-->
-                <!-- 品牌正文区域 -->
-                <section class="content row">
-                    <!-- .box-body -->
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">品牌修改</h3>
-                        </div>
-                        <!-- 数据表单 -->
-                        <form id="changeBrandForm" class="form-horizontal">
-                            <div class="box-body">
-
-                            </div>
-                            <div class="box-footer">
-                                <div class="col-sm-offset-4 col-sm-8" >
-                                    <input type="button" class="btn btn-success col-sm-2" onclick="changeBrandSubmit()" value="提交"/>
-                                    <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                    <input type="button" class="btn btn-danger col-sm-1" onclick="goBackBrand()" value="返回"/>
-                                </div>
-                            </div>
-                        </form>
-
-                        <!-- 数据表单 /-->
-                    </div>
-                    <!-- /.box-body -->
-                </section>
-                <!-- 品牌正文区域 /-->
-            </div>
-
-        <%--   类别展示    --%>
-        <div id="showAllCategory" hidden="hidden">
-            <!-- 类别内容头部 -->
-            <section class="content-header">
-                <h1>
-                    类别展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">类别展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 类别内容头部 /-->
-            <!-- 类别正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">类别列表</h3>
-                    </div>
-
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="category-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="category-selall" type="checkbox" onclick="selectAllOrNone(this);">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品类别名</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品单位</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"  class="checkbox_select" ></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"  class="checkbox_select" ></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"  class="checkbox_select" ></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 类别正文区域 /-->
-        </div>
-
-        <%--   类别新增    --%>
-        <div id="addCategory" hidden="hidden">
-            <!-- 类别新增内容头部 -->
-            <section class="content-header">
-                <h1>
-                    类别新增
-                    <small>提交表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">类别</a></li>
-                    <li class="active">类别新增</li>
-                </ol>
-            </section>
-            <!-- 类别内容头部 /-->
-            <!-- 类别正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">类别新增</h3>
-                    </div>
-                    <!-- 数据表单 -->
-                    <form class="form-horizontal">
-                        <div class="box-body">
-
-
-                            <div class="col-sm-6 form-group">
-                                <label class="col-sm-3 control-label">产品类别名：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_name" placeholder="请输入产品类别名...">
-                                    <span class="help-block small msg-info">Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label class="col-sm-3 control-label">产品单位：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_unit" placeholder="请输入产品单位...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label class="col-sm-3 control-label">备注：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_remark" placeholder="请输入备注...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="submit" class="btn btn-success col-sm-2" value="提交"/>
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" value="返回"/>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- 数据表单 /-->
-                </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 类别正文区域 /-->
-        </div>
-
-        <%--   类别修改    --%>
-        <div id="changeCategory" hidden="hidden">
-            <!-- 类别修改内容头部 -->
-            <section class="content-header">
-                <h1>
-                    类别修改
-                    <small>修改表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">类别</a></li>
-                    <li class="active">类别修改</li>
-                </ol>
-            </section>
-            <!-- 品牌内容头部 /-->
-            <!-- 品牌正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">类别修改</h3>
-                    </div>
-                    <!-- 数据表单 -->
-                    <form class="form-horizontal">
-                        <div class="box-body">
-
-
-                            <div class="col-sm-6 form-group">
-                                <label class="col-sm-3 control-label">产品类别名：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_name" placeholder="请输入产品类别名...">${category.name}
-                                    <span class="help-block small msg-info">Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label class="col-sm-3 control-label">产品单位：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_unit" placeholder="请输入产品单位...">${category.unit}
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label class="col-sm-3 control-label">备注：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_remark" placeholder="请输入备注...">${category.remark}
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="submit" class="btn btn-success col-sm-2" value="提交"/>
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" value="返回"/>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- 数据表单 /-->
-                </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 品牌正文区域 /-->
-        </div>
-
         <%--  品牌类别关联    --%>
-        <div id="showAllCategoryBrand" hidden="hidden">
+        <div id="showAllCategoryBrand" >
             <!-- 品牌和类别关联内容头部 -->
             <section class="content-header">
                 <h1>
@@ -622,56 +83,54 @@
                             <div class="pull-left">
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
+                                        <button type="button" class="btn btn-default btn-success" title="新建" onclick="gotoAddCategoryBrand()"><i class="fa fa-file-o"></i> 新增</button>
+                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllCategoryBrandByCbIds()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllCategoryBrand()"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                                    <input type="text" id="categoryBrandSearch" name="table_search" class="form-control pull-right" placeholder="Search">
 
                                     <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                        <button type="submit" class="btn btn-default" onclick="categoryBrandSearch()"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>
                             <!--工具栏/-->
 
                             <!--数据列表-->
-                            <table id="cate-bra-list" class="table table-bordered table-striped table-hover dataTable">
+                            <table id="categoryBrand-list" class="table table-bordered table-striped table-hover dataTable">
                                 <thead>
                                 <tr>
                                     <th class="" style="padding-right:0px;">
-                                        <input id="cate-bra-selall" type="checkbox">
+                                        <input id="categoryBrand-selall" type="checkbox">
                                     </th>
                                     <th>#</th>
+                                    <th>关联id</th>
                                     <th>产品类别名</th>
-                                    <th>产品单位</th>
                                     <th>产品品牌名</th>
-                                    <th>产品厂家</th>
-                                    <th>产品产地</th>
                                     <th>备注</th>
                                     <th class="text-center">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
+<%--                                <tr>--%>
+<%--                                    <td><input name="ids" type="checkbox"></td>--%>
+<%--                                    <td>1</td>--%>
+<%--                                    <td>方向机</td>--%>
+<%--                                    <td>台</td>--%>
+<%--                                    <td>世宝</td>--%>
+<%--                                    <td>世宝</td>--%>
+<%--                                    <td>杭州</td>--%>
+<%--                                    <td></td>--%>
+<%--                                    <td class="text-center">--%>
+<%--                                        <button type="button" class="btn btn-info btn-xs">修改</button>--%>
+<%--                                        <button type="button" class="btn btn-danger btn-xs">删除</button>--%>
+<%--                                    </td>--%>
+<%--                                </tr>--%>
                                 </tbody>
                             </table>
                             <!--数据列表/-->
@@ -743,23 +202,20 @@
                         <h3 class="box-title">品牌类别关联新增</h3>
                     </div>
                     <!-- 数据表单 -->
-                    <form class="form-horizontal">
+                    <form id="addCategoryBrandForm" class="form-horizontal">
                         <div class="box-body">
-
+                            <div class="col-sm-12 form-group"  style="text-align: center">
+                                <label id="addCategoryBrandMsg"></label>
+                            </div>
 
                             <div class="col-sm-6 form-group">
                                 <label class="col-sm-3 control-label">产品类别名：</label>
 
                                 <div class="col-sm-9">
-                                    <select class="form-control select2" style="width: 100%;">
-                                    <option selected="selected">Alabama</option>
-                                    <option>Alaska</option>
-                                    <option>California</option>
-                                    <option>Delaware</option>
-                                    <option>Tennessee</option>
-                                    <option>Texas</option>
-                                    <option>Washington</option>
+                                    <select id="addCategorySelect" name="cname" class="form-control select2" style="width: 100%;">
+
                                     </select>
+                                    <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
 
@@ -767,15 +223,10 @@
                                 <label class="col-sm-3 control-label">产品品牌名：</label>
 
                                 <div class="col-sm-9">
-                                    <select class="form-control select2" style="width: 100%;">
-                                        <option selected="selected">Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
+                                    <select id="addBrandSelect" name="bname" class="form-control select2" style="width: 100%;">
+
                                     </select>
+                                    <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
 
@@ -783,16 +234,17 @@
                                 <label class="col-sm-3 control-label">备注：</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_remark" placeholder="请输入备注...">
+                                    <input type="text" class="form-control" name="remark" placeholder="请输入备注...">
+                                    <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
 
                         </div>
                         <div class="box-footer">
                             <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="submit" class="btn btn-success col-sm-2" value="提交"/>
+                                <input type="submit" class="btn btn-success col-sm-2" onclick="addCategoryBrand()" value="提交"/>
                                 <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" value="返回"/>
+                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackCategoryBrand()" value="返回"/>
                             </div>
                         </div>
                     </form>
@@ -827,23 +279,31 @@
                         <h3 class="box-title">品牌类别关联修改</h3>
                     </div>
                     <!-- 数据表单 -->
-                    <form class="form-horizontal">
+                    <form id="changeCategoryBrandForm" class="form-horizontal">
                         <div class="box-body">
 
+                            <div class="col-sm-12 form-group"  style="text-align: center">
+                                <label id="changeCategoryBrandMsg"></label>
+                            </div>
+
+                            <div id="changeCbId" class="col-sm-6 form-group">
+
+                            </div>
 
                             <div class="col-sm-6 form-group">
                                 <label class="col-sm-3 control-label">产品类别名：</label>
 
                                 <div class="col-sm-9">
-                                    <select class="form-control select2" style="width: 100%;">
-                                        <option selected="selected">Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
+                                    <select class="form-control select2" id="changeCategorySelect" name="cname" style="width: 100%;">
+<%--                                        <option selected="selected">Alabama</option>--%>
+<%--                                        <option>Alaska</option>--%>
+<%--                                        <option>California</option>--%>
+<%--                                        <option>Delaware</option>--%>
+<%--                                        <option>Tennessee</option>--%>
+<%--                                        <option>Texas</option>--%>
+<%--                                        <option>Washington</option>--%>
                                     </select>
+                                    <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
 
@@ -851,32 +311,34 @@
                                 <label class="col-sm-3 control-label">产品品牌名：</label>
 
                                 <div class="col-sm-9">
-                                    <select class="form-control select2" style="width: 100%;">
-                                        <option selected="selected">Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
+                                    <select class="form-control select2" id="changeBrandSelect" name="bname" style="width: 100%;">
+<%--                                        <option selected="selected">Alabama</option>--%>
+<%--                                        <option>Alaska</option>--%>
+<%--                                        <option>California</option>--%>
+<%--                                        <option>Delaware</option>--%>
+<%--                                        <option>Tennessee</option>--%>
+<%--                                        <option>Texas</option>--%>
+<%--                                        <option>Washington</option>--%>
                                     </select>
+                                    <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 form-group">
                                 <label class="col-sm-3 control-label">备注：</label>
 
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_remark" placeholder="请输入备注...">
+                                <div id="changeRemark" class="col-sm-9">
+                                    <input type="text" class="form-control" name="remark" placeholder="请输入备注...">
+                                    <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
 
                         </div>
                         <div class="box-footer">
                             <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="submit" class="btn btn-success col-sm-2" value="保存"/>
+                                <input type="submit" class="btn btn-success col-sm-2" onclick="changeCategoryBrandSubmit()" value="保存"/>
                                 <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" value="返回"/>
+                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackCategoryBrand()" value="返回"/>
                             </div>
                         </div>
                     </form>
@@ -887,229 +349,7 @@
             </section>
             <!-- 类别正文区域 /-->
         </div>
-        <%--    产品展示    --%>
-        <div id="showAllProduct" hidden="hidden">
-            <!-- 产品内容头部 -->
-            <section class="content-header">
-                <h1>
-                    产品展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">产品展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 产品内容头部 /-->
-            <!-- 产品正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">产品列表</h3>
-                    </div>
 
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="product-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="product-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品型号</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品类别</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品品牌</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品厂家</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品产地</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品单位</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品图片</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品描述</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>台</td>
-                                    <td>img/001.png</td>
-                                    <td>适用于XX车</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>台</td>
-                                    <td>img/001.png</td>
-                                    <td>适用于XX车</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 产品正文区域 /-->
-        </div>
-        <%--    产品新增    --%>
-        <div id="addProduct" hidden="hidden">
-            <!-- 内容头部 -->
-            <section class="content-header">
-                <h1>
-                    产品展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">产品展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 内容头部 /-->
-            <!-- 正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">产品新增</h3>
-                    </div>
-
-                    <!-- 数据表单 -->
-                    <form class="form-horizontal">
-                        <div class="box-body">
-
-
-                            <div class="col-sm-6 form-group">
-                                <label class="col-sm-3 control-label">产品类别名：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_name" placeholder="请输入产品类别名...">
-                                    <span class="help-block small msg-info">Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label class="col-sm-3 control-label">产品单位：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_unit" placeholder="请输入产品单位...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label class="col-sm-3 control-label">备注：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="c_remark" placeholder="请输入备注...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="submit" class="btn btn-success col-sm-2" value="提交"/>
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" value="返回"/>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- 数据表单 /-->
-                    <!-- /.box-body -->
-                </div>
-            </section>
-            <!-- 产品正文区域 /-->
-        </div>
     </div>
     <!-- @@close -->
     <!-- 内容区域 /-->
@@ -1168,10 +408,25 @@
 <script>
     $(function () {
 
-        if(!$("showAllBrand").attr("hidden")){
-            findAllBrand();
+        if(!$("showAllCategoryBrand").attr("hidden")){
+            findAllCategoryBrand();
         }
-        selectAllOrNone("#brand-selall","#brand-list");
+        $.post("category/findAll",{},function (categoryData) {
+            var str1 = "";
+            for(var i = 0; i < categoryData.length; i++){
+                str1+='<option>'+categoryData[i].name+'</option>';
+            }
+            $("#addCategorySelect").html(str1);
+        });
+
+        $.post("brand/findAll",{},function (brandData) {
+            var str2 = "";
+            for(var j = 0; j < brandData.length; j++){
+                str2+='<option>'+brandData[j].name+'</option>';
+            }
+            $("#addBrandSelect").html(str2);
+        });
+        selectAllOrNone("#categoryBrand-selall","#categoryBrand-list");
     });
     //全选全不选
     function selectAllOrNone(checkId,tabId) {
@@ -1179,10 +434,10 @@
             $(tabId+" tr td input[type='checkbox']").prop("checked",$(checkId).prop("checked"));
         });
     }
-    function deleteAllBrandByNames() {
+    function deleteAllCategoryBrandByCbIds() {
         var result = confirm("确定删除所选吗？");
         if(result){
-            var checks = $("#brand-list tbody tr td input[type='checkbox']:checked");
+            var checks = $("#categoryBrand-list tbody tr td input[type='checkbox']:checked");
             if(0 == checks.length){
                 alert("未选种任何一条!");
                 return false;
@@ -1191,13 +446,13 @@
             checks.each(function () {
                 checkedArr.push($(this).val());
             });
-            var names = checkedArr.join(",");
-            $.post("brand/deleteByNames",{"names":names},function (data) {
+            var cbIds = checkedArr.join(",");
+            $.post("categoryBrand/deleteByCbIds",{"cbIds":cbIds},function (data) {
                 if(data){
                     $(function (){
                         alert("批量删除成功！")
                     });
-                    findAllBrand();
+                    findAllCategoryBrand();
                 }else{
                     $(function () {
                         alert("批量删除失败！")
@@ -1206,89 +461,83 @@
             });
         }
     }
-    function findAllBrand() {
-        $.post("brand/findAll",{},function (data) {
-            var str;
+    function findAllCategoryBrand() {
+        $.post("categoryBrand/findAll",{},function (data) {
+            if(null == data){
+                $("#categoryBrand-list tbody").html("");
+                return;
+            }
+            var str = "";
             for(var i = 0; i < data.length; i++){
                 var tr = '<tr>\n' +
-                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].cbId+'"></td>\n' +
                     '                                        <td>'+(i+1)+'</td>\n' +
-                    '                                        <td>'+data[i].name+'</td>\n' +
-                    '                                        <td>'+data[i].factory+'</td>\n' +
-                    '                                        <td>'+data[i].place+'</td>\n' +
+                    '                                        <td>'+data[i].cbId+'</td>\n' +
+                    '                                        <td>'+data[i].cname+'</td>\n' +
+                    '                                        <td>'+data[i].bname+'</td>\n' +
                     '                                        <td>'+data[i].remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findBrandByName(\''+data[i].name+'\')" value="修改"/>\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteBrandByName(\''+data[i].name+'\')" value="删除"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findCategoryBrandByCbId(\''+data[i].cbId+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteCategoryBrandByCbId(\''+data[i].cbId+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
                 str +=tr;
             }
-            $("#brand-list tbody").html(str);
+            $("#categoryBrand-list tbody").html(str);
         });
     }
-    function findBrandByName(name) {
-        $("#showAllBrand").attr("hidden","hidden");
-        $("#addBrand").attr("hidden","hidden");
-        $("#changeBrand").removeAttr("hidden");
-        $.post("brand/findByName?name="+name,{},function (data) {
-            var str=
+
+    function findCategoryBrandByCbId(cbId) {
+        $("#showAllCategoryBrand").attr("hidden","hidden");
+        $("#addCategoryBrand").attr("hidden","hidden");
+        $("#changeCategoryBrand").removeAttr("hidden");
+        $.post("categoryBrand/findByCbId?cbId="+cbId,{},function (data) {
+            var str0 = '<label class="col-sm-3 control-label">关联id：</label>\n' +
+                '                                <input type="hidden" class="form-control" name="cbId" value="'+ data.cbId +'" placeholder="请输入备注...">\n' +
                 '\n' +
-                '                                <div class="col-sm-12 form-group"  style="text-align: center">\n' +
-                '                                    <label id="changeBrandMsg"></label>\n' +
-                '                                </div>\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputBrandName" class="col-sm-3 control-label">产品品牌：</label>\n' +
-                '                                    <input type="hidden" class="form-control" name="name" value="'+data.name+'" placeholder="请输入品牌名...">\n' +
-                '\n' +
-                '                                    <div class="col-sm-9">\n' +
-                '                                        <input type="text" class="form-control" name="name" value="'+data.name+'" disabled placeholder="请输入品牌名...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' +
-                '\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputBrandFactory" class="col-sm-3 control-label">产品厂家：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-9">\n' +
-                '                                        <input type="text" class="form-control" name="factory" value="'+data.factory+'" placeholder="请输入厂家...">\n' +
-                '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputBrandPlace" class="col-sm-3 control-label">产品产地：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-9">\n' +
-                '                                        <input type="text" class="form-control" name="place" value="'+data.place+'" placeholder="请输入产地...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' +
-                '\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputBrandRemark" class="col-sm-3 control-label">备注：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-9">\n' +
-                '                                        <input type="text" class="form-control" name="remark" value="'+data.remark+'" placeholder="请输入备注...">\n' +
-                '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' ;
-            $("#changeBrandForm .box-body").html(str);
+                '                                <div class="col-sm-9">\n' +
+                '                                    <input type="text" class="form-control" name="cbId" value="'+ data.cbId +'" disabled="disabled" placeholder="请输入备注...">\n' +
+                '                                    <span class="help-block small msg-info" >Help block with success</span>\n' +
+                '                                </div>';
+            $("#changeCategoryBrandForm .box-body #changeCbId").html(str0);
+            $.post("category/findAll",{},function (categoryData) {
+                var str1 = "";
+                // alert(data.cname);
+                for(var i = 0; i < categoryData.length; i++){
+                    if($.trim(categoryData[i].name) === $.trim(data.cname)){
+                        str1+='<option selected="selected">'+data.cname+'</option>';
+                    }else{
+                        str1+='<option>'+categoryData[i].name+'</option>';
+                    }
+                }
+                $("#changeCategorySelect").html(str1);
+            });
+            $.post("brand/findAll",{},function (brandData) {
+                var str2 = "";
+                for(var j = 0; j < brandData.length; j++){
+                    if($.trim(brandData[j].name) === $.trim(data.bname)){
+                        str2+='<option selected="selected">'+data.bname+'</option>';
+                    }else{
+                        str2+='<option>'+brandData[j].name+'</option>';
+                    }
+                }
+                $("#changeBrandSelect").html(str2);
+            });
+
+            var str4='<input type="text" class="form-control" name="remark" value="'+ data.remark +'" placeholder="请输入备注...">'
+            $("#changeRemark").html(str4);
         });
 
     }
-    function deleteBrandByName(name) {
+    function deleteCategoryBrandByCbId(cbId) {
         var result = confirm("确定删除吗？");
         if(result){
-            $.post("brand/deleteByName",{"name":name},function (data) {
+            $.post("categoryBrand/deleteByCbId",{"cbId":cbId},function (data) {
                 if(data){
                     $(function (){
                         alert("删除成功！")
                     });
-                    findAllBrand();
+                    findAllCategoryBrand();
                 }else{
                     $(function () {
                         alert("删除失败！")
@@ -1297,41 +546,69 @@
             });
         }
     }
-    function gotoAddBrand() {
-        $("#showAllBrand").attr("hidden","hidden");
-        $("#changeBrand").attr("hidden","hidden");
-        $("#addBrand").removeAttr("hidden");
+    function gotoAddCategoryBrand() {
+        $("#showAllCategoryBrand").attr("hidden","hidden");
+        $("#changeCategoryBrand").attr("hidden","hidden");
+        $("#addCategoryBrand").removeAttr("hidden");
     }
-    function addBrand(){
-        $.post("brand/add",$("#addBrandForm").serialize(),function (data) {
+    function addCategoryBrand(){
+        $.post("categoryBrand/add",$("#addCategoryBrandForm").serialize(),function (data) {
             if(data){
-                $("#addBrandMsg").html("添加成功！");
-                $("#addBrandMsg").css("color","green");
+                $("#addCategoryBrandMsg").html("添加成功！");
+                $("#addCategoryBrandMsg").css("color","green");
             }else{
-                $("#addBrandMsg").html("已存在！添加失败！");
-                $("#addBrandMsg").css("color","red");
+                $("#addCategoryBrandMsg").html("已存在！添加失败！");
+                $("#addCategoryBrandMsg").css("color","red");
             }
         });
     }
-    function changeBrandSubmit() {
-        $.post("brand/change",$("#changeBrandForm").serialize(), function (data) {
+
+
+    function changeCategoryBrandSubmit() {
+        $.post("categoryBrand/change",$("#changeCategoryBrandForm").serialize(), function (data) {
             if(data){
-                $("#changeBrandMsg").html("修改成功！");
-                $("#changeBrandMsg").css("color","green");
+                $("#changeCategoryBrandMsg").html("修改成功！");
+                $("#changeCategoryBrandMsg").css("color","green");
             }else{
-                $("#changeBrandMsg").html("修改失败！");
-                $("#changeBrandMsg").css("color","red");
+                $("#changeCategoryBrandMsg").html("修改失败！");
+                $("#changeCategoryBrandMsg").css("color","red");
             }
         });
     }
-    function goBackBrand() {
-        findAllBrand();
-        $("#showAllBrand").removeAttr("hidden","hidden");
-        $("#addBrand").attr("hidden","hidden");
-        $("#changeBrand").attr("hidden","hidden");
+
+    function categoryBrandSearch() {
+        var search = $("#categoryBrandSearch").val();
+        $.post("categoryBrand/findByCondition",{"condition":search},function (data) {
+            if(null == data){
+                $("#categoryBrand-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].cbId+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].cbId+'</td>\n' +
+                    '                                        <td>'+data[i].cname+'</td>\n' +
+                    '                                        <td>'+data[i].bname+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findCategoryBrandByCbId(\''+data[i].cbId+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteCategoryBrandByCbId(\''+data[i].cbId+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#categoryBrand-list tbody").html(str);
+        });
+    }
+    function goBackCategoryBrand() {
+        findAllCategoryBrand();
+        $("#showAllCategoryBrand").removeAttr("hidden","hidden");
+        $("#addCategoryBrand").attr("hidden","hidden");
+        $("#changeCategoryBrand").attr("hidden","hidden");
     }
 </script>
-<%--<script src="all-javascript.jsp" type="text/javascript"></script>--%>
 </body>
 
 </html>
