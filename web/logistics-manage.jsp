@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>(单独)汽配销售系统产品管理页面</title>
+    <title>(单独)汽配销售系统物流管理页面</title>
     <meta name="description" content="汽配销售">
     <meta name="keywords" content="汽配销售">
 
@@ -60,7 +60,7 @@
                     <small>数据列表</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
+                    <li><a href="#"><i class="fa fa-folder"></i> 物流管理</a></li>
                     <li><a href="#">物流展示</a></li>
                     <li class="active">数据列表</li>
                 </ol>
@@ -84,28 +84,28 @@
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-default btn-success" title="新增" onclick="gotoAddLogistics()"><i class="fa fa-file-o"></i> 新增</button>
-                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllBrandByNames()"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllBrand()"><i class="fa fa-refresh"></i> 刷新</button>
+                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllLogisticsByNames()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllLogistics()"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" id="brandSearch" name="table_search" class="form-control pull-right" placeholder="Search">
+                                    <input type="text" id="logisticsSearch" name="table_search" class="form-control pull-right" placeholder="Search">
 
                                     <div class="input-group-btn">
-                                        <button type="submit" id="search" class="btn btn-default" onclick="brandSearch()"><i class="fa fa-search"></i></button>
+                                        <button type="submit" id="search" class="btn btn-default" onclick="logisticsSearch()"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                             </div>
                             <!--工具栏/-->
 
                             <!--数据列表-->
-                            <table id="brand-list" class="table table-bordered table-striped table-hover dataTable">
+                            <table id="logistics-list" class="table table-bordered table-striped table-hover dataTable">
                                 <thead>
                                 <tr>
                                     <th class="" style="padding-right:0px;">
-                                        <input id="brand-selall" type="checkbox">
+                                        <input id="logistics-selall" type="checkbox">
                                     </th>
                                     <th class="sorting_asc">#</th>
                                     <th class="sorting_desc">物流名</th>
@@ -166,7 +166,7 @@
         </div>
 
         <%--   物流新增    --%>
-        <div id="addBrand" hidden="hidden">
+        <div id="addLogistics" hidden="hidden">
                 <!-- 物流新增内容头部 -->
                 <section class="content-header">
                     <h1>
@@ -174,7 +174,7 @@
                         <small>提交表单</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
+                        <li><a href="#"><i class="fa fa-folder"></i> 物流管理</a></li>
                         <li><a href="#">物流</a></li>
                         <li class="active">物流新增</li>
                     </ol>
@@ -188,45 +188,45 @@
                             <h3 class="box-title">物流新增</h3>
                         </div>
                         <!-- 数据表单 -->
-                        <form id="addBrandForm" class="form-horizontal">
+                        <form id="addLogisticsForm" class="form-horizontal">
                         <div class="box-body">
 
                             <div class="col-sm-12 form-group"  style="text-align: center">
-                                <label id="addBrandMsg"></label>
+                                <label id="addLogisticsMsg"></label>
                             </div>
 
                             <div class="col-sm-6 form-group">
-                                <label for="inputBrandName" class="col-sm-3 control-label">产品物流：</label>
+                                <label for="inputLogisticsName" class="col-sm-3 control-label">物流名称：</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBrandName" name="name" placeholder="请输入物流名...">
+                                    <input type="text" class="form-control" id="inputLogisticsName" name="name" placeholder="请输入物流名...">
                                     <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 form-group">
-                                <label for="inputBrandFactory" class="col-sm-3 control-label">产品厂家：</label>
+                                <label for="inputLogisticsPhone" class="col-sm-3 control-label">物流电话：</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBrandFactory" name="factory" placeholder="请输入厂家...">
+                                    <input type="text" class="form-control" id="inputLogisticsPhone" name="phone" placeholder="请输入手机...">
                                     <span class="help-block small msg-info" >Help block with success</span>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 form-group">
-                                <label for="inputBrandPlace" class="col-sm-3 control-label">产品产地：</label>
+                                <label for="inputLogisticsAddress" class="col-sm-3 control-label">物流地址：</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBrandPlace" name="place" placeholder="请输入产地...">
+                                    <input type="text" class="form-control" id="inputLogisticsAddress" name="address" placeholder="请输入物流地址...">
                                     <span class="help-block small msg-info">Help block with success</span>
                                 </div>
                             </div>
 
                             <div class="col-sm-6 form-group">
-                                <label for="inputBrandRemark" class="col-sm-3 control-label">备注：</label>
+                                <label for="inputLogisticsRemark" class="col-sm-3 control-label">备注：</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputBrandRemark" name="remark" placeholder="请输入备注...">
+                                    <input type="text" class="form-control" id="inputLogisticsRemark" name="remark" placeholder="请输入备注...">
                                     <span class="help-block small msg-info" >Help block with success</span>
                                 </div>
                             </div>
@@ -234,9 +234,9 @@
                         </div>
                         <div class="box-footer">
                             <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="addBrand()" value="提交" />
+                                <input type="button" class="btn btn-success col-sm-2" onclick="addLogistics()" value="提交" />
                                 <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackBrand()" value="返回"/>
+                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackLogistics()" value="返回"/>
                             </div>
                         </div>
                         </form>
@@ -249,7 +249,7 @@
             </div>
 
         <%--   物流修改    --%>
-        <div id="changeBrand" hidden="hidden">
+        <div id="changeLogistics" hidden="hidden">
                 <!-- 物流修改内容头部 -->
                 <section class="content-header">
                     <h1>
@@ -257,7 +257,7 @@
                         <small>修改表单</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
+                        <li><a href="#"><i class="fa fa-folder"></i> 物流管理</a></li>
                         <li><a href="#">物流</a></li>
                         <li class="active">物流修改</li>
                     </ol>
@@ -271,15 +271,15 @@
                             <h3 class="box-title">物流修改</h3>
                         </div>
                         <!-- 数据表单 -->
-                        <form id="changeBrandForm" class="form-horizontal">
+                        <form id="changeLogisticsForm" class="form-horizontal">
                             <div class="box-body">
 
                             </div>
                             <div class="box-footer">
                                 <div class="col-sm-offset-4 col-sm-8" >
-                                    <input type="button" class="btn btn-success col-sm-2" onclick="changeBrandSubmit()" value="提交"/>
+                                    <input type="button" class="btn btn-success col-sm-2" onclick="changeLogisticsSubmit()" value="提交"/>
                                     <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                    <input type="button" class="btn btn-danger col-sm-1" onclick="goBackBrand()" value="返回"/>
+                                    <input type="button" class="btn btn-danger col-sm-1" onclick="goBackLogistics()" value="返回"/>
                                 </div>
                             </div>
                         </form>
@@ -349,10 +349,10 @@
 <script>
     $(function () {
 
-        if(!$("showAllBrand").attr("hidden")){
-            findAllBrand();
+        if(!$("showAllLogistics").attr("hidden")){
+            findAllLogistics();
         }
-        selectAllOrNone("#brand-selall","#brand-list");
+        selectAllOrNone("#logistics-selall","#logistics-list");
     });
     //全选全不选
     function selectAllOrNone(checkId,tabId) {
@@ -360,10 +360,10 @@
             $(tabId+" tr td input[type='checkbox']").prop("checked",$(checkId).prop("checked"));
         });
     }
-    function deleteAllBrandByNames() {
+    function deleteAllLogisticsByNames() {
         var result = confirm("确定删除所选吗？");
         if(result){
-            var checks = $("#brand-list tbody tr td input[type='checkbox']:checked");
+            var checks = $("#logistics-list tbody tr td input[type='checkbox']:checked");
             if(0 == checks.length){
                 alert("未选种任何一条!");
                 return false;
@@ -373,12 +373,12 @@
                 checkedArr.push($(this).val());
             });
             var names = checkedArr.join(",");
-            $.post("brand/deleteByNames",{"names":names},function (data) {
+            $.post("logistics/deleteByNames",{"names":names},function (data) {
                 if(data){
                     $(function (){
                         alert("批量删除成功！")
                     });
-                    findAllBrand();
+                    findAllLogistics();
                 }else{
                     $(function () {
                         alert("批量删除失败！")
@@ -387,10 +387,10 @@
             });
         }
     }
-    function findAllBrand() {
-        $.post("brand/findAll",{},function (data) {
+    function findAllLogistics() {
+        $.post("logistics/findAll",{},function (data) {
             if(null == data){
-                $("#brand-list tbody").html("");
+                $("#logistics-list tbody").html("");
                 return;
             }
             var str = "";
@@ -399,25 +399,25 @@
                     '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
                     '                                        <td>'+(i+1)+'</td>\n' +
                     '                                        <td>'+data[i].name+'</td>\n' +
-                    '                                        <td>'+data[i].factory+'</td>\n' +
-                    '                                        <td>'+data[i].place+'</td>\n' +
+                    '                                        <td>'+data[i].phone+'</td>\n' +
+                    '                                        <td>'+data[i].address+'</td>\n' +
                     '                                        <td>'+data[i].remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findBrandByName(\''+data[i].name+'\')" value="修改"/>\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteBrandByName(\''+data[i].name+'\')" value="删除"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findLogisticsByName(\''+data[i].name+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteLogisticsByName(\''+data[i].name+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
                 str +=tr;
             }
-            $("#brand-list tbody").html(str);
+            $("#logistics-list tbody").html(str);
         });
     }
 
-    function brandSearch() {
-        var search = $("#brandSearch").val();
-        $.post("brand/findByCondition",{"condition":search},function (data) {
+    function logisticsSearch() {
+        var search = $("#logisticsSearch").val();
+        $.post("logistics/findAllByCondition",{"condition":search},function (data) {
             if(null == data){
-                $("#brand-list tbody").html("");
+                $("#logistics-list tbody").html("");
                 return;
             }
             var str = "";
@@ -426,32 +426,32 @@
                     '                                        <td><input name="ids" type="checkbox" value="'+data[i].name+'"></td>\n' +
                     '                                        <td>'+(i+1)+'</td>\n' +
                     '                                        <td>'+data[i].name+'</td>\n' +
-                    '                                        <td>'+data[i].factory+'</td>\n' +
-                    '                                        <td>'+data[i].place+'</td>\n' +
+                    '                                        <td>'+data[i].phone+'</td>\n' +
+                    '                                        <td>'+data[i].address+'</td>\n' +
                     '                                        <td>'+data[i].remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findBrandByName(\''+data[i].name+'\')" value="修改"/>\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteBrandByName(\''+data[i].name+'\')" value="删除"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findLogisticsByName(\''+data[i].name+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteLogisticsByName(\''+data[i].name+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
                 str +=tr;
             }
-            $("#brand-list tbody").html(str);
+            $("#logistics-list tbody").html(str);
         });
 
     }
-    function findBrandByName(name) {
-        $("#showAllBrand").attr("hidden","hidden");
-        $("#addBrand").attr("hidden","hidden");
-        $("#changeBrand").removeAttr("hidden");
-        $.post("brand/findByName?",{"name":name},function (data) {
+    function findLogisticsByName(name) {
+        $("#showAllLogistics").attr("hidden","hidden");
+        $("#addLogistics").attr("hidden","hidden");
+        $("#changeLogistics").removeAttr("hidden");
+        $.post("logistics/findByName",{"name":name},function (data) {
             var str=
                 '\n' +
                 '                                <div class="col-sm-12 form-group"  style="text-align: center">\n' +
-                '                                    <label id="changeBrandMsg"></label>\n' +
+                '                                    <label id="changeLogisticsMsg"></label>\n' +
                 '                                </div>\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputBrandName" class="col-sm-3 control-label">产品物流：</label>\n' +
+                '                                    <label for="inputLogisticsName" class="col-sm-3 control-label">物流名：</label>\n' +
                 '                                    <input type="hidden" class="form-control" name="name" value="'+data.name+'" placeholder="请输入物流名...">\n' +
                 '\n' +
                 '                                    <div class="col-sm-9">\n' +
@@ -462,26 +462,26 @@
                 '\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputBrandFactory" class="col-sm-3 control-label">产品厂家：</label>\n' +
+                '                                    <label for="inputLogisticsPhone" class="col-sm-3 control-label">物流电话：</label>\n' +
                 '\n' +
                 '                                    <div class="col-sm-9">\n' +
-                '                                        <input type="text" class="form-control" name="factory" value="'+data.factory+'" placeholder="请输入厂家...">\n' +
+                '                                        <input type="text" class="form-control" name="phone" value="'+data.phone+'" placeholder="请输入物流电话...">\n' +
                 '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputBrandPlace" class="col-sm-3 control-label">产品产地：</label>\n' +
+                '                                    <label for="inputLogisticsAddress" class="col-sm-3 control-label">物流地址：</label>\n' +
                 '\n' +
                 '                                    <div class="col-sm-9">\n' +
-                '                                        <input type="text" class="form-control" name="place" value="'+data.place+'" placeholder="请输入产地...">\n' +
+                '                                        <input type="text" class="form-control" name="address" value="'+data.address+'" placeholder="请输入物流地址...">\n' +
                 '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputBrandRemark" class="col-sm-3 control-label">备注：</label>\n' +
+                '                                    <label for="inputLogisticsRemark" class="col-sm-3 control-label">备注：</label>\n' +
                 '\n' +
                 '                                    <div class="col-sm-9">\n' +
                 '                                        <input type="text" class="form-control" name="remark" value="'+data.remark+'" placeholder="请输入备注...">\n' +
@@ -489,19 +489,19 @@
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' ;
-            $("#changeBrandForm .box-body").html(str);
+            $("#changeLogisticsForm .box-body").html(str);
         });
 
     }
-    function deleteBrandByName(name) {
+    function deleteLogisticsByName(name) {
         var result = confirm("确定删除吗？");
         if(result){
-            $.post("brand/deleteByName?",{"name":name},function (data) {
+            $.post("logistics/deleteByName",{"name":name},function (data) {
                 if(data){
                     $(function (){
                         alert("删除成功！");
                     });
-                    findAllBrand();
+                    findAllLogistics();
                 }else{
                     $(function () {
                         alert("删除失败！");
@@ -510,39 +510,39 @@
             });
         }
     }
-    function gotoAddBrand() {
-        $("#showAllBrand").attr("hidden","hidden");
-        $("#changeBrand").attr("hidden","hidden");
-        $("#addBrand").removeAttr("hidden");
+    function gotoAddLogistics() {
+        $("#showAllLogistics").attr("hidden","hidden");
+        $("#changeLogistics").attr("hidden","hidden");
+        $("#addLogistics").removeAttr("hidden");
     }
-    function addBrand(){
-        $.post("brand/add",$("#addBrandForm").serialize(),function (data) {
+    function addLogistics(){
+        $.post("logistics/add",$("#addLogisticsForm").serialize(),function (data) {
             if(data){
-                $("#addBrandMsg").html("添加成功！");
-                $("#addBrandMsg").css("color","green");
+                $("#addLogisticsMsg").html("添加成功！");
+                $("#addLogisticsMsg").css("color","green");
             }else{
-                $("#addBrandMsg").html("已存在！添加失败！");
-                $("#addBrandMsg").css("color","red");
+                $("#addLogisticsMsg").html("已存在！添加失败！");
+                $("#addLogisticsMsg").css("color","red");
             }
         });
 
     }
-    function changeBrandSubmit() {
-        $.post("brand/change",$("#changeBrandForm").serialize(), function (data) {
+    function changeLogisticsSubmit() {
+        $.post("logistics/change",$("#changeLogisticsForm").serialize(), function (data) {
             if(data){
-                $("#changeBrandMsg").html("修改成功！");
-                $("#changeBrandMsg").css("color","green");
+                $("#changeLogisticsMsg").html("修改成功！");
+                $("#changeLogisticsMsg").css("color","green");
             }else{
-                $("#changeBrandMsg").html("修改失败！");
-                $("#changeBrandMsg").css("color","red");
+                $("#changeLogisticsMsg").html("修改失败！");
+                $("#changeLogisticsMsg").css("color","red");
             }
         });
     }
-    function goBackBrand() {
-        findAllBrand();
-        $("#showAllBrand").removeAttr("hidden","hidden");
-        $("#addBrand").attr("hidden","hidden");
-        $("#changeBrand").attr("hidden","hidden");
+    function goBackLogistics() {
+        findAllLogistics();
+        $("#showAllLogistics").removeAttr("hidden","hidden");
+        $("#addLogistics").attr("hidden","hidden");
+        $("#changeLogistics").attr("hidden","hidden");
     }
 </script>
 </body>

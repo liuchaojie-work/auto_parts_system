@@ -23,7 +23,7 @@ public class LogisticsDaoImpl implements ILogisticsDao {
 
     @Override
     public List<Logistics> findAllByCondition(String condition) throws SQLException {
-        String sql = "select * from tab_logistics where name like ? or phone like = ? or address like = ? or remark like = ?";
+        String sql = "select * from tab_logistics where name like ? or phone like ? or address like ? or remark like ?";
         Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
         return runner.query(sql, new BeanListHandler<Logistics>(Logistics.class), params);
     }
@@ -59,7 +59,7 @@ public class LogisticsDaoImpl implements ILogisticsDao {
         Object[] params = names.split(",");
         int len = params.length;
         StringBuilder sb = new StringBuilder();
-        sb.append("delete from where name in (");
+        sb.append("delete from tab_logistics where name in (");
         for(int i = 0; i < len; i++){
             if(i != len-1){
                 sb.append("?,");

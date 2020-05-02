@@ -167,7 +167,7 @@
                     <ul class="treeview-menu">
 
                         <li id="location">
-                            <a href="purchase-manage.jsp">
+                            <a href="location-manage.jsp">
                                 <i class="fa fa-circle-o"></i> 库位
                             </a>
                         </li>
@@ -255,7 +255,7 @@
                     <ul class="treeview-menu">
 
                         <li id="logistics">
-                            <a href="user-manage.jsp">
+                            <a href="logistics-manage.jsp?#showAllLogistics">
                                 <i class="fa fa-circle-o"></i> 物流
                             </a>
                         </li>
