@@ -136,7 +136,7 @@
                     <ul class="treeview-menu">
 
                         <li id="payment">
-                            <a href="sale-manage.jsp">
+                            <a href="payment-manage.jsp#showAllPayment">
                                 <i class="fa fa-circle-o"></i> 支付方式
                             </a>
                         </li>
