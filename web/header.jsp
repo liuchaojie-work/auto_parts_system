@@ -167,7 +167,7 @@
                     <ul class="treeview-menu">
 
                         <li id="location">
-                            <a href="location-manage.jsp">
+                            <a href="location-manage.jsp#showAllLocation">
                                 <i class="fa fa-circle-o"></i> 库位
                             </a>
                         </li>
