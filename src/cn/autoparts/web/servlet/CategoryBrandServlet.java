@@ -39,6 +39,26 @@ public class CategoryBrandServlet extends BaseServlet{
         }
     }
 
+    public void findByCname(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String cname = request.getParameter("cname");
+        try {
+            List<CategoryBrand> byCname = categoryBrandService.findByCname(cname);
+            writeValue(byCname, response);
+        } catch (CategoryBrandException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void findByBname(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String bname = request.getParameter("bname");
+        try {
+            List<CategoryBrand> byBname = categoryBrandService.findByBname(bname);
+            writeValue(byBname, response);
+        } catch (CategoryBrandException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void findByTwoName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String cname = request.getParameter("cname");
         String bname = request.getParameter("bname");

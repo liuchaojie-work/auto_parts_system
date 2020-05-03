@@ -32,6 +32,22 @@ public interface ICategoryBrandDao {
     CategoryBrand findByTwoName(String cname, String bname) throws SQLException;
 
     /**
+     * 根据类别名查询
+     * @param cname
+     * @return
+     * @throws SQLException
+     */
+    List<CategoryBrand> findByCname(String cname) throws SQLException;
+
+    /**
+     * 根据品牌名查询
+     * @param bname
+     * @return
+     * @throws SQLException
+     */
+    List<CategoryBrand> findByBname(String bname) throws SQLException;
+
+    /**
      * 根据id查询
      * @param cbId
      * @return

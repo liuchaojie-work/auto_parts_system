@@ -42,6 +42,26 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
     }
 
     @Override
+    public List<CategoryBrand> findByCname(String cname) throws CategoryBrandException {
+        try {
+            return categoryBrandDao.findByCname(cname);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new CategoryBrandException("根据类别名查找所有失败！");
+        }
+    }
+
+    @Override
+    public List<CategoryBrand> findByBname(String bname) throws CategoryBrandException {
+        try {
+            return categoryBrandDao.findByBname(bname);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new CategoryBrandException("根据品牌名查找所有失败！");
+        }
+    }
+
+    @Override
     public CategoryBrand findByCbId(String cbId) throws CategoryBrandException {
         try {
             return categoryBrandDao.findByCbId(cbId);

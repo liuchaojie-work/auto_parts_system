@@ -31,6 +31,21 @@ public interface ICategoryBrandService {
     CategoryBrand findByTwoName(String cname, String bname) throws CategoryBrandException;
 
     /**
+     * 根据类别名查询
+     * @param cname
+     * @return
+     * @throws CategoryBrandException
+     */
+    List<CategoryBrand> findByCname(String cname) throws CategoryBrandException;
+
+    /**
+     * 根据品牌名查询
+     * @param bname
+     * @return
+     * @throws CategoryBrandException
+     */
+    List<CategoryBrand> findByBname(String bname) throws CategoryBrandException;
+    /**
      * 根据id查询
      * @param cbId
      * @return

@@ -32,6 +32,18 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
     }
 
     @Override
+    public List<CategoryBrand> findByCname(String cname) throws SQLException {
+        String sql = "select * from tab_cate_bra where cname = ?";
+        return runner.query(sql, new BeanListHandler<CategoryBrand>(CategoryBrand.class),cname);
+    }
+
+    @Override
+    public List<CategoryBrand> findByBname(String bname) throws SQLException {
+        String sql = "select * from tab_cate_bra where bname = ?";
+        return runner.query(sql, new BeanListHandler<CategoryBrand>(CategoryBrand.class),bname);
+    }
+
+    @Override
     public CategoryBrand findByCbId(String cbId) throws SQLException {
         String sql = "select * from tab_cate_bra where cbId = ?";
         return runner.query(sql, new BeanHandler<CategoryBrand>(CategoryBrand.class), cbId);
