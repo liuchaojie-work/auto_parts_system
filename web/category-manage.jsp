@@ -50,235 +50,206 @@
     <!-- 内容区域 -->
 
     <div class="content-wrapper">
+        <div class="tab-pane">
+            <%--    类别展示    --%>
+            <div id="showAllCategory">
+                <!-- 类别内容头部 -->
+                <section class="content-header">
+                    <h1>
+                        类别展示
+                        <small>数据列表</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
+                        <li><a href="#">类别展示</a></li>
+                        <li class="active">数据列表</li>
+                    </ol>
+                </section>
+                <!-- 类别内容头部 /-->
+                <!-- 类别正文区域 -->
+                <section class="content row">
+                    <!-- .box-body -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">类别列表</h3>
+                        </div>
 
-        <%--    类别展示    --%>
-        <div id="showAllCategory">
-            <!-- 类别内容头部 -->
-            <section class="content-header">
-                <h1>
-                    类别展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">类别展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 类别内容头部 /-->
-            <!-- 类别正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">类别列表</h3>
-                    </div>
+                        <div class="box-body">
 
-                    <div class="box-body">
+                            <!-- 数据表格 -->
+                            <div class="table-box">
 
-                        <!-- 数据表格 -->
-                        <div class="table-box">
+                                <!--工具栏-->
+                                <div class="pull-left">
+                                    <div class="form-group form-inline">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-success" title="新增" data-toggle="modal" data-target="#addCategory"><i class="fa fa-file-o"></i> 新增</button>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllCategoryByNames()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllCategory()"><i class="fa fa-refresh"></i> 刷新</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" id="categorySearch" name="table_search" class="form-control pull-right" placeholder="Search">
 
-                            <!--工具栏-->
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="search" class="btn btn-default" onclick="categorySearch()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--工具栏/-->
+
+                                <!--数据列表-->
+                                <table id="category-list" class="table table-bordered table-striped table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="" style="padding-right:0px;">
+                                            <input id="category-selall" type="checkbox">
+                                        </th>
+                                        <th class="sorting_asc">#</th>
+                                        <th class="sorting_desc">类别名</th>
+                                        <th class="sorting_asc sorting_asc_disabled">单位</th>
+                                        <th class="sorting">备注</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!--数据列表/-->
+                            </div>
+                            <!-- 数据表格 /-->
+
+                        </div>
+                        <!-- /.box-body -->
+
+                        <!-- .box-footer-->
+                        <div class="box-footer">
                             <div class="pull-left">
                                 <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-success" title="新增" onclick="gotoAddCategory()"><i class="fa fa-file-o"></i> 新增</button>
-                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllCategoryByNames()"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllCategory()"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
+                                    总共2 页，共14 条数据。 每页
+                                    <select class="form-control">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>50</option>
+                                    </select> 条
                                 </div>
                             </div>
+
                             <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" id="categorySearch" name="table_search" class="form-control pull-right" placeholder="Search">
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#" aria-label="Previous">首页</a>
+                                    </li>
+                                    <li><a href="#">上一页</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">下一页</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">尾页</a>
+                                    </li>
+                                </ul>
+                            </div>
 
-                                    <div class="input-group-btn">
-                                        <button type="submit" id="search" class="btn btn-default" onclick="categorySearch()"><i class="fa fa-search"></i></button>
+                        </div>
+                        <!-- /.box-footer-->
+                    </div>
+                </section>
+                <!-- 类别正文区域 /-->
+            </div>
+
+            <%--   类别新增    --%>
+            <div id="addCategory" class="modal" role="dialog">
+
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllCategory()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">类别新增</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addCategoryForm" class="form-horizontal">
+                                <div class="box-body">
+
+                                    <div class="col-sm-12 form-group"  style="text-align: center">
+                                        <label id="addCategoryMsg"></label>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputCategoryName" class="col-sm-4 control-label">产品类别：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputCategoryName" name="name" placeholder="请输入类别名...">
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputCategoryUnit" class="col-sm-4 control-label">单位：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputCategoryUnit" name="unit" placeholder="请输入单位...">
+                                            <span class="help-block small msg-info" >Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputCategoryRemark" class="col-sm-4 control-label">备注：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputCategoryRemark" name="remark" placeholder="请输入备注...">
+                                            <span class="help-block small msg-info" >Help block with success</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="addCategory()" value="提交" />
+                                        <input type="reset"  style="margin-left:10px;"  class="btn btn-warning col-sm-2" value="重置"/>
                                     </div>
                                 </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="category-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="category-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">类别名</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单位</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
+                            </form>
                         </div>
-                        <!-- 数据表格 /-->
-
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal"  onclick="findAllCategory()" value="返回"/>
+                        </div>
                     </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
                 </div>
-            </section>
-            <!-- 类别正文区域 /-->
-        </div>
 
-        <%--   类别新增    --%>
-        <div id="addCategory" hidden="hidden">
-            <!-- 类别新增内容头部 -->
-            <section class="content-header">
-                <h1>
-                    类别新增
-                    <small>提交表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">类别</a></li>
-                    <li class="active">类别新增</li>
-                </ol>
-            </section>
-            <!-- 类别内容头部 /-->
-            <!-- 类别正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">类别新增</h3>
+            </div>
+
+            <%--   类别修改    --%>
+            <div id="changeCategory" class="modal" role="dialog">
+                <!-- 类别修改内容头部 -->
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllCategory()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">类别修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="changeCategoryForm" class="form-horizontal">
+                                <div class="box-body">
+                                    <div id="content"></div>
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="changeCategorySubmit()" value="提交"/>
+                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal"  onclick="findAllCategory()" value="返回"/>
+                        </div>
                     </div>
-                    <!-- 数据表单 -->
-                    <form id="addCategoryForm" class="form-horizontal">
-                        <div class="box-body">
-
-                            <div class="col-sm-12 form-group"  style="text-align: center">
-                                <label id="addCategoryMsg"></label>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputCategoryName" class="col-sm-3 control-label">产品类别：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputCategoryName" name="name" placeholder="请输入类别名...">
-                                    <span class="help-block small msg-info">Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputCategoryUnit" class="col-sm-3 control-label">单位：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputCategoryUnit" name="unit" placeholder="请输入单位...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputCategoryRemark" class="col-sm-3 control-label">备注：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputCategoryRemark" name="remark" placeholder="请输入备注...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="addCategory()" value="提交" />
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackCategory()" value="返回"/>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- 数据表单 /-->
                 </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 类别正文区域 /-->
-        </div>
-
-        <%--   类别修改    --%>
-        <div id="changeCategory" hidden="hidden">
-            <!-- 类别修改内容头部 -->
-            <section class="content-header">
-                <h1>
-                    类别修改
-                    <small>修改表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">类别</a></li>
-                    <li class="active">类别修改</li>
-                </ol>
-            </section>
-            <!-- 类别内容头部 /-->
-            <!-- 类别正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">类别修改</h3>
-                    </div>
-                    <!-- 数据表单 -->
-                    <form id="changeCategoryForm" class="form-horizontal">
-                        <div class="box-body">
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="changeCategorySubmit()" value="提交"/>
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackCategory()" value="返回"/>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- 数据表单 /-->
-                </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 类别正文区域 /-->
+            </div>
         </div>
 
     </div>
@@ -392,7 +363,7 @@
                     '                                        <td>'+data[i].unit+'</td>\n' +
                     '                                        <td>'+data[i].remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findCategoryByName(\''+data[i].name+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changeCategory"  onclick="findCategoryByName(\''+data[i].name+'\')" value="修改"/>\n' +
                     '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteCategoryByName(\''+data[i].name+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
@@ -430,9 +401,6 @@
     }
 
     function findCategoryByName(name) {
-        $("#showAllCategory").attr("hidden","hidden");
-        $("#addCategory").attr("hidden","hidden");
-        $("#changeCategory").removeAttr("hidden");
         $.post("category/findByName?name="+name,{},function (data) {
             var str=
                 '\n' +
@@ -468,7 +436,7 @@
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' ;
-            $("#changeCategoryForm .box-body").html(str);
+            $("#changeCategoryForm .box-body #content").html(str);
         });
 
     }
@@ -489,11 +457,7 @@
             });
         }
     }
-    function gotoAddCategory() {
-        $("#showAllCategory").attr("hidden","hidden");
-        $("#changeCategory").attr("hidden","hidden");
-        $("#addCategory").removeAttr("hidden");
-    }
+
     function addCategory(){
         $.post("category/add",$("#addCategoryForm").serialize(),function (data) {
             if(data){
@@ -503,7 +467,6 @@
                 $("#addCategoryMsg").html("已存在！添加失败！");
                 $("#addCategoryMsg").css("color","red");
             }
-            gotoAddCategory();
         });
     }
     function changeCategorySubmit() {
@@ -517,12 +480,7 @@
             }
         });
     }
-    function goBackCategory() {
-        findAllCategory();
-        $("#showAllCategory").removeAttr("hidden","hidden");
-        $("#addCategory").attr("hidden","hidden");
-        $("#changeCategory").attr("hidden","hidden");
-    }
+
 </script>
 </body>
 

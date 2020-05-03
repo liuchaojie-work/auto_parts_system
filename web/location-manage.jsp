@@ -50,235 +50,207 @@
     <!-- 内容区域 -->
 
     <div class="content-wrapper">
+        <div class="tab-pane">
+            <%--    库位展示    --%>
+            <div id="showAllLocation">
+                <!-- 库位内容头部 -->
+                <section class="content-header">
+                    <h1>
+                        库位展示
+                        <small>数据列表</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-folder"></i> 进货管理</a></li>
+                        <li><a href="#">库位展示</a></li>
+                        <li class="active">数据列表</li>
+                    </ol>
+                </section>
+                <!-- 库位内容头部 /-->
+                <!-- 库位正文区域 -->
+                <section class="content row">
+                    <!-- .box-body -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">库位列表</h3>
+                        </div>
 
-        <%--    库位展示    --%>
-        <div id="showAllLocation">
-            <!-- 库位内容头部 -->
-            <section class="content-header">
-                <h1>
-                    库位展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 进货管理</a></li>
-                    <li><a href="#">库位展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 库位内容头部 /-->
-            <!-- 库位正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">库位列表</h3>
-                    </div>
+                        <div class="box-body">
 
-                    <div class="box-body">
+                            <!-- 数据表格 -->
+                            <div class="table-box">
 
-                        <!-- 数据表格 -->
-                        <div class="table-box">
+                                <!--工具栏-->
+                                <div class="pull-left">
+                                    <div class="form-group form-inline">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-success" title="新增" data-toggle="modal" data-target="#addLocation"><i class="fa fa-file-o"></i> 新增</button>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllLocationByNos()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllLocation()"><i class="fa fa-refresh"></i> 刷新</button>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <!--工具栏-->
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" id="locationSearch" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="search" class="btn btn-default" onclick="locationSearch()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--工具栏/-->
+
+                                <!--数据列表-->
+                                <table id="location-list" class="table table-bordered table-striped table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="" style="padding-right:0px;">
+                                            <input id="location-selall" type="checkbox">
+                                        </th>
+                                        <th class="sorting_asc">#</th>
+                                        <th class="sorting_desc">库位编号</th>
+                                        <th class="sorting_asc sorting_asc_disabled">库位地址</th>
+                                        <th class="sorting">备注</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!--数据列表/-->
+                            </div>
+                            <!-- 数据表格 /-->
+
+                        </div>
+                        <!-- /.box-body -->
+
+                        <!-- .box-footer-->
+                        <div class="box-footer">
                             <div class="pull-left">
                                 <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-success" title="新增" onclick="gotoAddLocation()"><i class="fa fa-file-o"></i> 新增</button>
-                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllLocationByNos()"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllLocation()"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
+                                    总共2 页，共14 条数据。 每页
+                                    <select class="form-control">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>50</option>
+                                    </select> 条
                                 </div>
                             </div>
+
                             <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" id="locationSearch" name="table_search" class="form-control pull-right" placeholder="Search">
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#" aria-label="Previous">首页</a>
+                                    </li>
+                                    <li><a href="#">上一页</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">下一页</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">尾页</a>
+                                    </li>
+                                </ul>
+                            </div>
 
-                                    <div class="input-group-btn">
-                                        <button type="submit" id="search" class="btn btn-default" onclick="locationSearch()"><i class="fa fa-search"></i></button>
+                        </div>
+                        <!-- /.box-footer-->
+                    </div>
+                </section>
+                <!-- 库位正文区域 /-->
+            </div>
+
+            <%--   库位新增    --%>
+            <div id="addLocation" class="modal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllLocation()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">库位新增</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addLocationForm" class="form-horizontal">
+                                <div class="box-body">
+
+                                    <div class="col-sm-12 form-group"  style="text-align: center">
+                                        <label id="addLocationMsg"></label>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputLocationNo" class="col-sm-4 control-label">库位编号：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputLocationNo" name="no" placeholder="请输入库位编号...">
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputLocationLoca" class="col-sm-4 control-label">库位位置：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputLocationLoca" name="loca" placeholder="请输入库位位置...">
+                                            <span class="help-block small msg-info" >Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputLocationRemark" class="col-sm-4 control-label">备注：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputLocationRemark" name="remark" placeholder="请输入备注...">
+                                            <span class="help-block small msg-info" >Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="addLocation()" value="提交" />
+                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
                                     </div>
                                 </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="location-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="location-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">库位编号</th>
-                                    <th class="sorting_asc sorting_asc_disabled">库位地址</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
+                            </form>
                         </div>
-                        <!-- 数据表格 /-->
-
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllLocation()" value="返回"/>
+                        </div>
                     </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
                 </div>
-            </section>
-            <!-- 库位正文区域 /-->
-        </div>
+            </div>
 
-        <%--   库位新增    --%>
-        <div id="addLocation" hidden="hidden">
-            <!-- 库位新增内容头部 -->
-            <section class="content-header">
-                <h1>
-                    库位新增
-                    <small>提交表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 进货管理</a></li>
-                    <li><a href="#">库位</a></li>
-                    <li class="active">库位新增</li>
-                </ol>
-            </section>
-            <!-- 库位内容头部 /-->
-            <!-- 库位正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">库位新增</h3>
+            <%--   库位修改    --%>
+            <div id="changeLocation" class="modal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllLocation()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">库位修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="changeLocationForm" class="form-horizontal">
+                                <div class="box-body">
+                                    <div id="content">
+
+                                    </div>
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="changeLocationSubmit()" value="提交"/>
+                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllLocation()" value="返回"/>
+                        </div>
                     </div>
-                    <!-- 数据表单 -->
-                    <form id="addLocationForm" class="form-horizontal">
-                        <div class="box-body">
-
-                            <div class="col-sm-12 form-group"  style="text-align: center">
-                                <label id="addLocationMsg"></label>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputLocationNo" class="col-sm-3 control-label">库位编号：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputLocationNo" name="no" placeholder="请输入库位编号...">
-                                    <span class="help-block small msg-info">Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputLocationLoca" class="col-sm-3 control-label">库位位置：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputLocationLoca" name="loca" placeholder="请输入库位位置...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputLocationRemark" class="col-sm-3 control-label">备注：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputLocationRemark" name="remark" placeholder="请输入备注...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="addLocation()" value="提交" />
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackLocation()" value="返回"/>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- 数据表单 /-->
                 </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 库位正文区域 /-->
-        </div>
-
-        <%--   库位修改    --%>
-        <div id="changeLocation" hidden="hidden">
-            <!-- 库位修改内容头部 -->
-            <section class="content-header">
-                <h1>
-                    库位修改
-                    <small>修改表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 进货管理</a></li>
-                    <li><a href="#">库位</a></li>
-                    <li class="active">库位修改</li>
-                </ol>
-            </section>
-            <!-- 库位内容头部 /-->
-            <!-- 库位正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">库位修改</h3>
-                    </div>
-                    <!-- 数据表单 -->
-                    <form id="changeLocationForm" class="form-horizontal">
-                        <div class="box-body">
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="changeLocationSubmit()" value="提交"/>
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackLocation()" value="返回"/>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- 数据表单 /-->
-                </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 库位正文区域 /-->
+            </div>
         </div>
 
     </div>
@@ -338,7 +310,6 @@
 <script src="dist/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
     $(function () {
-
         if(!$("showAllLocation").attr("hidden")){
             findAllLocation();
         }
@@ -392,7 +363,7 @@
                     '                                        <td>'+data[i].loca+'</td>\n' +
                     '                                        <td>'+data[i].remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findLocationByNo(\''+data[i].no+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changeLocation" onclick="findLocationByNo(\''+data[i].no+'\')" value="修改"/>\n' +
                     '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteLocationByNo(\''+data[i].no+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
@@ -426,13 +397,9 @@
             }
             $("#location-list tbody").html(str);
         });
-
     }
 
     function findLocationByNo(no) {
-        $("#showAllLocation").attr("hidden","hidden");
-        $("#addLocation").attr("hidden","hidden");
-        $("#changeLocation").removeAttr("hidden");
         $.post("location/findByNo?no="+no,{},function (data) {
             var str=
                 '\n' +
@@ -440,10 +407,10 @@
                 '                                    <label id="changeLocationMsg"></label>\n' +
                 '                                </div>\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputLocationNo" class="col-sm-3 control-label">库位编号：</label>\n' +
+                '                                    <label for="inputLocationNo" class="col-sm-4 control-label">库位编号：</label>\n' +
                 '                                    <input type="hidden" class="form-control" name="no" value="'+data.no+'" placeholder="请输入库位编号...">\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="no" value="'+data.no+'" disabled placeholder="请输入库位名...">\n' +
                 '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
                 '                                    </div>\n' +
@@ -451,24 +418,24 @@
                 '\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputLocationLoca" class="col-sm-3 control-label">库位位置：</label>\n' +
+                '                                    <label for="inputLocationLoca" class="col-sm-4 control-label">库位位置：</label>\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="loca" value="'+data.loca+'" placeholder="请输入库位位置..">\n' +
                 '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputLocationRemark" class="col-sm-3 control-label">备注：</label>\n' +
+                '                                    <label for="inputLocationRemark" class="col-sm-4 control-label">备注：</label>\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="remark" value="'+data.remark+'" placeholder="请输入备注...">\n' +
                 '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' ;
-            $("#changeLocationForm .box-body").html(str);
+            $("#changeLocationForm .box-body #content").html(str);
         });
 
     }
@@ -489,11 +456,6 @@
             });
         }
     }
-    function gotoAddLocation() {
-        $("#showAllLocation").attr("hidden","hidden");
-        $("#changeLocation").attr("hidden","hidden");
-        $("#addLocation").removeAttr("hidden");
-    }
     function addLocation(){
         $.post("location/add",$("#addLocationForm").serialize(),function (data) {
             if(data){
@@ -503,7 +465,6 @@
                 $("#addLocationMsg").html("已存在！添加失败！");
                 $("#addLocationMsg").css("color","red");
             }
-            gotoAddLocation();
         });
     }
     function changeLocationSubmit() {
@@ -517,12 +478,7 @@
             }
         });
     }
-    function goBackLocation() {
-        findAllLocation();
-        $("#showAllLocation").removeAttr("hidden","hidden");
-        $("#addLocation").attr("hidden","hidden");
-        $("#changeLocation").attr("hidden","hidden");
-    }
+
 </script>
 </body>
 

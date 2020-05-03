@@ -179,86 +179,86 @@
                                 <span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title">产品新增</h4>
                         </div>
+
+                        <!-- 数据表单 -->
                         <div class="modal-body">
-                            <!-- 数据表单 -->
-                            <div class="modal-body">
-                                <form id="addProductForm" class="form-horizontal">
-                                    <div class="box-body">
+                            <form id="addProductForm" class="form-horizontal">
+                                <div class="box-body">
 
-                                        <div class="col-sm-12 form-group"  style="text-align: center">
-                                            <label id="addProductMsg"></label>
-                                        </div>
-
-                                        <div class="col-sm-6 form-group">
-                                            <label for="inputProductProId" class="col-sm-4 control-label">产品型号：</label>
-
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="inputProductProId" name="typeno" placeholder="请输入产品型号...">
-                                                <span class="help-block small msg-info">Help block with success</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6 form-group">
-                                            <label class="col-sm-4 control-label">产品类别：</label>
-
-                                            <div class="col-sm-8">
-                                                <select id="addProductCategorySelect" name="cname" class="form-control select2" style="width: 100%;" >
-
-                                                </select>
-                                                <span class="help-block small msg-info">Help block with success</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6 form-group">
-                                            <label class="col-sm-4 control-label">产品品牌：</label>
-
-                                            <div class="col-sm-8">
-                                                <select id="addProductBrandSelect" name="bname" class="form-control select2" style="width: 100%;" >
-
-                                                </select>
-                                                <span class="help-block small msg-info">Help block with success</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6 form-group">
-                                            <label class="col-sm-4 control-label">产品图片：</label>
-
-                                            <div class="col-sm-8">
-                                                <input type="file" class="form-control" name="img" placeholder="请选择图片" style="border: 0">
-                                                <span class="help-block small msg-info" >Help block with success</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6 form-group">
-                                            <label for="inputProductDescr" class="col-sm-4 control-label">产品描述：</label>
-
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="inputProductDescr" name="descr" placeholder="请输入产品描述...">
-                                                <span class="help-block small msg-info" >Help block with success</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6 form-group">
-                                            <label for="inputProductRemark" class="col-sm-4 control-label">备注：</label>
-
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" id="inputProductRemark" name="remark" placeholder="请输入备注...">
-                                                <span class="help-block small msg-info" >Help block with success</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-offset-4 col-sm-8" >
-                                            <input type="button" class="btn btn-success col-sm-2" onclick="addProduct()" value="提交" />
-                                            <input type="reset" style="margin-left: 10px" class="btn btn-warning col-sm-2" value="重置"/>
-                                        </div>
-
+                                    <div class="col-sm-12 form-group"  style="text-align: center">
+                                        <label id="addProductMsg"></label>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllProduct()" value="关闭"/>
-                            </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputProductProId" class="col-sm-4 control-label">产品型号：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputProductProId" name="typeno" placeholder="请输入产品型号...">
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-4 control-label">产品类别：</label>
+
+                                        <div class="col-sm-8">
+                                            <select id="addProductCategorySelect" name="cname" class="form-control select2" style="width: 100%;" >
+
+                                            </select>
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-4 control-label">产品品牌：</label>
+
+                                        <div class="col-sm-8">
+                                            <select id="addProductBrandSelect" name="bname" class="form-control select2" style="width: 100%;" >
+
+                                            </select>
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-4 control-label">产品图片：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="file" class="form-control" name="img" placeholder="请选择图片" style="border: 0">
+                                            <span class="help-block small msg-info" >Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputProductDescr" class="col-sm-4 control-label">产品描述：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputProductDescr" name="descr" placeholder="请输入产品描述...">
+                                            <span class="help-block small msg-info" >Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputProductRemark" class="col-sm-4 control-label">备注：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputProductRemark" name="remark" placeholder="请输入备注...">
+                                            <span class="help-block small msg-info" >Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="addProduct()" value="提交" />
+                                        <input type="reset" style="margin-left: 10px" class="btn btn-warning col-sm-2" value="重置"/>
+                                    </div>
+
+                                </div>
+                            </form>
                         </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllProduct()" value="关闭"/>
+                        </div>
+
                     </div>
                 </div>
                 <!-- 产品内容头部 /-->
@@ -274,19 +274,19 @@
                                 <span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title">产品修改</h4>
                         </div>
-                        <div class="modal-body">
-                            <!-- 数据表单 -->
-                            <div class="modal-body">
-                                <form id="changeProductForm" class="form-horizontal">
-                                    <div class="box-body">
 
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllProduct()" value="关闭"/>
-                            </div>
+                        <!-- 数据表单 -->
+                        <div class="modal-body">
+                            <form id="changeProductForm" class="form-horizontal">
+                                <div class="box-body">
+
+                                </div>
+                            </form>
                         </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllProduct()" value="关闭"/>
+                        </div>
+
                     </div>
                 </div>
 

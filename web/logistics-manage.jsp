@@ -50,133 +50,19 @@
     <!-- 内容区域 -->
 
     <div class="content-wrapper">
-
-        <%--    物流展示    --%>
-        <div id="showAllLogistics">
-            <!-- 物流内容头部 -->
-            <section class="content-header">
-                <h1>
-                    物流展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 物流管理</a></li>
-                    <li><a href="#">物流展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 物流内容头部 /-->
-            <!-- 物流正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">物流列表</h3>
-                    </div>
-
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-success" title="新增" onclick="gotoAddLogistics()"><i class="fa fa-file-o"></i> 新增</button>
-                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllLogisticsByNames()"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllLogistics()"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" id="logisticsSearch" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" id="search" class="btn btn-default" onclick="logisticsSearch()"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="logistics-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="logistics-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">物流名</th>
-                                    <th class="sorting_asc sorting_asc_disabled">厂家</th>
-                                    <th class="sorting_desc sorting_desc_disabled">产地</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                             </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 物流正文区域 /-->
-        </div>
-
-        <%--   物流新增    --%>
-        <div id="addLogistics" hidden="hidden">
-                <!-- 物流新增内容头部 -->
+        <div class="tab-pane">
+            <%--    物流展示    --%>
+            <div id="showAllLogistics">
+                <!-- 物流内容头部 -->
                 <section class="content-header">
                     <h1>
-                        物流新增
-                        <small>提交表单</small>
+                        物流展示
+                        <small>数据列表</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-folder"></i> 物流管理</a></li>
-                        <li><a href="#">物流</a></li>
-                        <li class="active">物流新增</li>
+                        <li><a href="#">物流展示</a></li>
+                        <li class="active">数据列表</li>
                     </ol>
                 </section>
                 <!-- 物流内容头部 /-->
@@ -185,111 +71,199 @@
                     <!-- .box-body -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">物流新增</h3>
+                            <h3 class="box-title">物流列表</h3>
                         </div>
-                        <!-- 数据表单 -->
-                        <form id="addLogisticsForm" class="form-horizontal">
+
                         <div class="box-body">
 
-                            <div class="col-sm-12 form-group"  style="text-align: center">
-                                <label id="addLogisticsMsg"></label>
-                            </div>
+                            <!-- 数据表格 -->
+                            <div class="table-box">
 
-                            <div class="col-sm-6 form-group">
-                                <label for="inputLogisticsName" class="col-sm-3 control-label">物流名称：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputLogisticsName" name="name" placeholder="请输入物流名...">
-                                    <span class="help-block small msg-info">Help block with success</span>
+                                <!--工具栏-->
+                                <div class="pull-left">
+                                    <div class="form-group form-inline">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-success" title="新增" data-toggle="modal" data-target="#addLogistics"><i class="fa fa-file-o"></i> 新增</button>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllLogisticsByNames()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllLogistics()"><i class="fa fa-refresh"></i> 刷新</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" id="logisticsSearch" name="table_search" class="form-control pull-right" placeholder="Search">
 
-                            <div class="col-sm-6 form-group">
-                                <label for="inputLogisticsPhone" class="col-sm-3 control-label">物流电话：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputLogisticsPhone" name="phone" placeholder="请输入手机...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="search" class="btn btn-default" onclick="logisticsSearch()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
+                                <!--工具栏/-->
+
+                                <!--数据列表-->
+                                <table id="logistics-list" class="table table-bordered table-striped table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="" style="padding-right:0px;">
+                                            <input id="logistics-selall" type="checkbox">
+                                        </th>
+                                        <th class="sorting_asc">#</th>
+                                        <th class="sorting_desc">物流名</th>
+                                        <th class="sorting_asc sorting_asc_disabled">厂家</th>
+                                        <th class="sorting_desc sorting_desc_disabled">产地</th>
+                                        <th class="sorting">备注</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!--数据列表/-->
                             </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputLogisticsAddress" class="col-sm-3 control-label">物流地址：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputLogisticsAddress" name="address" placeholder="请输入物流地址...">
-                                    <span class="help-block small msg-info">Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputLogisticsRemark" class="col-sm-3 control-label">备注：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputLogisticsRemark" name="remark" placeholder="请输入备注...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
+                            <!-- 数据表格 /-->
 
                         </div>
+                        <!-- /.box-body -->
+
+                        <!-- .box-footer-->
                         <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="addLogistics()" value="提交" />
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackLogistics()" value="返回"/>
-                            </div>
-                        </div>
-                        </form>
-
-                        <!-- 数据表单 /-->
-                    </div>
-                    <!-- /.box-body -->
-                </section>
-                <!-- 物流正文区域 /-->
-            </div>
-
-        <%--   物流修改    --%>
-        <div id="changeLogistics" hidden="hidden">
-                <!-- 物流修改内容头部 -->
-                <section class="content-header">
-                    <h1>
-                        物流修改
-                        <small>修改表单</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-folder"></i> 物流管理</a></li>
-                        <li><a href="#">物流</a></li>
-                        <li class="active">物流修改</li>
-                    </ol>
-                </section>
-                <!-- 物流内容头部 /-->
-                <!-- 物流正文区域 -->
-                <section class="content row">
-                    <!-- .box-body -->
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">物流修改</h3>
-                        </div>
-                        <!-- 数据表单 -->
-                        <form id="changeLogisticsForm" class="form-horizontal">
-                            <div class="box-body">
-
-                            </div>
-                            <div class="box-footer">
-                                <div class="col-sm-offset-4 col-sm-8" >
-                                    <input type="button" class="btn btn-success col-sm-2" onclick="changeLogisticsSubmit()" value="提交"/>
-                                    <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                    <input type="button" class="btn btn-danger col-sm-1" onclick="goBackLogistics()" value="返回"/>
+                            <div class="pull-left">
+                                <div class="form-group form-inline">
+                                    总共2 页，共14 条数据。 每页
+                                    <select class="form-control">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>50</option>
+                                    </select> 条
                                 </div>
                             </div>
-                        </form>
 
-                        <!-- 数据表单 /-->
+                            <div class="box-tools pull-right">
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#" aria-label="Previous">首页</a>
+                                    </li>
+                                    <li><a href="#">上一页</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">下一页</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">尾页</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+                        <!-- /.box-footer-->
                     </div>
-                    <!-- /.box-body -->
                 </section>
                 <!-- 物流正文区域 /-->
             </div>
+
+            <%--   物流新增    --%>
+            <div id="addLogistics" class="modal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllLogistics()">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">物流新增</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form id="addLogisticsForm" class="form-horizontal">
+                                    <div class="box-body">
+
+                                        <div class="col-sm-12 form-group"  style="text-align: center">
+                                            <label id="addLogisticsMsg"></label>
+                                        </div>
+
+                                        <div class="col-sm-6 form-group">
+                                            <label for="inputLogisticsName" class="col-sm-4 control-label">物流名称：</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inputLogisticsName" name="name" placeholder="请输入物流名...">
+                                                <span class="help-block small msg-info">Help block with success</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 form-group">
+                                            <label for="inputLogisticsPhone" class="col-sm-4 control-label">物流电话：</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inputLogisticsPhone" name="phone" placeholder="请输入手机...">
+                                                <span class="help-block small msg-info" >Help block with success</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 form-group">
+                                            <label for="inputLogisticsAddress" class="col-sm-4 control-label">物流地址：</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inputLogisticsAddress" name="address" placeholder="请输入物流地址...">
+                                                <span class="help-block small msg-info">Help block with success</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 form-group">
+                                            <label for="inputLogisticsRemark" class="col-sm-4 control-label">备注：</label>
+
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="inputLogisticsRemark" name="remark" placeholder="请输入备注...">
+                                                <span class="help-block small msg-info" >Help block with success</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-offset-4 col-sm-8" >
+                                            <input type="button" class="btn btn-success col-sm-2" onclick="addLogistics()" value="提交" />
+                                            <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllLogistics()" value="返回"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <%--   物流修改    --%>
+            <div id="changeLogistics" class="modal" role="dialog">
+
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllLogistics()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">物流修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="changeLogisticsForm" class="form-horizontal">
+                                <div class="box-body">
+                                    <div id="content">
+
+                                    </div>
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="changeLogisticsSubmit()" value="提交"/>
+                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllLogistics()" value="返回"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
     <!-- @@close -->
@@ -403,7 +377,7 @@
                     '                                        <td>'+data[i].address+'</td>\n' +
                     '                                        <td>'+data[i].remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findLogisticsByName(\''+data[i].name+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changeLogistics"  onclick="findLogisticsByName(\''+data[i].name+'\')" value="修改"/>\n' +
                     '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteLogisticsByName(\''+data[i].name+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
@@ -441,9 +415,6 @@
 
     }
     function findLogisticsByName(name) {
-        $("#showAllLogistics").attr("hidden","hidden");
-        $("#addLogistics").attr("hidden","hidden");
-        $("#changeLogistics").removeAttr("hidden");
         $.post("logistics/findByName",{"name":name},function (data) {
             var str=
                 '\n' +
@@ -451,10 +422,10 @@
                 '                                    <label id="changeLogisticsMsg"></label>\n' +
                 '                                </div>\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputLogisticsName" class="col-sm-3 control-label">物流名：</label>\n' +
+                '                                    <label for="inputLogisticsName" class="col-sm-4 control-label">物流名：</label>\n' +
                 '                                    <input type="hidden" class="form-control" name="name" value="'+data.name+'" placeholder="请输入物流名...">\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="name" value="'+data.name+'" disabled placeholder="请输入物流名...">\n' +
                 '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
                 '                                    </div>\n' +
@@ -462,18 +433,18 @@
                 '\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputLogisticsPhone" class="col-sm-3 control-label">物流电话：</label>\n' +
+                '                                    <label for="inputLogisticsPhone" class="col-sm-4 control-label">物流电话：</label>\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="phone" value="'+data.phone+'" placeholder="请输入物流电话...">\n' +
                 '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputLogisticsAddress" class="col-sm-3 control-label">物流地址：</label>\n' +
+                '                                    <label for="inputLogisticsAddress" class="col-sm-4 control-label">物流地址：</label>\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="address" value="'+data.address+'" placeholder="请输入物流地址...">\n' +
                 '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
                 '                                    </div>\n' +
@@ -481,15 +452,15 @@
                 '\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputLogisticsRemark" class="col-sm-3 control-label">备注：</label>\n' +
+                '                                    <label for="inputLogisticsRemark" class="col-sm-4 control-label">备注：</label>\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="remark" value="'+data.remark+'" placeholder="请输入备注...">\n' +
                 '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' ;
-            $("#changeLogisticsForm .box-body").html(str);
+            $("#changeLogisticsForm .box-body #content").html(str);
         });
 
     }
@@ -510,11 +481,7 @@
             });
         }
     }
-    function gotoAddLogistics() {
-        $("#showAllLogistics").attr("hidden","hidden");
-        $("#changeLogistics").attr("hidden","hidden");
-        $("#addLogistics").removeAttr("hidden");
-    }
+
     function addLogistics(){
         $.post("logistics/add",$("#addLogisticsForm").serialize(),function (data) {
             if(data){
@@ -538,12 +505,7 @@
             }
         });
     }
-    function goBackLogistics() {
-        findAllLogistics();
-        $("#showAllLogistics").removeAttr("hidden","hidden");
-        $("#addLogistics").attr("hidden","hidden");
-        $("#changeLogistics").attr("hidden","hidden");
-    }
+
 </script>
 </body>
 

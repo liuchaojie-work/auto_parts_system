@@ -51,234 +51,208 @@
 
     <div class="content-wrapper">
 
-        <%--    支付方式展示    --%>
-        <div id="showAllPayment">
-            <!-- 支付方式内容头部 -->
-            <section class="content-header">
-                <h1>
-                    支付方式展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 销售管理</a></li>
-                    <li><a href="#">支付方式展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 支付方式内容头部 /-->
-            <!-- 支付方式正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">支付方式列表</h3>
-                    </div>
+        <div class="tab-pane">
+            <%--    支付方式展示    --%>
+            <div id="showAllPayment">
+                <!-- 支付方式内容头部 -->
+                <section class="content-header">
+                    <h1>
+                        支付方式展示
+                        <small>数据列表</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-folder"></i> 销售管理</a></li>
+                        <li><a href="#">支付方式展示</a></li>
+                        <li class="active">数据列表</li>
+                    </ol>
+                </section>
+                <!-- 支付方式内容头部 /-->
+                <!-- 支付方式正文区域 -->
+                <section class="content row">
+                    <!-- .box-body -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">支付方式列表</h3>
+                        </div>
 
-                    <div class="box-body">
+                        <div class="box-body">
 
-                        <!-- 数据表格 -->
-                        <div class="table-box">
+                            <!-- 数据表格 -->
+                            <div class="table-box">
 
-                            <!--工具栏-->
+                                <!--工具栏-->
+                                <div class="pull-left">
+                                    <div class="form-group form-inline">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-success" title="新增" data-toggle="modal" data-target="#addPayment"><i class="fa fa-file-o"></i> 新增</button>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllPaymentByPayWays()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllPayment()"><i class="fa fa-refresh"></i> 刷新</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" id="paymentSearch" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="search" class="btn btn-default" onclick="paymentSearch()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--工具栏/-->
+
+                                <!--数据列表-->
+                                <table id="payment-list" class="table table-bordered table-striped table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="" style="padding-right:0px;">
+                                            <input id="payment-selall" type="checkbox">
+                                        </th>
+                                        <th class="sorting_asc">#</th>
+                                        <th class="sorting_desc">支付方式</th>
+                                        <th class="sorting_asc sorting_asc_disabled">支付状态</th>
+                                        <th class="sorting">备注</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!--数据列表/-->
+                            </div>
+                            <!-- 数据表格 /-->
+
+                        </div>
+                        <!-- /.box-body -->
+
+                        <!-- .box-footer-->
+                        <div class="box-footer">
                             <div class="pull-left">
                                 <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-success" title="新增" onclick="gotoAddPayment()"><i class="fa fa-file-o"></i> 新增</button>
-                                        <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllPaymentByPayWays()"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllPayment()"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
+                                    总共2 页，共14 条数据。 每页
+                                    <select class="form-control">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>50</option>
+                                    </select> 条
                                 </div>
                             </div>
+
                             <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" id="paymentSearch" name="table_search" class="form-control pull-right" placeholder="Search">
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#" aria-label="Previous">首页</a>
+                                    </li>
+                                    <li><a href="#">上一页</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">下一页</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">尾页</a>
+                                    </li>
+                                </ul>
+                            </div>
 
-                                    <div class="input-group-btn">
-                                        <button type="submit" id="search" class="btn btn-default" onclick="paymentSearch()"><i class="fa fa-search"></i></button>
+                        </div>
+                        <!-- /.box-footer-->
+                    </div>
+                </section>
+                <!-- 支付方式正文区域 /-->
+            </div>
+
+            <%--   支付方式新增    --%>
+            <div id="addPayment" class="modal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllPayment()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">支付方式新增</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addPaymentForm" class="form-horizontal">
+                                <div class="box-body">
+
+                                    <div class="col-sm-12 form-group"  style="text-align: center">
+                                        <label id="addPaymentMsg"></label>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputPaymentPayWay" class="col-sm-4 control-label">支付方式：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputPaymentPayWay" name="payWay" placeholder="请输入支付方式...">
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputPaymentPayStatus" class="col-sm-4 control-label">支付状态：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputPaymentPayStatus" name="payStatus" placeholder="请输入支付状态...">
+                                            <span class="help-block small msg-info" >Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label for="inputPaymentRemark" class="col-sm-4 control-label">备注：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="inputPaymentRemark" name="remark" placeholder="请输入备注...">
+                                            <span class="help-block small msg-info" >Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="addPayment()" value="提交" />
+                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
                                     </div>
                                 </div>
-                            </div>
-                            <!--工具栏/-->
 
-                            <!--数据列表-->
-                            <table id="payment-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="payment-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">支付方式</th>
-                                    <th class="sorting_asc sorting_asc_disabled">支付状态</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
+                            </form>
                         </div>
-                        <!-- 数据表格 /-->
-
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllPayment()" value="返回"/>
+                        </div>
                     </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
                 </div>
-            </section>
-            <!-- 支付方式正文区域 /-->
-        </div>
+            </div>
 
-        <%--   支付方式新增    --%>
-        <div id="addPayment" hidden="hidden">
-            <!-- 支付方式新增内容头部 -->
-            <section class="content-header">
-                <h1>
-                    支付方式新增
-                    <small>提交表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 销售管理</a></li>
-                    <li><a href="#">支付方式</a></li>
-                    <li class="active">支付方式新增</li>
-                </ol>
-            </section>
-            <!-- 支付方式内容头部 /-->
-            <!-- 支付方式正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">支付方式新增</h3>
+
+            <%--   支付方式修改    --%>
+            <div id="changePayment" class="modal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllPayment()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">支付方式修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="changePaymentForm" class="form-horizontal">
+                                <div class="box-body">
+                                    <div id="content">
+
+                                    </div>
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="changePaymentSubmit()" value="提交"/>
+                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal"  onclick="findAllPayment()" value="返回"/>
+                        </div>
                     </div>
-                    <!-- 数据表单 -->
-                    <form id="addPaymentForm" class="form-horizontal">
-                        <div class="box-body">
-
-                            <div class="col-sm-12 form-group"  style="text-align: center">
-                                <label id="addPaymentMsg"></label>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputPaymentPayWay" class="col-sm-3 control-label">支付方式：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputPaymentPayWay" name="payWay" placeholder="请输入支付方式...">
-                                    <span class="help-block small msg-info">Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputPaymentPayStatus" class="col-sm-3 control-label">支付状态：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputPaymentPayStatus" name="payStatus" placeholder="请输入支付状态...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6 form-group">
-                                <label for="inputPaymentRemark" class="col-sm-3 control-label">备注：</label>
-
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="inputPaymentRemark" name="remark" placeholder="请输入备注...">
-                                    <span class="help-block small msg-info" >Help block with success</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="addPayment()" value="提交" />
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackPayment()" value="返回"/>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- 数据表单 /-->
                 </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 支付方式正文区域 /-->
-        </div>
-
-        <%--   支付方式修改    --%>
-        <div id="changePayment" hidden="hidden">
-            <!-- 支付方式修改内容头部 -->
-            <section class="content-header">
-                <h1>
-                    支付方式修改
-                    <small>修改表单</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 销售管理</a></li>
-                    <li><a href="#">支付方式</a></li>
-                    <li class="active">支付方式修改</li>
-                </ol>
-            </section>
-            <!-- 支付方式内容头部 /-->
-            <!-- 支付方式正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">支付方式修改</h3>
-                    </div>
-                    <!-- 数据表单 -->
-                    <form id="changePaymentForm" class="form-horizontal">
-                        <div class="box-body">
-
-                        </div>
-                        <div class="box-footer">
-                            <div class="col-sm-offset-4 col-sm-8" >
-                                <input type="button" class="btn btn-success col-sm-2" onclick="changePaymentSubmit()" value="提交"/>
-                                <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-1" value="重置"/>
-                                <input type="button" class="btn btn-danger col-sm-1" onclick="goBackPayment()" value="返回"/>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- 数据表单 /-->
-                </div>
-                <!-- /.box-body -->
-            </section>
-            <!-- 支付方式正文区域 /-->
+            </div>
         </div>
 
     </div>
@@ -392,7 +366,7 @@
                     '                                        <td>'+data[i].payStatus+'</td>\n' +
                     '                                        <td>'+data[i].remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findPaymentByPayWay(\''+data[i].payWay+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changePayment" onclick="findPaymentByPayWay(\''+data[i].payWay+'\')" value="修改"/>\n' +
                     '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deletePaymentByPayWay(\''+data[i].payWay+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
@@ -430,9 +404,6 @@
     }
 
     function findPaymentByPayWay(payWay) {
-        $("#showAllPayment").attr("hidden","hidden");
-        $("#addPayment").attr("hidden","hidden");
-        $("#changePayment").removeAttr("hidden");
         $.post("payment/findByPayWay",{"payWay":payWay},function (data) {
             var str=
                 '\n' +
@@ -440,10 +411,10 @@
                 '                                    <label id="changePaymentMsg"></label>\n' +
                 '                                </div>\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputPaymentPayWay" class="col-sm-3 control-label">支付方式：</label>\n' +
+                '                                    <label for="inputPaymentPayWay" class="col-sm-4 control-label">支付方式：</label>\n' +
                 '                                    <input type="hidden" class="form-control" name="payWay" value="'+data.payWay+'" placeholder="请输入支付方式...">\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="payWay" value="'+data.payWay+'" disabled placeholder="请输入支付方式...">\n' +
                 '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
                 '                                    </div>\n' +
@@ -451,24 +422,24 @@
                 '\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputPaymentPayStatus" class="col-sm-3 control-label">支付状态：</label>\n' +
+                '                                    <label for="inputPaymentPayStatus" class="col-sm-4 control-label">支付状态：</label>\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="payStatus" value="'+data.payStatus+'" placeholder="请输入支付状态..">\n' +
                 '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputPaymentRemark" class="col-sm-3 control-label">备注：</label>\n' +
+                '                                    <label for="inputPaymentRemark" class="col-sm-4 control-label">备注：</label>\n' +
                 '\n' +
-                '                                    <div class="col-sm-9">\n' +
+                '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" name="remark" value="'+data.remark+'" placeholder="请输入备注...">\n' +
                 '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
                 '                                    </div>\n' +
                 '                                </div>\n' +
                 '\n' ;
-            $("#changePaymentForm .box-body").html(str);
+            $("#changePaymentForm .box-body #content").html(str);
         });
 
     }
@@ -489,11 +460,7 @@
             });
         }
     }
-    function gotoAddPayment() {
-        $("#showAllPayment").attr("hidden","hidden");
-        $("#changePayment").attr("hidden","hidden");
-        $("#addPayment").removeAttr("hidden");
-    }
+
     function addPayment(){
         $.post("payment/add",$("#addPaymentForm").serialize(),function (data) {
             if(data){
@@ -503,7 +470,6 @@
                 $("#addPaymentMsg").html("已存在！添加失败！");
                 $("#addPaymentMsg").css("color","red");
             }
-            gotoAddPayment();
         });
     }
     function changePaymentSubmit() {
@@ -517,12 +483,7 @@
             }
         });
     }
-    function goBackPayment() {
-        findAllPayment();
-        $("#showAllPayment").removeAttr("hidden","hidden");
-        $("#addPayment").attr("hidden","hidden");
-        $("#changePayment").attr("hidden","hidden");
-    }
+
 </script>
 </body>
 

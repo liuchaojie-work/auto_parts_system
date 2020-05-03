@@ -82,8 +82,8 @@
                             <div class="pull-left">
                                 <div class="form-group form-inline">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
+                                        <button type="button" class="btn btn-default btn-danger" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                        <button type="button" class="btn btn-default btn-info" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
                                     </div>
                                 </div>
                             </div>
