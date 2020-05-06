@@ -74,6 +74,17 @@ public class UserServlet extends BaseServlet {
         }
     }
 
+    public void findByUserId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getParameter("userId");
+        try {
+            User byUserId = userService.findByUserId(userId);
+            System.out.println(byUserId.toString());
+            writeValue(byUserId, response);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void findByThreeCondition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String account = request.getParameter("account");
         try {
@@ -83,6 +94,7 @@ public class UserServlet extends BaseServlet {
             e.printStackTrace();
         }
     }
+
 
     public void findCustomerByCondition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String condition = request.getParameter("condition");
@@ -129,6 +141,7 @@ public class UserServlet extends BaseServlet {
         User user = new User();
         try {
             BeanUtils.populate(user, params);
+            System.out.println("1");
             boolean flag = userService.change(user);
             writeValue(flag, response);
         } catch (IllegalAccessException e) {
@@ -139,7 +152,7 @@ public class UserServlet extends BaseServlet {
             e.printStackTrace();
         }
     }
-    public void deldeteByUserId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void deleteByUserId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
         try {
             boolean flag = userService.deleteByUserId(userId);

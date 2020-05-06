@@ -36,6 +36,12 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
+    public User findByUserId(String userId) throws SQLException {
+        String sql = "select * from tab_user where userId = ?";
+        return runner.query(sql, new BeanHandler<User>(User.class), userId);
+    }
+
+    @Override
     public User findByUsername(String username) throws SQLException {
         String sql = "select * from tab_user where username = ?";
         return runner.query(sql, new BeanHandler<User>(User.class), username);
@@ -61,20 +67,18 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public List<User> findCustomerByCondition(String condition) throws SQLException {
-        String sql = "select * from tab_user where iden = 0 and (userId like ? or " +
-                " username like ? or phone like ? or email like ? or regTime like ?, img like ? or" +
-                "name like ? or gender like ? address like ? or receiverAdd like ? or logName like ? or remark like ?)";
+        String sql = "select * from tab_user where iden = 0 and (" +
+                " phone like ? or name like ? or gender like ? or address like ? or receiverAdd like ? or logName like ? or remark like ?)";
         Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
-                "%" + condition + "%","%" + condition + "%","%" + condition + "%","%" + condition + "%",
-                "%" + condition + "%","%" + condition + "%","%" + condition + "%","%" + condition + "%"};
+                "%" + condition + "%","%" + condition + "%","%" + condition + "%"};
         return runner.query(sql, new BeanListHandler<User>(User.class), params);
     }
 
     @Override
     public List<User> findAdminByCondition(String condition) throws SQLException {
         String sql = "select * from tab_user where iden = 1 and (userId like ? or " +
-                " username like ? or phone like ? or email like ? or regTime like ?, img like ? or" +
-                "name like ? or gender like ? or remark like ?)";
+                " username like ? or phone like ? or email like ? or regTime like ? or img like ? or " +
+                " name like ? or gender like ? or remark like ?)";
         Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
                 "%" + condition + "%","%" + condition + "%","%" + condition + "%","%" + condition + "%" ,"%" + condition + "%"};
         return runner.query(sql, new BeanListHandler<User>(User.class), params);
@@ -94,12 +98,12 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public boolean change(User user) throws SQLException {
-        String sql = "update tab_user set username = ?, phone = ?, email = ?, activeCode = ?, activeStatus = ?, " +
-                "password = ?, regTime = ?, img = ?, name = ?, gender = ?, iden = ?, address = ?, " +
+        String sql = "update tab_user set username = ?, phone = ?, email = ?, activeStatus = ?, " +
+                " img = ?, name = ?, gender = ?,  address = ?, " +
                 "receiverAdd = ?, logName = ?, remark = ? where userId = ?";
-        Object[] params = {user.getUsername(), user.getPhone(), user.getEmail(),user.getActiveCode(),
-                user.getActiveStatus(), user.getPassword(), user.getRegTime(),user.getImg(),
-                user.getName(), user.getGender(), user.getIden(), user.getAddress(),
+        Object[] params = {user.getUsername(), user.getPhone(), user.getEmail(),
+                user.getActiveStatus(),user.getImg(),
+                user.getName(), user.getGender(), user.getAddress(),
                 user.getReceiverAdd(), user.getLogName(), user.getRemark(), user.getUserId()};
         return 1 == runner.update(sql, params);
     }

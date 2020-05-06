@@ -72,6 +72,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User findByUserId(String userId) throws UserException {
+        try {
+            return userDao.findByUserId(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserException("通过userId查找失败！");
+        }
+    }
+
+    @Override
     public User findByThreeCondition(String account) throws UserException {
         try {
             return userDao.findByThreeCondition(account);

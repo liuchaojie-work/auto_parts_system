@@ -52,6 +52,13 @@ public interface IUserService {
     User findByEmail(String email) throws UserException;
 
     /**
+     * 根据用户id查找
+     * @param userId
+     * @return
+     * @throws UserException
+     */
+    User findByUserId(String userId) throws UserException;
+    /**
      * 根据用户名，电话，或邮件查询用户
      * @param account
      * @return
