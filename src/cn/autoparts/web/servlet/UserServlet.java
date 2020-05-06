@@ -116,6 +116,15 @@ public class UserServlet extends BaseServlet {
         }
     }
 
+    public void findAllByCondition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String condition = request.getParameter("condition");
+        try {
+            List<User> allByCondition = userService.findAllByCondition(condition);
+            writeValue(allByCondition, response);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+    }
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Map<String, String[]> params = request.getParameterMap();
         String userId = UUIDUtils.getID("u");

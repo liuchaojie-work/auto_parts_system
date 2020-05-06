@@ -261,7 +261,7 @@
                         </li>
 
                         <li id="user">
-                            <a href="user-manage.jsp">
+                            <a href="account-manage.jsp">
                                 <i class="fa fa-circle-o"></i> 账号
                             </a>
                         </li>

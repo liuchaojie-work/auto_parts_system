@@ -85,6 +85,13 @@ public interface IUserDao {
     List<User> findAdminByCondition(String condition) throws SQLException;
 
     /**
+     * 条件查询所有
+     * @param condition
+     * @return
+     * @throws SQLException
+     */
+    List<User> findAllByCondition(String condition) throws SQLException;
+    /**
      * 添加用户
      * @param user
      * @return

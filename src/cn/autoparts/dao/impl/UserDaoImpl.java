@@ -85,6 +85,16 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
+    public List<User> findAllByCondition(String condition) throws SQLException {
+        String sql = "select * from tab_user where userId like ? or " +
+                " username like ? or phone like ? or email like ? or" +
+                " name like ? or iden like ? or remark like ?";
+        Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
+                "%" + condition + "%","%" + condition + "%","%" + condition + "%"};
+        return runner.query(sql, new BeanListHandler<User>(User.class), params);
+    }
+
+    @Override
     public boolean add(User user) throws SQLException {
         String sql = "insert into tab_user(userId, username, phone, email, activeCode, activeStatus," +
                 "password, regTime, img, name, gender, iden, address, receiverAdd, logName, remark)" +

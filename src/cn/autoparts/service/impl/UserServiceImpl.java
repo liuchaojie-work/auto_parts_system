@@ -112,6 +112,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public List<User> findAllByCondition(String condition) throws UserException {
+        try {
+            return userDao.findAllByCondition(condition);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserException("条件查询所有失败！");
+        }
+    }
+
+    @Override
     public boolean add(User user) throws UserException {
         try {
             return userDao.add(user);

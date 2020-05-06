@@ -80,7 +80,13 @@ public interface IUserService {
      * @throws UserException
      */
     List<User> findAdminByCondition(String condition) throws UserException;
-
+    /**
+     * 条件查询所有
+     * @param condition
+     * @return
+     * @throws UserException
+     */
+    List<User> findAllByCondition(String condition) throws UserException;
     /**
      * 添加用户
      * @param user
