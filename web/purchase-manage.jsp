@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>(单独)汽配销售系统销售管理页面</title>
+    <title>(单独)汽配销售系统进货关联页面</title>
     <meta name="description" content="汽配销售">
     <meta name="keywords" content="汽配销售">
 
@@ -51,765 +51,253 @@
 
     <div class="content-wrapper">
 
-        <div>
-            <!-- 支付方式内容头部 -->
-            <section class="content-header">
-                <h1>
-                    支付方式展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">支付方式展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 支付方式内容头部 /-->
-            <!-- 支付方式正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">支付方式列表</h3>
-                    </div>
+        <div class="tab-pane">
+            <%--  进货    --%>
+            <div id="showAllPurchase" >
+                <!-- 进货内容头部 -->
+                <section class="content-header">
+                    <h1>
+                        进货展示
+                        <small>数据列表</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-folder"></i> 进货管理</a></li>
+                        <li><a href="#">进货展示</a></li>
+                        <li class="active">数据列表</li>
+                    </ol>
+                </section>
+                <!-- 进货内容头部 /-->
+                <!-- 进货正文区域 -->
+                <section class="content row">
+                    <!-- .box-body -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">进货列表</h3>
+                        </div>
 
-                    <div class="box-body">
+                        <div class="box-body">
 
-                        <!-- 数据表格 -->
-                        <div class="table-box">
+                            <!-- 数据表格 -->
+                            <div class="table-box">
 
-                            <!--工具栏-->
+                                <!--工具栏-->
+                                <div class="pull-left">
+                                    <div class="form-group form-inline">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-success" title="新建" data-toggle="modal" data-target="#addPurchase"><i class="fa fa-file-o"></i> 新增</button>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllPurchaseByCbIds()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllPurchase()"><i class="fa fa-refresh"></i> 刷新</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" id="categoryBrandSearch" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default" onclick="categoryBrandSearch()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--工具栏/-->
+
+                                <!--数据列表-->
+                                <table id="categoryBrand-list" class="table table-bordered table-striped table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="" style="padding-right:0px;">
+                                            <input id="categoryBrand-selall" type="checkbox">
+                                        </th>
+                                        <th>#</th>
+                                        <th>关联id</th>
+                                        <th>产品类别名</th>
+                                        <th>产品品牌名</th>
+                                        <th>备注</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!--数据列表/-->
+                            </div>
+                            <!-- 数据表格 /-->
+
+                        </div>
+                        <!-- /.box-body -->
+
+                        <!-- .box-footer-->
+                        <div class="box-footer">
                             <div class="pull-left">
                                 <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
+                                    总共2 页，共14 条数据。 每页
+                                    <select class="form-control">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>50</option>
+                                    </select> 条
                                 </div>
                             </div>
+
                             <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#" aria-label="Previous">首页</a>
+                                    </li>
+                                    <li><a href="#">上一页</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">下一页</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">尾页</a>
+                                    </li>
+                                </ul>
+                            </div>
 
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                        </div>
+                        <!-- /.box-footer-->
+                    </div>
+                </section>
+                <!-- 进货正文区域 /-->
+            </div>
+
+            <%--   进货新增    --%>
+            <div id="addPurchase"  class="modal" role="dialog" >
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllPurchase()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">进货新增</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addPurchaseForm" class="form-horizontal">
+                                <div class="box-body">
+                                    <div class="col-sm-12 form-group"  style="text-align: center">
+                                        <label id="addPurchaseMsg"></label>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">产品类别名：</label>
+
+                                        <div class="col-sm-9">
+                                            <select id="addCategorySelect" name="cname" class="form-control select2" style="width: 100%;">
+
+                                            </select>
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">产品品牌名：</label>
+
+                                        <div class="col-sm-9">
+                                            <select id="addBrandSelect" name="bname" class="form-control select2" style="width: 100%;">
+
+                                            </select>
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">备注：</label>
+
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="remark" placeholder="请输入备注...">
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="submit" class="btn btn-success col-sm-2" onclick="addPurchase()" value="提交"/>
+                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning" value="重置"/>
                                     </div>
                                 </div>
-                            </div>
-                            <!--工具栏/-->
+                            </form>
 
-                            <!--数据列表-->
-                            <table id="payment-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="payment-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">付款方式</th>
-                                    <th class="sorting_asc sorting_asc_disabled">付款状态</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>现金</td>
-                                    <td>已付</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>记账</td>
-                                    <td>未付</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>微信</td>
-                                    <td>已付</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
                         </div>
-                        <!-- 数据表格 /-->
-
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllPurchase()" value="返回"/>
+                        </div>
                     </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
                 </div>
-            </section>
-            <!-- 支付方式正文区域 /-->
+            </div>
+
+            <%--   进货修改    --%>
+            <div id="changePurchase" class="modal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllPurchase()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">进货修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="changePurchaseForm" class="form-horizontal">
+                                <div class="box-body">
+
+                                    <div class="col-sm-12 form-group"  style="text-align: center">
+                                        <label id="changePurchaseMsg"></label>
+                                    </div>
+
+                                    <div id="changeCbId" class="col-sm-6 form-group">
+
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">产品类别名：</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control select2" id="changeCategorySelect" name="cname" style="width: 100%;">
+
+                                            </select>
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">产品品牌名：</label>
+
+                                        <div class="col-sm-9">
+                                            <select class="form-control select2" id="changeBrandSelect" name="bname" style="width: 100%;">
+
+                                            </select>
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label">备注：</label>
+
+                                        <div id="changeRemark" class="col-sm-9">
+                                            <input type="text" class="form-control" name="remark" placeholder="请输入备注...">
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="submit" class="btn btn-success col-sm-2" onclick="changePurchaseSubmit()" value="保存"/>
+                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllPurchase()" value="返回"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <div>
-            <!-- 产品销售内容头部 -->
-            <section class="content-header">
-                <h1>销售--开单</h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 销售管理</a></li>
-                    <li><a href="#">销售</a></li>
-                    <li class="active">开单</li>
-                </ol>
-            </section>
-            <!-- 产品销售内容头部 /-->
-            <!-- 产品销售正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <div class="col-md-1">
-                            <input type="button" class="btn btn-primary btn-block" value="开单"/>
-                        </div>
-                        <form class="col-md-11" style="margin: 4px 0px;">
-                            <div class="form-group">
-                                <div>
-                                    <input type="hidden" name="user_id" placeholder="客户id"/>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" name="cus_name" placeholder="客户名"/>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" name="user_phone" placeholder="手机号码"/>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" name="log_name" placeholder="物流名称"/>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" name="cus_receiver_add" placeholder="收货地址"/>
-                                </div>
-                                <div class="col-sm-offset-3 col-sm-1">
-                                    <select name="pay_way">
-                                        <option>现金</option>
-                                        <option>微信</option>
-                                        <option>支付宝</option>
-                                        <option>银行卡</option>
-                                        <option>欠账</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
 
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="pro-sell-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="category-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品型号</th>
-                                    <th class="sorting_asc sorting_asc_disabled">类别</th>
-                                    <th class="sorting_asc sorting_asc_disabled">品牌</th>
-                                    <th class="sorting_asc sorting_asc_disabled">厂家</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产地</th>
-                                    <th class="sorting_asc sorting_asc_disabled">数量</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单位</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单价</th>
-                                    <th class="sorting_asc sorting_asc_disabled">优惠</th>
-                                    <th class="sorting_asc sorting_asc_disabled">总计</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>10</td>
-                                    <td>台</td>
-                                    <td>800</td>
-                                    <td>0</td>
-                                    <td>8000</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 产品销售正文区域 /-->
-        </div>
-
-        <div>
-            <!-- 产品销售内容头部 -->
-            <section class="content-header">
-                <h1>
-                    产品销售展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">产品销售展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 产品销售内容头部 /-->
-            <!-- 产品销售正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">产品销售列表</h3>
-                    </div>
-
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="pro-sell-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="category-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品型号</th>
-                                    <th class="sorting_asc sorting_asc_disabled">类别</th>
-                                    <th class="sorting_asc sorting_asc_disabled">品牌</th>
-                                    <th class="sorting_asc sorting_asc_disabled">厂家</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产地</th>
-                                    <th class="sorting_asc sorting_asc_disabled">数量</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单位</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单价</th>
-                                    <th class="sorting_asc sorting_asc_disabled">优惠</th>
-                                    <th class="sorting_asc sorting_asc_disabled">总计</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>10</td>
-                                    <td>台</td>
-                                    <td>800</td>
-                                    <td>0</td>
-                                    <td>8000</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 产品销售正文区域 /-->
-        </div>
-
-        <div>
-            <!-- 品牌和类别关联内容头部 -->
-            <section class="content-header">
-                <h1>
-                    品牌和类别关联展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 品牌和类别关联管理</a></li>
-                    <li><a href="#">品牌和类别关联展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 品牌和类别关联内容头部 /-->
-            <!-- 品牌和类别关联正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">品牌和类别关联列表</h3>
-                    </div>
-
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="cate-bra-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="cate-bra-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品类别名</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品品牌名</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 品牌和类别关联正文区域 /-->
-        </div>
-
-        <div>
-            <!-- 产品内容头部 -->
-            <section class="content-header">
-                <h1>
-                    产品展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">产品展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 产品内容头部 /-->
-            <!-- 产品正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">产品列表</h3>
-                    </div>
-
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="product-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="product-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品型号</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品类别</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品品牌</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品厂家</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品产地</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品单位</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品图片</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品描述</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>台</td>
-                                    <td>img/001.png</td>
-                                    <td>适用于XX车</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>台</td>
-                                    <td>img/001.png</td>
-                                    <td>适用于XX车</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 产品正文区域 /-->
-        </div>
     </div>
     <!-- @@close -->
     <!-- 内容区域 /-->
@@ -820,7 +308,6 @@
 
 
 
-<script src="dist/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="dist/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="dist/plugins/jQueryUI/jquery-ui.min.js"></script>
 <script>
@@ -867,42 +354,196 @@
 <script src="dist/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="dist/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
-    $(document).ready(function() {
-        // 选择框
-        $(".select2").select2();
+    $(function () {
 
-        // WYSIHTML5编辑器
-        $(".textarea").wysihtml5({
-            locale: 'zh-CN'
-        });
-
-        // 全选操作
-        $("#brand-selall").click(function() {
-            var clicks = $(this).is(':checked');
-            if (!clicks) {
-                $("#brand-list td input[type='checkbox']").iCheck("uncheck");
-            } else {
-                $("#brand-list td input[type='checkbox']").iCheck("check");
+        if(!$("showAllPurchase").attr("hidden")){
+            findAllPurchase();
+        }
+        $.post("category/findAll",{},function (categoryData) {
+            var str1 = "";
+            for(var i = 0; i < categoryData.length; i++){
+                str1+='<option>'+categoryData[i].name+'</option>';
             }
-            $(this).data("clicks", !clicks);
+            $("#addCategorySelect").html(str1);
         });
+
+        $.post("brand/findAll",{},function (brandData) {
+            var str2 = "";
+            for(var j = 0; j < brandData.length; j++){
+                str2+='<option>'+brandData[j].name+'</option>';
+            }
+            $("#addBrandSelect").html(str2);
+        });
+        selectAllOrNone("#categoryBrand-selall","#categoryBrand-list");
     });
+    //全选全不选
+    function selectAllOrNone(checkId,tabId) {
+        $(checkId).click(function () {
+            $(tabId+" tr td input[type='checkbox']").prop("checked",$(checkId).prop("checked"));
+        });
+    }
+    function deleteAllPurchaseByCbIds() {
+        var result = confirm("确定删除所选吗？");
+        if(result){
+            var checks = $("#categoryBrand-list tbody tr td input[type='checkbox']:checked");
+            if(0 == checks.length){
+                alert("未选种任何一条!");
+                return false;
+            }
+            var checkedArr = new Array();
+            checks.each(function () {
+                checkedArr.push($(this).val());
+            });
+            var cbIds = checkedArr.join(",");
+            $.post("categoryBrand/deleteByCbIds",{"cbIds":cbIds},function (data) {
+                if(data){
+                    $(function (){
+                        alert("批量删除成功！")
+                    });
+                    findAllPurchase();
+                }else{
+                    $(function () {
+                        alert("批量删除失败！")
+                    });
+                }
+            });
+        }
+    }
+    function findAllPurchase() {
+        $.post("categoryBrand/findAll",{},function (data) {
+            if(null == data){
+                $("#categoryBrand-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].cbId+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].cbId+'</td>\n' +
+                    '                                        <td>'+data[i].cname+'</td>\n' +
+                    '                                        <td>'+data[i].bname+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changePurchase"  onclick="findPurchaseByCbId(\''+data[i].cbId+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deletePurchaseByCbId(\''+data[i].cbId+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#categoryBrand-list tbody").html(str);
+        });
+    }
 
+    function findPurchaseByCbId(cbId) {
+        $.post("categoryBrand/findByCbId?cbId="+cbId,{},function (data) {
+            var str0 = '<label class="col-sm-3 control-label">关联id：</label>\n' +
+                '                                <input type="hidden" class="form-control" name="cbId" value="'+ data.cbId +'" placeholder="请输入备注...">\n' +
+                '\n' +
+                '                                <div class="col-sm-9">\n' +
+                '                                    <input type="text" class="form-control" name="cbId" value="'+ data.cbId +'" disabled="disabled" placeholder="请输入备注...">\n' +
+                '                                    <span class="help-block small msg-info" >Help block with success</span>\n' +
+                '                                </div>';
+            $("#changePurchaseForm .box-body #changeCbId").html(str0);
+            $.post("category/findAll",{},function (categoryData) {
+                var str1 = "";
+                // alert(data.cname);
+                for(var i = 0; i < categoryData.length; i++){
+                    if($.trim(categoryData[i].name) === $.trim(data.cname)){
+                        str1+='<option selected="selected">'+data.cname+'</option>';
+                    }else{
+                        str1+='<option>'+categoryData[i].name+'</option>';
+                    }
+                }
+                $("#changeCategorySelect").html(str1);
+            });
+            $.post("brand/findAll",{},function (brandData) {
+                var str2 = "";
+                for(var j = 0; j < brandData.length; j++){
+                    if($.trim(brandData[j].name) === $.trim(data.bname)){
+                        str2+='<option selected="selected">'+data.bname+'</option>';
+                    }else{
+                        str2+='<option>'+brandData[j].name+'</option>';
+                    }
+                }
+                $("#changeBrandSelect").html(str2);
+            });
 
-    // 设置激活菜单
-    function setSidebarActive(tagUri) {
-        var liObj = $("#" + tagUri);
-        if (liObj.length > 0) {
-            liObj.parent().parent().addClass("active");
-            liObj.addClass("active");
+            var str4='<input type="text" class="form-control" name="remark" value="'+ data.remark +'" placeholder="请输入备注...">'
+            $("#changeRemark").html(str4);
+        });
+
+    }
+    function deletePurchaseByCbId(cbId) {
+        var result = confirm("确定删除吗？");
+        if(result){
+            $.post("categoryBrand/deleteByCbId",{"cbId":cbId},function (data) {
+                if(data){
+                    $(function (){
+                        alert("删除成功！")
+                    });
+                    findAllPurchase();
+                }else{
+                    $(function () {
+                        alert("删除失败！")
+                    });
+                }
+            });
         }
     }
 
+    function addPurchase(){
+        $.post("categoryBrand/add",$("#addPurchaseForm").serialize(),function (data) {
+            if(data){
+                $("#addPurchaseMsg").html("添加成功！");
+                $("#addPurchaseMsg").css("color","green");
+            }else{
+                $("#addPurchaseMsg").html("已存在！添加失败！");
+                $("#addPurchaseMsg").css("color","red");
+            }
+        });
+    }
 
-    $(document).ready(function() {
-        // 激活导航位置
-        setSidebarActive("admin-index");
-    });
+
+    function changePurchaseSubmit() {
+        $.post("categoryBrand/change",$("#changePurchaseForm").serialize(), function (data) {
+            if(data){
+                $("#changePurchaseMsg").html("修改成功！");
+                $("#changePurchaseMsg").css("color","green");
+            }else{
+                $("#changePurchaseMsg").html("修改失败！");
+                $("#changePurchaseMsg").css("color","red");
+            }
+        });
+    }
+
+    function categoryBrandSearch() {
+        var search = $("#categoryBrandSearch").val();
+        $.post("categoryBrand/findByCondition",{"condition":search},function (data) {
+            if(null == data){
+                $("#categoryBrand-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].cbId+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].cbId+'</td>\n' +
+                    '                                        <td>'+data[i].cname+'</td>\n' +
+                    '                                        <td>'+data[i].bname+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findPurchaseByCbId(\''+data[i].cbId+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deletePurchaseByCbId(\''+data[i].cbId+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#categoryBrand-list tbody").html(str);
+        });
+    }
+
 </script>
 </body>
 
