@@ -58,12 +58,20 @@ public interface IPurchaseDao {
     boolean add(Purchase purchase) throws SQLException;
 
     /**
-     * 修改库存
+     * 修改库存信息
      * @param purchase
      * @return
      * @throws SQLException
      */
     boolean change(Purchase purchase) throws SQLException;
+
+    /**
+     * 入库时若该进货编号存在，则修改产品库存数量
+     * @param purchase
+     * @return
+     * @throws SQLException
+     */
+    boolean changeCount(Purchase purchase) throws SQLException;
 
     /**
      * 根据进货编号删除

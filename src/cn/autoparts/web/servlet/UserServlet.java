@@ -150,7 +150,6 @@ public class UserServlet extends BaseServlet {
         User user = new User();
         try {
             BeanUtils.populate(user, params);
-            System.out.println("1");
             boolean flag = userService.change(user);
             writeValue(flag, response);
         } catch (IllegalAccessException e) {

@@ -63,6 +63,14 @@ public interface IPurchaseService {
     boolean change(Purchase purchase) throws PurchaseException;
 
     /**
+     * 入库时若该进货编号存在，则修改产品库存数量
+     * @param purchase
+     * @return
+     * @throws PurchaseException
+     */
+    boolean changeCount(Purchase purchase) throws PurchaseException;
+
+    /**
      * 根据进货编号删除
      * @param purNo
      * @return

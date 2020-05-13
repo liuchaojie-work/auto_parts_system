@@ -31,6 +31,8 @@ public class PurchaseServiceImpl implements IPurchaseService {
         }
     }
 
+
+
     @Override
     public List<Object[]> findByProId(String proId) throws PurchaseException {
         try {
@@ -78,6 +80,16 @@ public class PurchaseServiceImpl implements IPurchaseService {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new PurchaseException("修改失败!");
+        }
+    }
+
+    @Override
+    public boolean changeCount(Purchase purchase) throws PurchaseException {
+        try {
+            return purchaseDao.changeCount(purchase);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new PurchaseException("入库时修改失败!");
         }
     }
 

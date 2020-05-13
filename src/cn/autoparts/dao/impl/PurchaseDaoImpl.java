@@ -79,6 +79,23 @@ public class PurchaseDaoImpl implements IPurchaseDao {
         return 1 == runner.update(sql, params);
     }
 
+    /**
+     * 入库时改变库存数量和售价
+     * @param purchase
+     * @return
+     * @throws SQLException
+     */
+    @Override
+    public boolean changeCount(Purchase purchase) throws SQLException {
+        Integer proCount = (Integer) findByPrimarykey(purchase.getProId(), purchase.getPurchasePrice())[5];
+        String sql = "update tab_purchase set count ="+ proCount +" + ?, " +
+                " sellPrice = ?, time = ?, locNo = ?, remark = ? where purNo = ?";
+        Object[] params = { purchase.getCount(), purchase.getSellPrice(), purchase.getTime(),
+                purchase.getLocNo(), purchase.getRemark(), purchase.getPurNo()};
+        return 1 == runner.update(sql, params);
+    }
+
+
     @Override
     public boolean deleteByPurNo(String purNo) throws SQLException {
         String sql = "delete from tab_purchase where purNo = ?";

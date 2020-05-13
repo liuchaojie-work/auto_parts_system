@@ -273,7 +273,7 @@
                         </li>
 
                         <li id="admin">
-                            <a href="user-manage.jsp">
+                            <a href="admin-manage.jsp">
                                 <i class="fa fa-circle-o"></i> 管理员
                             </a>
                         </li>

@@ -93,12 +93,30 @@ public class PurchaseServlet extends BaseServlet {
             BeanUtils.populate(purchase, params);
             boolean flag = purchaseService.change(purchase);
             writeValue(flag, response);
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        }
+        catch (PurchaseException e) {
             e.printStackTrace();
-        } catch (PurchaseException e) {
-            e.printStackTrace();
+        }
+    }
+
+    public void changeCount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, PurchaseException {
+        String proId = request.getParameter("proId");
+        Integer purchasePrice = Integer.valueOf(request.getParameter("purchasePrice"));
+        Object[] byPrimarykey = purchaseService.findByPrimarykey(proId, purchasePrice);
+        if(null != byPrimarykey && 0 != byPrimarykey.length){
+            Purchase purchase = new Purchase();
+            Map<String, String[]> params = request.getParameterMap();
+            try {
+                BeanUtils.populate(purchase, params);
+                boolean flag = purchaseService.changeCount(purchase);
+                writeValue(flag, response);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
         }
     }
 
