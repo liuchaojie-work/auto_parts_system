@@ -85,33 +85,40 @@
                                     <div class="form-group form-inline">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default btn-success" title="新建" data-toggle="modal" data-target="#addPurchase"><i class="fa fa-file-o"></i> 新增</button>
-                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllPurchaseByCbIds()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllPurchaseByPurNos()"><i class="fa fa-trash-o"></i> 批量删除</button>
                                             <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllPurchase()"><i class="fa fa-refresh"></i> 刷新</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="box-tools pull-right">
                                     <div class="input-group input-group-sm" style="width: 200px;">
-                                        <input type="text" id="categoryBrandSearch" name="table_search" class="form-control pull-right" placeholder="Search">
+                                        <input type="text" id="purchaseSearch" name="table_search" class="form-control pull-right" placeholder="Search">
 
                                         <div class="input-group-btn">
-                                            <button type="submit" class="btn btn-default" onclick="categoryBrandSearch()"><i class="fa fa-search"></i></button>
+                                            <button type="submit" class="btn btn-default" onclick="purchaseSearch()"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
                                 <!--工具栏/-->
 
                                 <!--数据列表-->
-                                <table id="categoryBrand-list" class="table table-bordered table-striped table-hover dataTable">
+                                <table id="purchase-list" class="table table-bordered table-striped table-hover dataTable">
                                     <thead>
                                     <tr>
                                         <th class="" style="padding-right:0px;">
-                                            <input id="categoryBrand-selall" type="checkbox">
+                                            <input id="purchase-selall" type="checkbox">
                                         </th>
                                         <th>#</th>
-                                        <th>关联id</th>
-                                        <th>产品类别名</th>
-                                        <th>产品品牌名</th>
+                                        <th>入库编号</th>
+<%--                                        <th>产品id</th>--%>
+                                        <th>产品型号</th>
+                                        <th>产品类别</th>
+                                        <th>产品品牌</th>
+                                        <th>产品进价</th>
+                                        <th>产品数量</th>
+                                        <th>产品售价</th>
+                                        <th>入库时间</th>
+                                        <th>库位</th>
                                         <th>备注</th>
                                         <th class="text-center">操作</th>
                                     </tr>
@@ -181,11 +188,20 @@
                                     <div class="col-sm-12 form-group"  style="text-align: center">
                                         <label id="addPurchaseMsg"></label>
                                     </div>
-
                                     <div class="col-sm-6 form-group">
-                                        <label class="col-sm-3 control-label">产品类别名：</label>
+                                        <label class="col-sm-4 control-label">产品型号：</label>
 
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-8">
+                                            <select id="addTypenoSelect" name="typeno" class="form-control select2" style="width: 100%;">
+
+                                            </select>
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-4 control-label">产品类别名：</label>
+
+                                        <div class="col-sm-8">
                                             <select id="addCategorySelect" name="cname" class="form-control select2" style="width: 100%;">
 
                                             </select>
@@ -194,10 +210,47 @@
                                     </div>
 
                                     <div class="col-sm-6 form-group">
-                                        <label class="col-sm-3 control-label">产品品牌名：</label>
+                                        <label class="col-sm-4 control-label">产品品牌名：</label>
 
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-8">
                                             <select id="addBrandSelect" name="bname" class="form-control select2" style="width: 100%;">
+
+                                            </select>
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-4 control-label">产品进价：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="purchasePrice" placeholder="请输入进价...">
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-4 control-label">产品数量：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="count" placeholder="请输入数量..">
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-4 control-label">产品售价：</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="sellPrice" placeholder="请输入售价...">
+                                            <span class="help-block small msg-info">Help block with success</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-4 control-label">库位：</label>
+
+                                        <div class="col-sm-8">
+                                            <select id="addLocationSelect" name="loca" class="form-control select2" style="width: 100%;">
 
                                             </select>
                                             <span class="help-block small msg-info">Help block with success</span>
@@ -205,9 +258,9 @@
                                     </div>
 
                                     <div class="col-sm-6 form-group">
-                                        <label class="col-sm-3 control-label">备注：</label>
+                                        <label class="col-sm-4 control-label">备注：</label>
 
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-8">
                                             <input type="text" class="form-control" name="remark" placeholder="请输入备注...">
                                             <span class="help-block small msg-info">Help block with success</span>
                                         </div>
@@ -240,49 +293,6 @@
                             <form id="changePurchaseForm" class="form-horizontal">
                                 <div class="box-body">
 
-                                    <div class="col-sm-12 form-group"  style="text-align: center">
-                                        <label id="changePurchaseMsg"></label>
-                                    </div>
-
-                                    <div id="changeCbId" class="col-sm-6 form-group">
-
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <label class="col-sm-3 control-label">产品类别名：</label>
-
-                                        <div class="col-sm-9">
-                                            <select class="form-control select2" id="changeCategorySelect" name="cname" style="width: 100%;">
-
-                                            </select>
-                                            <span class="help-block small msg-info">Help block with success</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <label class="col-sm-3 control-label">产品品牌名：</label>
-
-                                        <div class="col-sm-9">
-                                            <select class="form-control select2" id="changeBrandSelect" name="bname" style="width: 100%;">
-
-                                            </select>
-                                            <span class="help-block small msg-info">Help block with success</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6 form-group">
-                                        <label class="col-sm-3 control-label">备注：</label>
-
-                                        <div id="changeRemark" class="col-sm-9">
-                                            <input type="text" class="form-control" name="remark" placeholder="请输入备注...">
-                                            <span class="help-block small msg-info">Help block with success</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-offset-4 col-sm-8" >
-                                        <input type="submit" class="btn btn-success col-sm-2" onclick="changePurchaseSubmit()" value="保存"/>
-                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
-                                    </div>
                                 </div>
 
                             </form>
@@ -353,12 +363,55 @@
 <script src="dist/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 <script src="dist/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="dist/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="js/date.js"></script>
 <script>
     $(function () {
 
         if(!$("showAllPurchase").attr("hidden")){
             findAllPurchase();
         }
+
+        $.post("product/findAll",{}, function (data) {
+            var str1 = "";
+            for(var i = 0; i < data.length; i++){
+                str1+='<option>'+data[i][1]+'</option>';
+            }
+            $("#addTypenoSelect").html(str1);
+        });
+
+        $.post("location/findAll",{}, function (data) {
+            for(var i = 0; i < data.length; i++){
+                $("#addLocationSelect").append('<option>'+data[i].loca+'</option>');
+            }
+
+        });
+
+        $("#addTypenoSelect").blur(function () {
+            var typeno = $("#addTypenoSelect").val();
+            $.post("product/findByTypeno", {"typeno":typeno}, function (typenoData) {
+                $("#addCategorySelect").html("");
+                $("#addBrandSelect").html("");
+                for(var i = 0; i < typenoData.length; i++){
+                    $.post("categoryBrand/findByCbId",{"cbId":typenoData[i].cbId}, function (data) {
+                        $("#addCategorySelect").append('<option>'+data.cname+'</option>');
+                        $("#addBrandSelect").append('<option>'+data.bname+'</option>');
+                    });
+                }
+            });
+        });
+
+
+        $("#addCategorySelect").blur(function () {
+            var typeno = $("#addTypenoSelect").val();
+            var cname = $("#addCategorySelect").val();
+            $.post("product/findByTypenoAndCname", {"typeno":typeno,"cname":cname}, function (data) {
+                $("#addBrandSelect").html("");
+                for(var i = 0; i < data.length; i++){
+                    $("#addBrandSelect").append('<option>'+data[i][1]+'</option>');
+                }
+            });
+        });
+
         $.post("category/findAll",{},function (categoryData) {
             var str1 = "";
             for(var i = 0; i < categoryData.length; i++){
@@ -374,7 +427,7 @@
             }
             $("#addBrandSelect").html(str2);
         });
-        selectAllOrNone("#categoryBrand-selall","#categoryBrand-list");
+        selectAllOrNone("#purchase-selall","#purchase-list");
     });
     //全选全不选
     function selectAllOrNone(checkId,tabId) {
@@ -382,10 +435,10 @@
             $(tabId+" tr td input[type='checkbox']").prop("checked",$(checkId).prop("checked"));
         });
     }
-    function deleteAllPurchaseByCbIds() {
+    function deleteAllPurchaseByPurNos() {
         var result = confirm("确定删除所选吗？");
         if(result){
-            var checks = $("#categoryBrand-list tbody tr td input[type='checkbox']:checked");
+            var checks = $("#purchase-list tbody tr td input[type='checkbox']:checked");
             if(0 == checks.length){
                 alert("未选种任何一条!");
                 return false;
@@ -394,8 +447,8 @@
             checks.each(function () {
                 checkedArr.push($(this).val());
             });
-            var cbIds = checkedArr.join(",");
-            $.post("categoryBrand/deleteByCbIds",{"cbIds":cbIds},function (data) {
+            var purNos = checkedArr.join(",");
+            $.post("purchase/deleteByPurNos",{"purNos":purNos},function (data) {
                 if(data){
                     $(function (){
                         alert("批量删除成功！")
@@ -410,74 +463,188 @@
         }
     }
     function findAllPurchase() {
-        $.post("categoryBrand/findAll",{},function (data) {
+        $.post("purchase/findAll",{},function (data) {
             if(null == data){
-                $("#categoryBrand-list tbody").html("");
+                $("#purchase-list tbody").html("");
                 return;
             }
             var str = "";
             for(var i = 0; i < data.length; i++){
                 var tr = '<tr>\n' +
-                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].cbId+'"></td>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i][0]+'"></td>\n' +
                     '                                        <td>'+(i+1)+'</td>\n' +
-                    '                                        <td>'+data[i].cbId+'</td>\n' +
-                    '                                        <td>'+data[i].cname+'</td>\n' +
-                    '                                        <td>'+data[i].bname+'</td>\n' +
-                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td>'+data[i][0]+'</td>\n' +
+                    // '                                        <td>'+data[i][1]+'</td>\n' +
+                    '                                        <td>'+data[i][2]+'</td>\n' +
+                    '                                        <td>'+data[i][3]+'</td>\n' +
+                    '                                        <td>'+data[i][4]+'</td>\n' +
+                    '                                        <td>'+data[i][5]+'</td>\n' +
+                    '                                        <td>'+data[i][6]+'</td>\n' +
+                    '                                        <td>'+data[i][7]+'</td>\n' +
+                    '                                        <td>'+changeTime(data[i][8])+'</td>\n' +
+                    '                                        <td>'+data[i][9]+'</td>\n' +
+                    '                                        <td>'+data[i][10]+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changePurchase"  onclick="findPurchaseByCbId(\''+data[i].cbId+'\')" value="修改"/>\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deletePurchaseByCbId(\''+data[i].cbId+'\')" value="删除"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changePurchase"  onclick="findPurchaseByPurNo(\''+data[i][0]+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deletePurchaseByPurNo(\''+data[i][0]+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
                 str +=tr;
             }
-            $("#categoryBrand-list tbody").html(str);
+            $("#purchase-list tbody").html(str);
         });
     }
 
-    function findPurchaseByCbId(cbId) {
-        $.post("categoryBrand/findByCbId?cbId="+cbId,{},function (data) {
-            var str0 = '<label class="col-sm-3 control-label">关联id：</label>\n' +
-                '                                <input type="hidden" class="form-control" name="cbId" value="'+ data.cbId +'" placeholder="请输入备注...">\n' +
+    function findPurchaseByPurNo(purNo) {
+        $.post("purchase/findByPurNo",{"purNo":purNo},function (data) {
+            var str=
+                '<div class="col-sm-12 form-group"  style="text-align: center">\n' +
+                '                                            <label id="changePurchaseMsg"></label>\n' +
+                '                                        </div>\n' +
+                '                                                <input type="hidden" class="form-control" id="inputPurchasePurNo" name="purNo" value="'+ purNo +'">\n' +
                 '\n' +
-                '                                <div class="col-sm-9">\n' +
-                '                                    <input type="text" class="form-control" name="cbId" value="'+ data.cbId +'" disabled="disabled" placeholder="请输入备注...">\n' +
-                '                                    <span class="help-block small msg-info" >Help block with success</span>\n' +
-                '                                </div>';
-            $("#changePurchaseForm .box-body #changeCbId").html(str0);
-            $.post("category/findAll",{},function (categoryData) {
-                var str1 = "";
-                // alert(data.cname);
-                for(var i = 0; i < categoryData.length; i++){
-                    if($.trim(categoryData[i].name) === $.trim(data.cname)){
-                        str1+='<option selected="selected">'+data.cname+'</option>';
-                    }else{
-                        str1+='<option>'+categoryData[i].name+'</option>';
-                    }
+                '                                        <div class="col-sm-6 form-group">\n' +
+                '                                            <label for="inputPurchaseTypeno" class="col-sm-4 control-label">产品型号：</label>\n' +
+                '\n' +
+                '                                                <input type="hidden" class="form-control" id="inputPurchaseTypeno" name="typeno" value="'+ data[1] +'"  placeholder="请输入产品型号...">\n' +
+                '                                            <div class="col-sm-8">\n' +
+                '                                                <input type="text" class="form-control" id="inputPurchaseTypeno" name="typeno" disabled="disabled" value="'+ data[1] +'"  placeholder="请输入产品型号...">\n' +
+                '                                                <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '\n' +
+                '                                        <div class="col-sm-6 form-group">\n' +
+                '                                            <label class="col-sm-4 control-label">产品类别：</label>\n' +
+                '\n' +
+                '                                            <div class="col-sm-8">\n' +
+                '                                                <select id="changeCategorySelect" name="cname" class="form-control select2" value="'+ data[2] +'"  style="width: 100%;" >\n' +
+                '                                                </select>\n' +
+                '                                                <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '\n' +
+                '                                        <div class="col-sm-6 form-group">\n' +
+                '                                            <label class="col-sm-4 control-label">产品品牌：</label>\n' +
+                '\n' +
+                '                                            <div class="col-sm-8">\n' +
+                '                                                <select id="changeBrandSelect" name="bname" class="form-control select2" value="'+ data[3] +'" style="width: 100%;" >\n' +
+                '\n' +
+                '                                                </select>\n' +
+                '                                                <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '\n' +
+                '                                        <div class="col-sm-6 form-group">\n' +
+                '                                            <label class="col-sm-4 control-label">进价：</label>\n' +
+                '\n' +
+                '                                            <div class="col-sm-8">\n' +
+                '                                                <input type="text" class="form-control" id="inputPurchasePrice" name="purchasePrice" value="'+ data[4] +'" placeholder="请输入产品进价...">\n' +
+                '                                                <span class="help-block small msg-info" >Help block with success</span>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '\n' +
+                '                                        <div class="col-sm-6 form-group">\n' +
+                '                                            <label for="inputPurchaseCount" class="col-sm-4 control-label">数量：</label>\n' +
+                '\n' +
+                '                                            <div class="col-sm-8">\n' +
+                '                                                <input type="text" class="form-control" id="inputPurchaseCount" name="count" value="'+ data[5] +'" placeholder="请输入数量...">\n' +
+                '                                                <span class="help-block small msg-info" >Help block with success</span>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '\n' +
+                '                                        <div class="col-sm-6 form-group">\n' +
+                '                                            <label for="inputSellPrice" class="col-sm-4 control-label">售价：</label>\n' +
+                '\n' +
+                '                                            <div class="col-sm-8">\n' +
+                '                                                <input type="text" class="form-control" id="inputSellPrice" name="sellPrice" value="'+ data[6] +'" placeholder="请输入售价...">\n' +
+                '                                                <span class="help-block small msg-info" >Help block with success</span>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputPurchaseTime" class="col-sm-4 control-label">入库时间：</label>\n' +
+                '                                        <input type="hidden" class="form-control" value="'+ data[7] +'" placeholder="请输入入库时间...">\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" value="'+ changeTime(data[7]) +'" disabled placeholder="请输入入库时间...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '                                        <div class="col-sm-6 form-group">\n' +
+                '                                            <label for="inputPurchaseLoca" class="col-sm-4 control-label">库位：</label>\n' +
+                '\n' +
+                '                                            <div class="col-sm-8">\n' +
+                '                                                <select id="changeLocationSelect" name="loca" class="form-control select2" value="'+ data[8] +'" style="width: 100%;" >\n' +
+                '                                                </select>\n' +
+                '                                                <span class="help-block small msg-info" >Help block with success</span>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '\n' +
+                '                                        <div class="col-sm-6 form-group">\n' +
+                '                                            <label for="inputPurchaseRemark" class="col-sm-4 control-label">备注：</label>\n' +
+                '\n' +
+                '                                            <div class="col-sm-8">\n' +
+                '                                                <input type="text" class="form-control" id="inputPurchaseRemark" name="remark" value="'+ data[9] +'" placeholder="请输入备注...">\n' +
+                '                                                <span class="help-block small msg-info" >Help block with success</span>\n' +
+                '                                            </div>\n' +
+                '                                        </div>\n' +
+                '\n' +
+                '                                        <div class="col-sm-offset-4 col-sm-8" >\n' +
+                '                                            <input type="button" class="btn btn-success col-sm-2" onclick="changePurchaseSubmit()" value="提交" />\n' +
+                '                                            <input type="reset" style="margin-left: 10px" class="btn btn-warning col-sm-2" value="重置"/>\n' +
+                '                                        </div>';
+            $("#changePurchaseForm .box-body").html(str);
+
+            var typeno = $("#inputPurchaseTypeno").val();
+            $.post("product/findByTypeno", {"typeno":typeno}, function (typenoData) {
+                $("#changeCategorySelect").html("");
+                $("#changeBrandSelect").html("");
+                for(var i = 0; i < typenoData.length; i++){
+                    $.post("categoryBrand/findByCbId",{"cbId":typenoData[i].cbId}, function (cbData) {
+                        if(cbData.cname == data[2]){
+                            $("#changeCategorySelect").append('<option selected>'+cbData.cname+'</option>');
+                        }else{
+                            $("#changeCategorySelect").append('<option>'+cbData.cname+'</option>');
+                        }
+                        if(cbData.bname == data[3]){
+                            $("#changeBrandSelect").append('<option selected>'+cbData.bname+'</option>');
+                        }else{
+                            $("#changeBrandSelect").append('<option>'+cbData.bname+'</option>');
+                        }
+                    });
                 }
-                $("#changeCategorySelect").html(str1);
             });
-            $.post("brand/findAll",{},function (brandData) {
-                var str2 = "";
-                for(var j = 0; j < brandData.length; j++){
-                    if($.trim(brandData[j].name) === $.trim(data.bname)){
-                        str2+='<option selected="selected">'+data.bname+'</option>';
+            var cname = $("#changeCategorySelect").val();
+            $.post("product/findByTypenoAndCname", {"typeno":typeno,"cname":cname}, function (bData) {
+                $("#changeBrandSelect").html("");
+                for(var i = 0; i < bData.length; i++){
+                    if(data[3] == bData[i][1]){
+                        $("#changeBrandSelect").append('<option selected>'+bData[i][1]+'</option>');
                     }else{
-                        str2+='<option>'+brandData[j].name+'</option>';
+                        $("#changeBrandSelect").append('<option>'+bData[i][1]+'</option>');
                     }
                 }
-                $("#changeBrandSelect").html(str2);
             });
 
-            var str4='<input type="text" class="form-control" name="remark" value="'+ data.remark +'" placeholder="请输入备注...">'
-            $("#changeRemark").html(str4);
+            $.post("location/findAll", {}, function (locationData) {
+                $("#changeLocationSelect").html("");
+                for(var i = 0; i < locationData.length; i++){
+                    if(data[8] == locationData[i].loca){
+                        $("#changeLocationSelect").append('<option selected>'+data[8]+'</option>');
+                    }else{
+                        $("#changeLocationSelect").append('<option>'+locationData[i].loca+'</option>');
+                    }
+                }
+            })
+
         });
 
     }
-    function deletePurchaseByCbId(cbId) {
+    function deletePurchaseByPurNo(purNo) {
         var result = confirm("确定删除吗？");
         if(result){
-            $.post("categoryBrand/deleteByCbId",{"cbId":cbId},function (data) {
+            $.post("purchase/deleteByPurNo",{"purNo":purNo},function (data) {
                 if(data){
                     $(function (){
                         alert("删除成功！")
@@ -493,7 +660,7 @@
     }
 
     function addPurchase(){
-        $.post("categoryBrand/add",$("#addPurchaseForm").serialize(),function (data) {
+        $.post("purchase/add",$("#addPurchaseForm").serialize(),function (data) {
             if(data){
                 $("#addPurchaseMsg").html("添加成功！");
                 $("#addPurchaseMsg").css("color","green");
@@ -506,7 +673,7 @@
 
 
     function changePurchaseSubmit() {
-        $.post("categoryBrand/change",$("#changePurchaseForm").serialize(), function (data) {
+        $.post("purchase/change",$("#changePurchaseForm").serialize(), function (data) {
             if(data){
                 $("#changePurchaseMsg").html("修改成功！");
                 $("#changePurchaseMsg").css("color","green");
@@ -517,30 +684,37 @@
         });
     }
 
-    function categoryBrandSearch() {
-        var search = $("#categoryBrandSearch").val();
-        $.post("categoryBrand/findByCondition",{"condition":search},function (data) {
+    function purchaseSearch() {
+        var search = $("#purchaseSearch").val();
+        $.post("purchase/findByCondition",{"condition":search},function (data) {
             if(null == data){
-                $("#categoryBrand-list tbody").html("");
+                $("#purchase-list tbody").html("");
                 return;
             }
             var str = "";
             for(var i = 0; i < data.length; i++){
                 var tr = '<tr>\n' +
-                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].cbId+'"></td>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i][0]+'"></td>\n' +
                     '                                        <td>'+(i+1)+'</td>\n' +
-                    '                                        <td>'+data[i].cbId+'</td>\n' +
-                    '                                        <td>'+data[i].cname+'</td>\n' +
-                    '                                        <td>'+data[i].bname+'</td>\n' +
-                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td>'+data[i][0]+'</td>\n' +
+                    // '                                        <td>'+data[i][1]+'</td>\n' +
+                    '                                        <td>'+data[i][2]+'</td>\n' +
+                    '                                        <td>'+data[i][3]+'</td>\n' +
+                    '                                        <td>'+data[i][4]+'</td>\n' +
+                    '                                        <td>'+data[i][5]+'</td>\n' +
+                    '                                        <td>'+data[i][6]+'</td>\n' +
+                    '                                        <td>'+data[i][7]+'</td>\n' +
+                    '                                        <td>'+changeTime(data[i][8])+'</td>\n' +
+                    '                                        <td>'+data[i][9]+'</td>\n' +
+                    '                                        <td>'+data[i][10]+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findPurchaseByCbId(\''+data[i].cbId+'\')" value="修改"/>\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deletePurchaseByCbId(\''+data[i].cbId+'\')" value="删除"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changePurchase"  onclick="findPurchaseByPurNo(\''+data[i][0]+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deletePurchaseByPurNo(\''+data[i][0]+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
                 str +=tr;
             }
-            $("#categoryBrand-list tbody").html(str);
+            $("#purchase-list tbody").html(str);
         });
     }
 

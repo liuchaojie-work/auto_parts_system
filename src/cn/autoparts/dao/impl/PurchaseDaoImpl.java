@@ -14,7 +14,7 @@ public class PurchaseDaoImpl implements IPurchaseDao {
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
     @Override
     public List<Object[]> findAll() throws SQLException {
-        String sql = "select tab_purchase.purNo, tab_purchase.proId, tab_cate_bra.cname, tab_cate_bra.bname ,tab_purchase.purchasePrice, " +
+        String sql = "select tab_purchase.purNo, tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname ,tab_purchase.purchasePrice, " +
                 " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark"+
                 " from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.proId = tab_product.proId and " +
                 " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no";
@@ -23,39 +23,40 @@ public class PurchaseDaoImpl implements IPurchaseDao {
 
     @Override
     public Object[] findByPrimarykey(String proId, Integer purchasePrice) throws SQLException {
-        String sql = "select tab_purchase.purNo, tab_cate_bra.cname, tab_cate_bra.bname, " +
+        String sql = "select tab_purchase.purNo, tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, " +
                 " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark"+
-                " from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.proId = ? and tab_purchase.purchasePrice = ? " +
+                " from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.proId = ? and tab_purchase.purchasePrice = ? and" +
                 " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.proId = tab_product.proId and tab_purchase.locNo = tab_location.no";
         return runner.query(sql, new ArrayHandler(), proId, purchasePrice);
     }
 
     @Override
     public List<Object[]> findByProId(String proId) throws SQLException {
-        String sql = "select tab_purchase.purNo, tab_cate_bra.cname, tab_cate_bra.bname, tab_purchase.purchasePrice, " +
+        String sql = "select tab_purchase.purNo, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, tab_purchase.purchasePrice, " +
                 " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark"+
-                " from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.proId = ? " +
+                " from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.proId = ? and " +
                 " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.proId = tab_product.proId and tab_purchase.locNo = tab_location.no";
         return runner.query(sql, new ArrayListHandler(), proId);
     }
 
     @Override
     public Object[] findByPurNo(String purNo) throws SQLException {
-        String sql = "select tab_purchase.proId, tab_cate_bra.cname, tab_cate_bra.bname, tab_purchase.purchasePrice, " +
+        String sql = "select tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, tab_purchase.purchasePrice, " +
                 " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark"+
-                " from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.purNo = ? " +
+                " from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.purNo = ? and" +
                 " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.proId = tab_product.proId and tab_purchase.locNo = tab_location.no";
         return runner.query(sql, new ArrayHandler(), purNo);
     }
 
     @Override
     public List<Object[]> findByCondition(String condition) throws SQLException {
-        String sql = "select tab_purchase.purNo, tab_purchase.proId, tab_cate_bra.cname, tab_cate_bra.bname ,tab_purchase.purchasePrice, " +
+        String sql =  "select tab_purchase.purNo, tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname ,tab_purchase.purchasePrice, " +
                 " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark"+
-                " from tab_purchase, tab_product, tab_cate_bra, tab_location where (tab_purchase.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId " +
-                " and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? " +
+                " from tab_purchase, tab_product, tab_cate_bra, tab_location where (tab_purchase.proId = tab_product.proId and " +
+                " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? " +
+                " or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? " +
                 " or tab_purchase.purchasePrice like ? or tab_purchase.count like ? or tab_purchase.sellPrice like ? " +
-                " or tab_purchase.time like ? or tab_location.loca like ? or tab_purchase.remark like ?)";
+                " or tab_purchase.time like binary ? or tab_location.loca like ? or tab_purchase.remark like ?)";
         Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
                             "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
         return runner.query(sql, new ArrayListHandler(), params);
@@ -107,7 +108,7 @@ public class PurchaseDaoImpl implements IPurchaseDao {
         Object[] params = purNos.split(",");
         int len = params.length;
         StringBuilder sb = new StringBuilder();
-        sb.append("delete tab_purchase where purNo in (");
+        sb.append("delete from tab_purchase where purNo in (");
         for(int i = 0; i < len; i++){
             if(i != len - 1){
                 sb.append("?,");

@@ -66,6 +66,28 @@ public class ProductServlet extends BaseServlet {
         }
     }
 
+    public void findByTypeno(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String typeno = request.getParameter("typeno");
+        try {
+            List<Product> byTypeno = productService.findByTypeno(typeno);
+            writeValue(byTypeno, response);
+        } catch (ProductException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void findByTypenoAndCname(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String typeno = request.getParameter("typeno");
+        String cname = request.getParameter("cname");
+        try {
+            List<Object[]> byTypenoAndCname = productService.findByTypenoAndCname(typeno, cname);
+            writeValue(byTypenoAndCname, response);
+        } catch (ProductException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     ICategoryBrandService categoryBrandService = new CategoryBrandServiceImpl();
 
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

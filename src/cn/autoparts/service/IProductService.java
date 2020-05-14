@@ -32,6 +32,7 @@ public interface IProductService {
      */
     Object[] findByProId(String proId) throws ProductException;
 
+
     /**
      * 根据型号和关联id查找
      * @param typeno
@@ -40,6 +41,23 @@ public interface IProductService {
      * @throws ProductException
      */
     Object[] findByTypenoAndCbId(String typeno, String cbId) throws ProductException;
+
+    /**
+     * 根据型号查找
+     * @param typeno
+     * @return
+     * @throws ProductException
+     */
+    List<Product> findByTypeno(String typeno) throws ProductException;
+
+    /**
+     * 根据型号和类别名查找
+     * @param typeno
+     * @param cname
+     * @return
+     * @throws ProductException
+     */
+    List<Object[]> findByTypenoAndCname(String typeno, String cname) throws ProductException;
 
     /**
      * 增加

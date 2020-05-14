@@ -32,6 +32,12 @@ public class LocationDaoImpl implements ILocationDao {
     }
 
     @Override
+    public Location findByLoca(String loca) throws SQLException {
+        String sql = "select * from tab_location where loca = ?";
+        return runner.query(sql, new BeanHandler<Location>(Location.class), loca);
+    }
+
+    @Override
     public boolean add(Location location) throws SQLException {
         String sql = "insert into tab_location(no, loca, remark) values(?,?,?)";
         Object[] params = {location.getNo(), location.getLoca(), location.getRemark()};

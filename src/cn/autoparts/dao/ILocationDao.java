@@ -33,6 +33,14 @@ public interface ILocationDao {
     Location findByNo(String no) throws SQLException;
 
     /**
+     * 根据库位位置查询
+     * @param loca
+     * @return
+     * @throws SQLException
+     */
+    Location findByLoca(String loca) throws SQLException;
+
+    /**
      * 增加库位
      * @param location
      * @return

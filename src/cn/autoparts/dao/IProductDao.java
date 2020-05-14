@@ -42,6 +42,22 @@ public interface IProductDao {
     Object[] findByTypenoAndCbId(String typeno, String cbId) throws SQLException;
 
     /**
+     * 根据型号查找
+     * @param typeno
+     * @return
+     * @throws SQLException
+     */
+    List<Product> findByTypeno(String typeno) throws SQLException;
+
+    /**
+     * 根据型号和类别名查找
+     * @param typeno
+     * @return
+     * @throws SQLException
+     */
+    List<Object[]> findByTypenoAndCname(String typeno, String cname) throws SQLException;
+
+    /**
      * 增加
      * @param product
      * @return

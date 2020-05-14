@@ -52,6 +52,27 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public List<Product> findByTypeno(String typeno) throws ProductException {
+        try {
+            return productDao.findByTypeno(typeno);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ProductException("根据型号查找失败！");
+        }
+    }
+
+    @Override
+    public List<Object[]> findByTypenoAndCname(String typeno, String cname) throws ProductException {
+        try {
+            return productDao.findByTypenoAndCname(typeno, cname);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ProductException("根据型号和类别名查找失败！");
+        }
+    }
+
+
+    @Override
     public boolean add(Product product) throws ProductException {
         try {
             return productDao.add(product);

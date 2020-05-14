@@ -32,6 +32,15 @@ public interface ILocationService {
      */
     Location findByNo(String no) throws LocationException;
 
+
+    /**
+     * 根据库位位置查询
+     * @param loca
+     * @return
+     * @throws LocationException
+     */
+    Location findByLoca(String loca) throws LocationException;
+
     /**
      * 增加库位
      * @param location

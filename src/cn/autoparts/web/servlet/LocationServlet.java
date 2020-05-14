@@ -37,6 +37,17 @@ public class LocationServlet extends BaseServlet {
         }
     }
 
+    public void findByLoca(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String loca = request.getParameter("loca");
+        try {
+            Location byNo = locationService.findByLoca(loca);
+            writeValue(byNo, response);
+        } catch (LocationException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void findAllByCondition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String condition = request.getParameter("condition");
         try {

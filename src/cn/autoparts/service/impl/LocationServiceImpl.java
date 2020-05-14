@@ -42,6 +42,16 @@ public class LocationServiceImpl implements ILocationService {
     }
 
     @Override
+    public Location findByLoca(String loca) throws LocationException {
+        try {
+            return locationDao.findByLoca(loca);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new LocationException("根据库位位置查找失败！");
+        }
+    }
+
+    @Override
     public boolean add(Location location) throws LocationException {
         try {
             return locationDao.add(location);
