@@ -213,7 +213,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-offset-4 col-sm-8" >
-                                        <input type="submit" class="btn btn-success col-sm-2" onclick="addCategoryBrand()" value="提交"/>
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="addCategoryBrand()" value="提交"/>
                                         <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning" value="重置"/>
                                     </div>
                                 </div>
