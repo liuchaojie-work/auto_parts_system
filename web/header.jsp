@@ -173,7 +173,7 @@
                         </li>
 
                         <li id="client-price">
-                            <a href="purchase-manage.jsp">
+                            <a href="clientPrice-manage.jsp">
                                 <i class="fa fa-circle-o"></i> 部分客户价格表
                             </a>
                         </li>

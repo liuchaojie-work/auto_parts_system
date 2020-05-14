@@ -6,6 +6,7 @@ import java.sql.Timestamp;
  * 客户价格
  */
 public class ClientPrice {
+    private String cpNo;
     private String userId;
     private String proId;
     private Integer price;
@@ -15,14 +16,23 @@ public class ClientPrice {
     public ClientPrice() {
     }
 
-    public ClientPrice(String userId, String proId,
-                       Integer price,
+    public ClientPrice(String cpNo, String userId,
+                       String proId, Integer price,
                        Timestamp time, String remark) {
+        this.cpNo = cpNo;
         this.userId = userId;
         this.proId = proId;
         this.price = price;
         this.time = time;
         this.remark = remark;
+    }
+
+    public String getCpNo() {
+        return cpNo;
+    }
+
+    public void setCpNo(String cpNo) {
+        this.cpNo = cpNo;
     }
 
     public String getUserId() {
@@ -68,7 +78,8 @@ public class ClientPrice {
     @Override
     public String toString() {
         return "ClientPrice{" +
-                "userId='" + userId + '\'' +
+                "cpNo='" + cpNo + '\'' +
+                ", userId='" + userId + '\'' +
                 ", proId='" + proId + '\'' +
                 ", price=" + price +
                 ", time=" + time +
