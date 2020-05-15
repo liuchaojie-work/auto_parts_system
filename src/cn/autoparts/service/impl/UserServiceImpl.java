@@ -22,6 +22,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public User findByAccountAndPassword(String account, String password) throws UserException {
+        try {
+            return userDao.findByAccountAndPassword(account, password);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserException("根据账号密码查找失败！");
+        }
+    }
+
+    @Override
     public List<User> findAllAdmin() throws UserException {
         try {
             return userDao.findAllAdmin();
@@ -138,6 +148,16 @@ public class UserServiceImpl implements IUserService {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new UserException("修改失败！");
+        }
+    }
+
+    @Override
+    public boolean changePassword(String account, String newPassword) throws UserException {
+        try {
+            return userDao.changePassword(account, newPassword);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserException("修改密码失败！");
         }
     }
 

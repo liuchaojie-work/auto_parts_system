@@ -18,6 +18,13 @@ public class UserDaoImpl implements IUserDao {
         return runner.query(sql, new BeanListHandler<User>(User.class));
     }
 
+    @Override
+    public User findByAccountAndPassword(String account, String password) throws SQLException {
+        String sql = "select * from tab_user where (username = ? or phone = ? or email = ?) and password = ?";
+        Object[] params = {account, account, account, password};
+        return runner.query(sql, new BeanHandler<User>(User.class), params);
+    }
+
     /**
      * 标识符为1/999为管理员,0为普通用户
      * @return
@@ -115,6 +122,13 @@ public class UserDaoImpl implements IUserDao {
                 user.getActiveStatus(),user.getImg(),
                 user.getName(), user.getGender(), user.getAddress(),
                 user.getReceiverAdd(), user.getLogName(), user.getRemark(), user.getUserId()};
+        return 1 == runner.update(sql, params);
+    }
+
+    @Override
+    public boolean changePassword(String account, String newPassword) throws SQLException {
+        String sql = "update tab_user set password = ? where username = ? or phone = ? or email = ?";
+        Object[] params = {newPassword, account, account, account};
         return 1 == runner.update(sql, params);
     }
 

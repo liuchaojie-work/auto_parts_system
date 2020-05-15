@@ -37,11 +37,7 @@
 <div id="login" class="login-page">
     <div class="login-box">
         <div class="login-logo">
-
-
             <a href="#"><strong>汽配</strong>销售系统</a>
-
-
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">
@@ -164,36 +160,35 @@
         });
 
         $("#login-account").blur(function () {
-            var account = $("#login-account").val();
-            checkLoginAccount(account);
+            checkLoginAccount();
         });
         $("#login-password").blur(function () {
-            var password = $("#login-password").val();
-            var flag = checkLoginPassword(password);
+            checkLoginPassword();
         });
 
-
+        $("#loginForm").submit(function () {
+            if(checkLoginAccount && checkLoginPassword){
+                var account = $("#login-account").val();
+                var password = $("#login-password").val();
+                $.post("user/login",$("#loginForm").serialize(), function (data) {
+                    if(null != data){
+                        location.href = "${pageContext.request.contextPath}/index.jsp";
+                    }else{
+                        alert("密码有误！");
+                    }
+                });
+            }
+        });
     });
 
     function changeCheckCode(img){
         img.src="checkCode?"+new Date().getTime();
     }
-    $("#loginForm").onsubmit = function () {
-        var account = $("#login-account").val();
-        var password = $("#login-password").val();
-        if(checkLoginAccount(account) && checkLoginPassword(password)){
-            $.post("user/findByThreeCondition",{"account":account}, function (data) {
-                if(data && data.password === password){
-                    $("#login-msg").html("登录成功!");
-                }else{
-                    $("#login-msg").html("密码错误！");
-                }
-            });
-        }
-    }
 
-    function checkLoginPassword(password) {
-        if(null == password && 0 === password.length){
+
+    function checkLoginPassword() {
+        var password = $("#login-password").val();
+        if(null == password || 0 == password.length){
             $("#login-password-msg").html("密码不能为空！");
             $("#login-password-msg").css({"fontsize":"8px","color":"red"});
             return false;
@@ -203,7 +198,8 @@
         }
 
     }
-     function checkLoginAccount(account) {
+     function checkLoginAccount() {
+         var account = $("#login-account").val();
          $.post("user/findByThreeCondition",{"account":account}, function (data) {
              if(data){
                  $("#login-account-msg").html("");

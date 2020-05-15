@@ -14,6 +14,14 @@ public interface IUserService {
     List<User> findAll() throws UserException;
 
     /**
+     * 根据账号密码查找
+     * @param account
+     * @param password
+     * @return
+     * @throws UserException
+     */
+    User findByAccountAndPassword(String account, String password) throws UserException;
+    /**
      * 查找所有管理员
      * @return
      * @throws UserException
@@ -102,6 +110,15 @@ public interface IUserService {
      * @throws UserException
      */
     boolean change(User user) throws UserException;
+
+    /**
+     * 修改密码
+     * @param account
+     * @param newPassword
+     * @return
+     * @throws UserException
+     */
+    boolean changePassword(String account, String newPassword) throws UserException;
 
     /**
      * 根据用户id删除用户

@@ -17,6 +17,15 @@ public interface IUserDao {
     List<User> findAll() throws SQLException;
 
     /**
+     * 根据账号密码查找
+     * @param account
+     * @param password
+     * @return
+     * @throws SQLException
+     */
+    User findByAccountAndPassword(String account, String password) throws SQLException;
+
+    /**
      * 查找所有管理员
      * @return
      * @throws SQLException
@@ -107,6 +116,14 @@ public interface IUserDao {
      */
     boolean change(User user) throws SQLException;
 
+    /**
+     * 修改密码
+     * @param account
+     * @param newPassword
+     * @return
+     * @throws SQLException
+     */
+    boolean changePassword(String account, String newPassword) throws SQLException;
     /**
      * 根据用户id删除用户
      * @param userId

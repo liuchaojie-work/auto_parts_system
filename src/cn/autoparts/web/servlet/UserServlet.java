@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -19,6 +20,37 @@ import java.util.Map;
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
     private IUserService userService = new UserServiceImpl();
+
+    public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String account = request.getParameter("account");
+        String password = request.getParameter("password");
+        try {
+            User byAccountAndPassword = userService.findByAccountAndPassword(account, password);
+            if(null != byAccountAndPassword){
+                HttpSession session = request.getSession();
+                session.setAttribute("user",byAccountAndPassword);
+            }
+            writeValue(byAccountAndPassword, response);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        request.getSession().invalidate();
+    }
+
+    public void changePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String newPassword = request.getParameter("newPassword");
+        String account = request.getParameter("account");
+        try {
+            boolean flag = userService.changePassword(account, newPassword);
+            writeValue(flag, response);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<User> users = userService.findAll();

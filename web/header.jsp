@@ -31,17 +31,30 @@
                 <ul class="nav navbar-nav">
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="./dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                            <span class="hidden-xs">liuchaojie</span>
-                        </a>
+                        <c:choose>
+                            <c:when test="${empty user}">
+                                <a href="${pageContext.request.contextPath}/login.jsp">登录</a>
+                            </c:when>
+                            <c:when test="${not empty user}">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <%-- 图片地址 img --%>
+                                    <img src="./dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                    <span class="hidden-xs">${user.username}</span>
+                                </a>
+                            </c:when>
+                        </c:choose>
+
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
                                 <img src="./dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                 <p>
-                                    张猿猿 - 数据管理员
+
+                                    ${user.name} --
+                                        <c:if test="${0 eq user.iden}"> 客户</c:if>
+                                        <c:if test="${1 eq user.iden}"> 管理员</c:if>
+                                        <c:if test="${999 eq user.iden}"> 超级管理员</c:if>
                                     <small>最后登录 11:20AM</small>
                                 </p>
                             </li>
@@ -50,7 +63,9 @@
                                     <a href="#" class="btn btn-default btn-flat">修改密码</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">退出</a>
+                                    <a href="#" class="btn btn-default btn-flat" onclick="$.get('user/exit',{},function() {
+                                      
+                                    });">退出</a>
                                 </div>
                             </li>
                         </ul>
@@ -66,15 +81,20 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- Sidebar user panel -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="./dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                    <p>liuchaojie</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
-                </div>
-            </div>
+            <c:choose>
+                <c:when test="${not empty user}">
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="./dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        </div>
+                        <div class="pull-left info">
+                            <p>${user.username}</p>
+                            <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
+                        </div>
+                    </div>
+                </c:when>
+            </c:choose>
+
 
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
