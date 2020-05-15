@@ -8,6 +8,7 @@ import cn.autoparts.service.IInventoryService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 库存
@@ -15,7 +16,7 @@ import java.util.List;
 public class InventoryServiceImpl implements IInventoryService {
     private IInventoryDao inventoryDao = new InventoryDaoImpl();
     @Override
-    public List<Inventory> findAll() throws InventoryException {
+    public List<Map<String, Object>> findAll() throws InventoryException {
         try {
             return inventoryDao.findAll();
         } catch (SQLException e) {
@@ -25,7 +26,7 @@ public class InventoryServiceImpl implements IInventoryService {
     }
 
     @Override
-    public List<Inventory> findAllByCondition(String condition) throws InventoryException {
+    public List<Map<String, Object>> findAllByCondition(String condition) throws InventoryException {
         try {
             return inventoryDao.findAllByCondition(condition);
         } catch (SQLException e) {
@@ -35,7 +36,7 @@ public class InventoryServiceImpl implements IInventoryService {
     }
 
     @Override
-    public Inventory findByProId(String proId) throws InventoryException {
+    public Map<String, Object> findByProId(String proId) throws InventoryException {
         try {
             return inventoryDao.findByProId(proId);
         } catch (SQLException e) {

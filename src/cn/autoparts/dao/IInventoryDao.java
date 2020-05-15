@@ -4,6 +4,7 @@ import cn.autoparts.bean.Inventory;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 库存表
@@ -14,7 +15,7 @@ public interface IInventoryDao {
      * @return
      * @throws SQLException
      */
-    List<Inventory> findAll() throws SQLException;
+    List<Map<String , Object>> findAll() throws SQLException;
 
     /**
      * 根据条件查找
@@ -22,7 +23,7 @@ public interface IInventoryDao {
      * @return
      * @throws SQLException
      */
-    List<Inventory> findAllByCondition(String condition) throws SQLException;
+    List<Map<String , Object>> findAllByCondition(String condition) throws SQLException;
 
     /**
      * 根据产品id查找
@@ -30,7 +31,7 @@ public interface IInventoryDao {
      * @return
      * @throws SQLException
      */
-    Inventory findByProId(String proId) throws SQLException;
+    Map<String , Object> findByProId(String proId) throws SQLException;
 
     /**
      * 增加

@@ -1,9 +1,16 @@
 package cn.autoparts.web.servlet;
 
+import cn.autoparts.bean.CategoryBrand;
 import cn.autoparts.bean.Inventory;
+import cn.autoparts.exception.CategoryBrandException;
 import cn.autoparts.exception.InventoryException;
+import cn.autoparts.exception.ProductException;
+import cn.autoparts.service.ICategoryBrandService;
 import cn.autoparts.service.IInventoryService;
+import cn.autoparts.service.IProductService;
+import cn.autoparts.service.impl.CategoryBrandServiceImpl;
 import cn.autoparts.service.impl.InventoryServiceImpl;
+import cn.autoparts.service.impl.ProductServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
@@ -20,8 +27,8 @@ public class InventoryServlet extends BaseServlet {
     private IInventoryService inventoryService = new InventoryServiceImpl();
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<Inventory> inventories = inventoryService.findAll();
-            writeValue(inventories, response);
+            List<Map<String, Object>> all = inventoryService.findAll();
+            writeValue(all, response);
         } catch (InventoryException e) {
             e.printStackTrace();
         }
@@ -30,8 +37,8 @@ public class InventoryServlet extends BaseServlet {
     public void findAllByCondition(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String condition = request.getParameter("condition");
         try {
-            List<Inventory> byCondition = inventoryService.findAllByCondition(condition);
-            writeValue(byCondition, response);
+            List<Map<String, Object>> allByCondition = inventoryService.findAllByCondition(condition);
+            writeValue(allByCondition, response);
         } catch (InventoryException e) {
             e.printStackTrace();
         }
@@ -40,25 +47,45 @@ public class InventoryServlet extends BaseServlet {
     public void findByProId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String proId = request.getParameter("proId");
         try {
-            Inventory byProId = inventoryService.findByProId(proId);
+            Map<String, Object> byProId = inventoryService.findByProId(proId);
             writeValue(byProId, response);
         } catch (InventoryException e) {
             e.printStackTrace();
         }
     }
 
+    ICategoryBrandService categoryBrandService = new CategoryBrandServiceImpl();
+    IProductService productService = new ProductServiceImpl();
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map<String, String[]> params = request.getParameterMap();
+        String typeno = request.getParameter("typeno");
+        String cname = request.getParameter("cname");
+        String bname = request.getParameter("bname");
+        String remark = request.getParameter("remark");
+        Integer count = Integer.valueOf(request.getParameter("count"));
         Inventory inventory = new Inventory();
         try {
-            BeanUtils.populate(inventory, params);
+            CategoryBrand byTwoName = categoryBrandService.findByTwoName(cname, bname);
+            String cbId = byTwoName.getCbId();
+            Object[] byTypenoAndCbId = productService.findByTypenoAndCbId(typeno, cbId);
+            String proId = (String) byTypenoAndCbId[0];
+            Map<String, Object> byProId = inventoryService.findByProId(proId);
+            inventory.setProId(proId);
+            inventory.setRemark(remark);
+            if(null != byProId){
+                count += (Integer) byProId.get("count");
+                inventory.setCount(count);
+                boolean flag = inventoryService.change(inventory);
+                writeValue(flag, response);
+                return;
+            }
+            inventory.setCount(count);
             boolean flag = inventoryService.add(inventory);
             writeValue(flag, response);
-        } catch (IllegalAccessException e) {
+        }  catch (InventoryException e) {
             e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (CategoryBrandException e) {
             e.printStackTrace();
-        } catch (InventoryException e) {
+        } catch (ProductException e) {
             e.printStackTrace();
         }
     }

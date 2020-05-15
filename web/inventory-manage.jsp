@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>(单独)汽配销售系统用户管理页面</title>
+    <title>(单独)汽配销售系统库存管理页面</title>
     <meta name="description" content="汽配销售">
     <meta name="keywords" content="汽配销售">
 
@@ -50,141 +50,123 @@
     <!-- 内容区域 -->
 
     <div class="content-wrapper">
-        <!--  库存      -->
-        <div>
-            <!-- 内容头部 -->
-            <section class="content-header">
-                <h1>
-                    库存管理
-                    <small>库存列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 库存管理</a></li>
-                    <li><a href="#">库存</a></li>
-                    <li class="active">库存列表</li>
-                </ol>
-            </section>
-            <!-- 内容头部 /-->
-            <!-- 正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">库存列表</h3>
-                    </div>
 
-                    <div class="box-body">
+        <div class="tab-pane">
+            <%--    库存展示    --%>
+            <div id="showAllInventory">
+                <!-- 库存内容头部 -->
+                <section class="content-header">
+                    <h1>
+                        库存展示
+                        <small>数据列表</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-folder"></i> 库存管理</a></li>
+                        <li><a href="#">库存展示</a></li>
+                        <li class="active">数据列表</li>
+                    </ol>
+                </section>
+                <!-- 库存内容头部 /-->
+                <!-- 库存正文区域 -->
+                <section class="content row">
+                    <!-- .box-body -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">库存列表</h3>
+                        </div>
 
-                        <!-- 数据表格 -->
-                        <div class="table-box">
+                        <div class="box-body">
 
-                            <!--工具栏-->
+                            <!-- 数据表格 -->
+                            <div class="table-box">
+
+                                <!--工具栏-->
+                                <div class="pull-left">
+                                    <div class="form-group form-inline">
+                                        <div class="btn-group">
+<%--                                            <button type="button" class="btn btn-default btn-success" title="新增" data-toggle="modal" data-target="#addInventory"><i class="fa fa-file-o"></i> 新增</button>--%>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllInventoryByProIds()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllInventory()"><i class="fa fa-refresh"></i> 刷新</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" id="inventorySearch" name="table_search" class="form-control pull-right" placeholder="Search">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" id="search" class="btn btn-default" onclick="inventorySearch()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--工具栏/-->
+
+                                <!--数据列表-->
+                                <table id="inventory-list" class="table table-bordered table-striped table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="" style="padding-right:0px;">
+                                            <input id="inventory-selall" type="checkbox">
+                                        </th>
+                                        <th class="sorting_asc">#</th>
+                                        <th class="sorting_desc">型号</th>
+                                        <th class="sorting_asc sorting_asc_disabled">类别</th>
+                                        <th class="sorting_desc sorting_desc_disabled">品牌</th>
+                                        <th>库存数量</th>
+                                        <th>单位</th>
+                                        <th class="sorting">备注</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <!--数据列表/-->
+                            </div>
+                            <!-- 数据表格 /-->
+
+                        </div>
+                        <!-- /.box-body -->
+
+                        <!-- .box-footer-->
+                        <div class="box-footer">
                             <div class="pull-left">
                                 <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default btn-danger" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default btn-info" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
+                                    总共2 页，共14 条数据。 每页
+                                    <select class="form-control">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>50</option>
+                                    </select> 条
                                 </div>
                             </div>
+
                             <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="inventory-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="inventory-selall" type="checkbox">
-                                    </th>
-                                    <th>#</th>
-                                    <th>产品ID</th>
-                                    <th>型号</th>
-                                    <th>类别</th>
-                                    <th>品牌</th>
-                                    <th>厂家</th>
-                                    <th>产地</th>
-                                    <th>库存数量</th>
-                                    <th>单位</th>
-                                    <th>备注</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>id</td>
-                                    <td>32290446</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>100</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">查看</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#" aria-label="Previous">首页</a>
+                                    </li>
+                                    <li><a href="#">上一页</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">下一页</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">尾页</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
+                        <!-- /.box-footer-->
                     </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 支付方式正文区域 /-->
+                </section>
+                <!-- 库存正文区域 /-->
+            </div>
         </div>
-        <!-- 账号信息表 -->
 
     </div>
     <!-- @@close -->
@@ -196,7 +178,6 @@
 
 
 
-<script src="dist/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="dist/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="dist/plugins/jQueryUI/jquery-ui.min.js"></script>
 <script>
@@ -243,42 +224,118 @@
 <script src="dist/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="dist/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script>
-    $(document).ready(function() {
-        // 选择框
-        $(".select2").select2();
+    $(function () {
 
-        // WYSIHTML5编辑器
-        $(".textarea").wysihtml5({
-            locale: 'zh-CN'
-        });
-
-        // 全选操作
-        $("#brand-selall").click(function() {
-            var clicks = $(this).is(':checked');
-            if (!clicks) {
-                $("#brand-list td input[type='checkbox']").iCheck("uncheck");
-            } else {
-                $("#brand-list td input[type='checkbox']").iCheck("check");
-            }
-            $(this).data("clicks", !clicks);
-        });
+        if(!$("showAllInventory").attr("hidden")){
+            findAllInventory();
+        }
+        selectAllOrNone("#inventory-selall","#inventory-list");
     });
-
-
-    // 设置激活菜单
-    function setSidebarActive(tagUri) {
-        var liObj = $("#" + tagUri);
-        if (liObj.length > 0) {
-            liObj.parent().parent().addClass("active");
-            liObj.addClass("active");
+    //全选全不选
+    function selectAllOrNone(checkId,tabId) {
+        $(checkId).click(function () {
+            $(tabId+" tr td input[type='checkbox']").prop("checked",$(checkId).prop("checked"));
+        });
+    }
+    function deleteAllInventoryByProIds() {
+        var result = confirm("确定删除所选吗？");
+        if(result){
+            var checks = $("#inventory-list tbody tr td input[type='checkbox']:checked");
+            if(0 == checks.length){
+                alert("未选种任何一条!");
+                return false;
+            }
+            var checkedArr = new Array();
+            checks.each(function () {
+                checkedArr.push($(this).val());
+            });
+            var proIds = checkedArr.join(",");
+            $.post("inventory/deleteByProIds",{"proIds":proIds},function (data) {
+                if(data){
+                    $(function (){
+                        alert("批量删除成功！")
+                    });
+                    findAllInventory();
+                }else{
+                    $(function () {
+                        alert("批量删除失败！")
+                    });
+                }
+            });
         }
     }
+    function findAllInventory() {
+        $.post("inventory/findAll",{},function (data) {
+            if(null == data){
+                $("#inventory-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].proId+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].typeno+'</td>\n' +
+                    '                                        <td>'+data[i].cname+'</td>\n' +
+                    '                                        <td>'+data[i].bname+'</td>\n' +
+                    '                                        <td>'+data[i].count+'</td>\n' +
+                    '                                        <td>'+data[i].unit+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteInventoryByProId(\''+data[i].proId+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#inventory-list tbody").html(str);
+        });
+    }
 
+    function inventorySearch() {
+        var search = $("#inventorySearch").val();
+        $.post("inventory/findAllByCondition",{"condition":search},function (data) {
+            if(null == data){
+                $("#inventory-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].proId+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].typeno+'</td>\n' +
+                    '                                        <td>'+data[i].cname+'</td>\n' +
+                    '                                        <td>'+data[i].bname+'</td>\n' +
+                    '                                        <td>'+data[i].count+'</td>\n' +
+                    '                                        <td>'+data[i].unit+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteInventoryByProId(\''+data[i].proId+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#inventory-list tbody").html(str);
+        });
 
-    $(document).ready(function() {
-        // 激活导航位置
-        setSidebarActive("admin-index");
-    });
+    }
+    function deleteInventoryByProId(proId) {
+        var result = confirm("确定删除吗？");
+        if(result){
+            $.post("inventory/deleteByProId",{"proId":proId},function (data) {
+                if(data){
+                    $(function (){
+                        alert("删除成功！");
+                    });
+                    findAllInventory();
+                }else{
+                    $(function () {
+                        alert("删除失败！");
+                    });
+                }
+            });
+        }
+    }
 </script>
 </body>
 

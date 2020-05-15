@@ -46,637 +46,275 @@
 <body class="hold-transition skin-purple sidebar-mini">
 
 <div class="wrapper">
-<jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="header.jsp"></jsp:include>
     <!-- 内容区域 -->
 
     <div class="content-wrapper">
 
-
-        <div>
-            <!-- 产品销售内容头部 -->
-            <section class="content-header">
-                <h1>销售--开单</h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 销售管理</a></li>
-                    <li><a href="#">销售</a></li>
-                    <li class="active">开单</li>
-                </ol>
-            </section>
-            <!-- 产品销售内容头部 /-->
-            <!-- 产品销售正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header">
-                        <div class="col-md-1">
-                            <input type="button" class="btn btn-primary btn-block" value="开单"/>
+        <div class="tab-pane">
+            <%--    销售信息展示    --%>
+            <div id="showAllSale">
+                <!-- 销售信息内容头部 -->
+                <section class="content-header">
+                    <h1>
+                        销售信息展示
+                        <small>数据列表</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-folder"></i> 销售管理</a></li>
+                        <li><a href="#">销售信息展示</a></li>
+                        <li class="active">数据列表</li>
+                    </ol>
+                </section>
+                <!-- 销售信息内容头部 /-->
+                <!-- 销售信息正文区域 -->
+                <section class="content row">
+                    <!-- .box-body -->
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">销售信息列表</h3>
                         </div>
-                        <form class="col-md-11" style="margin: 4px 0px;">
-                            <div class="form-group">
-                                <div>
-                                    <input type="hidden" name="user_id" placeholder="客户id"/>
+
+                        <div class="box-body">
+                            <!-- 数据表格 -->
+                            <div class="table-box box-body" style="padding: 0px;">
+                                <!--工具栏-->
+                                <div class="pull-left">
+                                    <div class="form-group form-inline">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-primary" title="开单" data-toggle="modal" data-target="#addCustomer"><i class="fa fa-file-o"></i> 开单</button>
+                                        </div>
+                                        <div id="customerInfo" class="form-group ">
+
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-2">
-                                    <input type="text" name="cus_name" placeholder="客户名"/>
+                                <div class="box-tools pull-right">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <select class="form-control select2" id="paymentSelect" name="payWay" style="width: 100%;">
+                                        </select>
+                                    </div>
                                 </div>
-                                <div class="col-sm-2">
-                                    <input type="text" name="user_phone" placeholder="手机号码"/>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" name="log_name" placeholder="物流名称"/>
-                                </div>
-                                <div class="col-sm-2">
-                                    <input type="text" name="cus_receiver_add" placeholder="收货地址"/>
-                                </div>
-                                <div class="col-sm-offset-3 col-sm-1">
-                                    <select  name="pay_way">
-                                        <option>现金</option>
-                                        <option>微信</option>
-                                        <option>支付宝</option>
-                                        <option>银行卡</option>
-                                        <option>欠账</option>
-                                    </select>
-                                </div>
+                                <!--工具栏/-->
                             </div>
-                        </form>
-                    </div>
+                            <!-- 数据表格 /-->
 
-                    <div class="box-body">
+                            <div class="table-box" id="addProductView" hidden>
+                                <!--工具栏-->
+                                <div class="pull-left">
+                                    <div class="form-group form-inline">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default btn-success" title="添加" data-toggle="modal" data-target="#addProduct"><i class="fa fa-file-o"></i> 添加产品</button>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="removeAllProductByProIds()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--工具栏/-->
+                                <!--数据列表-->
+                                <table id="product-list" class="table table-bordered table-striped table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="" style="padding-right:0px;">
+                                            <input id="product-selall" type="checkbox">
+                                        </th>
+                                        <th>#</th>
+                                        <th>产品型号</th>
+                                        <th>产品类别</th>
+                                        <th>产品品牌</th>
+                                        <th>产品单价</th>
+                                        <th>数量</th>
+                                        <th>单位</th>
+                                        <th>总计</th>
+                                        <th>备注</th>
+                                        <th class="text-center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
-                        <!-- 数据表格 -->
-                        <div class="table-box">
+                                    </tbody>
+                                </table>
+                                <!--数据列表/-->
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
 
-                            <!--工具栏-->
+                        <!-- .box-footer-->
+                        <div class="box-footer">
                             <div class="pull-left">
                                 <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
+                                    总共2 页，共14 条数据。 每页
+                                    <select class="form-control">
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option>50</option>
+                                    </select> 条
                                 </div>
                             </div>
+
                             <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+                                <ul class="pagination">
+                                    <li>
+                                        <a href="#" aria-label="Previous">首页</a>
+                                    </li>
+                                    <li><a href="#">上一页</a></li>
+                                    <li><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">下一页</a></li>
+                                    <li>
+                                        <a href="#" aria-label="Next">尾页</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- /.box-footer-->
+                    </div>
+                </section>
+                <!-- 销售信息正文区域 /-->
+            </div>
+            <div id="addCustomer" class="modal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">添加客户</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group input-group-sm" style="width: 200px;">
+                                <input type="text" id="customerSearch" name="table_search" class="form-control pull-right" placeholder="请输入查询信息...">
 
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default" onclick="customerSearch()"><i class="fa fa-search"></i></button>
                                 </div>
                             </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="pro-sell-list" class="table table-bordered table-striped table-hover dataTable">
+                            <table id="customer-list" class="table table-bordered table-striped table-hover dataTable">
                                 <thead>
                                 <tr>
                                     <th class="" style="padding-right:0px;">
-                                        <input id="category-selall" type="checkbox">
+                                        <input id="customer-selall" type="checkbox">
+                                    </th>
+                                    <th>#</th>
+                                    <th>姓名</th>
+                                    <th>性别</th>
+                                    <th>手机</th>
+                                    <th>地址</th>
+                                    <th>发货物流</th>
+                                    <th>收货地址</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="关闭"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%--   添加商品   --%>
+            <div id="addProduct" class="modal" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">添加产品</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-box box-body" style="padding: 0px;">
+                                <div class="box-tools pull-left">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" id="productSearch" name="table_search" class="form-control pull-right" placeholder="请输入搜索信息">
+
+                                        <div class="input-group-btn">
+                                            <button type="submit" class="btn btn-default" onclick="productSearch()"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--数据列表-->
+                            <table id="productSel-list" class="table table-bordered table-striped table-hover dataTable">
+                                <thead>
+                                <tr>
+                                    <th class="" style="padding-right:0px;">
+                                        <input id="productSel-selall" type="checkbox">
                                     </th>
                                     <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品型号</th>
-                                    <th class="sorting_asc sorting_asc_disabled">类别</th>
-                                    <th class="sorting_asc sorting_asc_disabled">品牌</th>
-                                    <th class="sorting_asc sorting_asc_disabled">厂家</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产地</th>
-                                    <th class="sorting_asc sorting_asc_disabled">数量</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单位</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单价</th>
-                                    <th class="sorting_asc sorting_asc_disabled">优惠</th>
-                                    <th class="sorting_asc sorting_asc_disabled">总计</th>
+                                    <th class="sorting_asc sorting_asc_disabled">产品型号</th>
+                                    <th class="sorting_desc sorting_desc_disabled">类别</th>
+                                    <th class="sorting_desc sorting_desc_disabled">品牌</th>
+                                    <th>进价</th>
+                                    <th>数量</th>
+                                    <th>售价</th>
+                                    <th>库位</th>
                                     <th class="sorting">备注</th>
                                     <th class="text-center">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>10</td>
-                                    <td>台</td>
-                                    <td>800</td>
-                                    <td>0</td>
-                                    <td>8000</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-
                                 </tbody>
                             </table>
                             <!--数据列表/-->
                         </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="关闭"/>
                         </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
                     </div>
-                    <!-- /.box-footer-->
                 </div>
-            </section>
-            <!-- 产品销售正文区域 /-->
+
+            </div>
+
+            <%--   销售信息修改    --%>
+            <div id="changeSale" class="modal" role="dialog">
+                <!-- 销售信息修改内容头部 -->
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllSale()">
+                                <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">销售信息修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form id="changeSaleForm" class="form-horizontal">
+                                <div class="box-body">
+                                    <div id="content">
+
+                                    </div>
+                                    <div class="col-sm-offset-4 col-sm-8" >
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="changeSaleSubmit()" value="提交"/>
+                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllSale()" value="返回"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <div>
-            <!-- 产品销售内容头部 -->
-            <section class="content-header">
-                <h1>
-                    产品销售展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">产品销售展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 产品销售内容头部 /-->
-            <!-- 产品销售正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">产品销售列表</h3>
-                    </div>
-
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="pro-sell-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="category-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品型号</th>
-                                    <th class="sorting_asc sorting_asc_disabled">类别</th>
-                                    <th class="sorting_asc sorting_asc_disabled">品牌</th>
-                                    <th class="sorting_asc sorting_asc_disabled">厂家</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产地</th>
-                                    <th class="sorting_asc sorting_asc_disabled">数量</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单位</th>
-                                    <th class="sorting_asc sorting_asc_disabled">单价</th>
-                                    <th class="sorting_asc sorting_asc_disabled">优惠</th>
-                                    <th class="sorting_asc sorting_asc_disabled">总计</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>10</td>
-                                    <td>台</td>
-                                    <td>800</td>
-                                    <td>0</td>
-                                    <td>8000</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 产品销售正文区域 /-->
-        </div>
-
-        <div>
-            <!-- 品牌和类别关联内容头部 -->
-            <section class="content-header">
-                <h1>
-                    品牌和类别关联展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 品牌和类别关联管理</a></li>
-                    <li><a href="#">品牌和类别关联展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 品牌和类别关联内容头部 /-->
-            <!-- 品牌和类别关联正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">品牌和类别关联列表</h3>
-                    </div>
-
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="cate-bra-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="cate-bra-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品类别名</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品品牌名</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>方向机</td>
-                                    <td>台</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 品牌和类别关联正文区域 /-->
-        </div>
-
-        <div>
-            <!-- 产品内容头部 -->
-            <section class="content-header">
-                <h1>
-                    产品展示
-                    <small>数据列表</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-folder"></i> 产品管理</a></li>
-                    <li><a href="#">产品展示</a></li>
-                    <li class="active">数据列表</li>
-                </ol>
-            </section>
-            <!-- 产品内容头部 /-->
-            <!-- 产品正文区域 -->
-            <section class="content row">
-                <!-- .box-body -->
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">产品列表</h3>
-                    </div>
-
-                    <div class="box-body">
-
-                        <!-- 数据表格 -->
-                        <div class="table-box">
-
-                            <!--工具栏-->
-                            <div class="pull-left">
-                                <div class="form-group form-inline">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default" title="新建"><i class="fa fa-file-o"></i> 新建</button>
-                                        <button type="button" class="btn btn-default" title="批量删除"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                        <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-tools pull-right">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
-
-                                    <div class="input-group-btn">
-                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--工具栏/-->
-
-                            <!--数据列表-->
-                            <table id="product-list" class="table table-bordered table-striped table-hover dataTable">
-                                <thead>
-                                <tr>
-                                    <th class="" style="padding-right:0px;">
-                                        <input id="product-selall" type="checkbox">
-                                    </th>
-                                    <th class="sorting_asc">#</th>
-                                    <th class="sorting_desc">产品型号</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品类别</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品品牌</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品厂家</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品产地</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品单位</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品图片</th>
-                                    <th class="sorting_asc sorting_asc_disabled">产品描述</th>
-                                    <th class="sorting">备注</th>
-                                    <th class="text-center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>台</td>
-                                    <td>img/001.png</td>
-                                    <td>适用于XX车</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input name="ids" type="checkbox"></td>
-                                    <td>1</td>
-                                    <td>32290336</td>
-                                    <td>方向机</td>
-                                    <td>世宝</td>
-                                    <td>世宝</td>
-                                    <td>杭州</td>
-                                    <td>台</td>
-                                    <td>img/001.png</td>
-                                    <td>适用于XX车</td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-info btn-xs">修改</button>
-                                        <button type="button" class="btn btn-danger btn-xs">删除</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <!--数据列表/-->
-                        </div>
-                        <!-- 数据表格 /-->
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <!-- .box-footer-->
-                    <div class="box-footer">
-                        <div class="pull-left">
-                            <div class="form-group form-inline">
-                                总共2 页，共14 条数据。 每页
-                                <select class="form-control">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>20</option>
-                                    <option>50</option>
-                                </select> 条
-                            </div>
-                        </div>
-
-                        <div class="box-tools pull-right">
-                            <ul class="pagination">
-                                <li>
-                                    <a href="#" aria-label="Previous">首页</a>
-                                </li>
-                                <li><a href="#">上一页</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">下一页</a></li>
-                                <li>
-                                    <a href="#" aria-label="Next">尾页</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <!-- /.box-footer-->
-                </div>
-            </section>
-            <!-- 产品正文区域 /-->
-        </div>
     </div>
     <!-- @@close -->
     <!-- 内容区域 /-->
     <!-- /.col -->
-<jsp:include page="footer.jsp"></jsp:include>
+    <jsp:include page="footer.jsp"></jsp:include>
 </div>
 <!-- 内容区域 /-->
 
 
 
-<script src="dist/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="dist/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="dist/plugins/jQueryUI/jquery-ui.min.js"></script>
 <script>
@@ -722,43 +360,393 @@
 <script src="dist/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 <script src="dist/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="dist/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="js/date.js"></script>
 <script>
-    $(document).ready(function() {
-        // 选择框
-        $(".select2").select2();
+    $(function () {
 
-        // WYSIHTML5编辑器
-        $(".textarea").wysihtml5({
-            locale: 'zh-CN'
-        });
+        if(!$("showAllSale").attr("hidden")){
+            findAllSale();
+        }
 
-        // 全选操作
-        $("#brand-selall").click(function() {
-            var clicks = $(this).is(':checked');
-            if (!clicks) {
-                $("#brand-list td input[type='checkbox']").iCheck("uncheck");
-            } else {
-                $("#brand-list td input[type='checkbox']").iCheck("check");
+        $.post("logistics/findAll",{},function (data) {
+            var str1 = "";
+            for(var i = 0; i < data.length; i++){
+                str1+='<option>'+data[i].name+'</option>';
             }
-            $(this).data("clicks", !clicks);
+            $("#addSaleLogisticsSelect").html(str1);
         });
+
+        $.post("payment/findAll",{}, function (data) {
+            for(var i = 0; i < data.length; i++ ){
+                $("#paymentSelect").append('<option>'+data[i].payWay+'</option>')
+            }
+        });
+        selectAllOrNone("#sale-selall","#sale-list");
     });
-
-
-    // 设置激活菜单
-    function setSidebarActive(tagUri) {
-        var liObj = $("#" + tagUri);
-        if (liObj.length > 0) {
-            liObj.parent().parent().addClass("active");
-            liObj.addClass("active");
+    //全选全不选
+    function selectAllOrNone(checkId,tabId) {
+        $(checkId).click(function () {
+            $(tabId+" tr td input[type='checkbox']").prop("checked",$(checkId).prop("checked"));
+        });
+    }
+    function deleteAllSaleByUserIds() {
+        var result = confirm("确定删除所选吗？");
+        if(result){
+            var checks = $("#sale-list tbody tr td input[type='checkbox']:checked");
+            if(0 == checks.length){
+                alert("未选种任何一条!");
+                return false;
+            }
+            var checkedArr = new Array();
+            checks.each(function () {
+                checkedArr.push($(this).val());
+            });
+            var userIds = checkedArr.join(",");
+            $.post("user/deleteByUserIds",{"userIds":userIds},function (data) {
+                if(data){
+                    $(function (){
+                        alert("批量删除成功！")
+                    });
+                    findAllSale();
+                }else{
+                    $(function () {
+                        alert("批量删除失败！")
+                    });
+                }
+            });
         }
     }
+    function findAllSale() {
+        $.post("user/findAllSale",{},function (data) {
+            if(null == data){
+                $("#sale-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].userId+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].name+'</td>\n' +
+                    '                                        <td>'+data[i].gender+'</td>\n' +
+                    '                                        <td>'+data[i].phone+'</td>\n' +
+                    '                                        <td>'+data[i].address+'</td>\n' +
+                    '                                        <td>'+data[i].logName+'</td>\n' +
+                    '                                        <td>'+data[i].receiverAdd+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changeSale" onclick="findSaleByUserId(\''+data[i].userId+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteSaleByUserId(\''+data[i].userId+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#sale-list tbody").html(str);
+        });
+    }
 
+    function saleSearch() {
+        var search = $("#saleSearch").val();
+        $.post("user/findSaleByCondition",{"condition":search},function (data) {
+            if(null == data){
+                $("#sale-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].userId+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].name+'</td>\n' +
+                    '                                        <td>'+data[i].gender+'</td>\n' +
+                    '                                        <td>'+data[i].phone+'</td>\n' +
+                    '                                        <td>'+data[i].address+'</td>\n' +
+                    '                                        <td>'+data[i].logName+'</td>\n' +
+                    '                                        <td>'+data[i].receiverAdd+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changeSale" onclick="findSaleByUserId(\''+data[i].userId+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteSaleByUserId(\''+data[i].userId+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#sale-list tbody").html(str);
+        });
+    }
 
-    $(document).ready(function() {
-        // 激活导航位置
-        setSidebarActive("admin-index");
-    });
+    function customerSearch() {
+        var search = $("#customerSearch").val();
+        $.post("user/findCustomerByCondition",{"condition":search},function (data) {
+            if(null == data){
+                $("#customer-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].userId+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].name+'</td>\n' +
+                    '                                        <td>'+data[i].gender+'</td>\n' +
+                    '                                        <td>'+data[i].phone+'</td>\n' +
+                    '                                        <td>'+data[i].address+'</td>\n' +
+                    '                                        <td>'+data[i].logName+'</td>\n' +
+                    '                                        <td>'+data[i].receiverAdd+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-dismiss="modal" onclick="checkedCustomerByUserId(\''+data[i].userId+'\')" value="选中"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#customer-list tbody").html(str);
+        });
+    }
+
+    function productSearch() {
+        var search = $("#productSearch").val();
+        $.post("purchase/findByCondition",{"condition":search},function (data) {
+            if(null == data){
+                $("#productSel-list tbody").html("");
+                return;
+            }
+            var str = "";
+            for(var i = 0; i < data.length; i++){
+                var tr = '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i][0]+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i][2]+'</td>\n' +
+                    '                                        <td>'+data[i][3]+'</td>\n' +
+                    '                                        <td>'+data[i][4]+'</td>\n' +
+                    '                                        <td>'+data[i][5]+'</td>\n' +
+                    '                                        <td>'+data[i][6]+'</td>\n' +
+                    '                                        <td>'+data[i][7]+'</td>\n' +
+                    '                                        <td>'+data[i][9]+'</td>\n' +
+                    '                                        <td>'+data[i][10]+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="checkedProductByPurNo(\''+data[i][0]+'\')" value="选中"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                str +=tr;
+            }
+            $("#productSel-list tbody").html(str);
+        });
+
+    }
+
+    function checkedCustomerByUserId(userId) {
+        $("#customerInfo").html("");
+        $.post("user/findByUserId",{"userId":userId},function (data) {
+            $("#customerInfo").append('<input type="text" name="name" value="'+ data.name + '">\n' +
+                '                <input type="text" name="phone" value="'+ data.phone + '">\n' +
+                '                <input type="text" name="receiverAdd" value="'+ data.receiverAdd + '">\n' +
+                '                <input type="text" name="logName" value="'+ data.logName + '">\n' +
+                '                <input type="hidden" name="userId" value="' + userId + '">');
+        });
+        $("#addProductView").removeAttr("hidden");
+        $("#product-list tbody").html("");
+    }
+
+    function checkedProductByPurNo(purNo) {
+        $.post("")
+        $("#product-list tbody").append('');
+    }
+    function findSaleByUserId(userId) {
+        $.post("user/findByUserId",{"userId":userId},function (data) {
+            var str=
+                '\n' +
+                '                                <div class="col-sm-12 form-group"  style="text-align: center">\n' +
+                '                                    <label id="changeSaleMsg"></label>\n' +
+                '                                </div>\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSaleUserId" class="col-sm-4 control-label">销售id：</label>\n' +
+                '                                    <input type="hidden" class="form-control" name="userId" value="'+data.userId+'" placeholder="请输入销售id...">\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" name="userId" value="'+data.userId+'" disabled placeholder="请输入销售id...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSaleName" class="col-sm-4 control-label">用户名：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" name="username" value="'+data.username+'" placeholder="请输入用户名...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSaleName" class="col-sm-4 control-label">手机号码：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" name="phone" value="'+data.phone+'" placeholder="请输入手机号码...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSaleFactory" class="col-sm-4 control-label">邮箱：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" name="email" value="'+data.email+'" placeholder="请输入邮箱...">\n' +
+                '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">姓名：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" name="name" value="'+data.name+'" placeholder="请输入姓名...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">激活码：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" value="'+data.activeCode+'" disabled placeholder="请输入激活码...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">激活状态：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" name="activeStatus" value="'+data.activeStatus+'" placeholder="请输入激活状态...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">注册时间：</label>\n' +
+                '                                        <input type="hidden" class="form-control" value="'+ data.regTime +'" placeholder="请输入注册时间...">\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" value="'+ changeTime(data.regTime) +'" disabled placeholder="请输入注册时间...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">头像：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="file" name="img" value="'+data.img+'" style="border: 0">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">姓别：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                       <div class="form-inline">\n';
+            if(data.gender === "男"){
+                str += '                                           <div class="radio"><label><input type="radio" name="gender" value="男" checked> 男</label></div>\n' +
+                    '                                           <div class="radio"><label><input type="radio" name="gender" value="女"> 女</label></div>\n' ;
+            }else if(data.gender === "女"){
+                str +='                                           <div class="radio"><label><input type="radio" name="gender" value="男"> 男</label></div>\n' +
+                    '                                           <div class="radio"><label><input type="radio" name="gender" value="女" checked> 女</label></div>\n';
+            }
+            str +=
+                '                                       </div>\n' +
+                '                                       <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">地址：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" name="address" value="'+data.address+'" placeholder="请输入地址...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">收货地址：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" name="receiverAdd" value="'+data.receiverAdd+'" placeholder="请输入收货地址...">\n' +
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">发货物流：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                            <select class="form-control select2" id="changeSaleSelect" name="logName" style="width: 100%;">\n' +
+                '                                            </select>'+
+                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' +
+                '                                <div class="col-sm-6 form-group">\n' +
+                '                                    <label for="inputSaleRemark" class="col-sm-4 control-label">备注：</label>\n' +
+                '\n' +
+                '                                    <div class="col-sm-8">\n' +
+                '                                        <input type="text" class="form-control" name="remark" value="'+data.remark+'" placeholder="请输入备注...">\n' +
+                '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
+                '                                    </div>\n' +
+                '                                </div>\n' +
+                '\n' ;
+            $.post("logistics/findAll",{},function (ldata) {
+                var str2 = "";
+                for(var j = 0; j < ldata.length; j++){
+                    if(data.logName === ldata[j].name){
+                        str2+='<option selected>'+ldata[j].name+'</option>';
+                    }else{
+                        str2+='<option>'+ldata[j].name+'</option>';
+                    }
+                }
+                $("#changeSaleSelect").html(str2);
+            });
+            $("#changeSaleForm .box-body #content").html(str);
+        });
+
+    }
+    function deleteSaleByUserId(userId) {
+        var result = confirm("确定删除吗？");
+        if(result){
+            $.post("user/deleteByUserId",{"userId":userId},function (data) {
+                if(data){
+                    $(function (){
+                        alert("删除成功！");
+                    });
+                    findAllSale();
+                }else{
+                    $(function () {
+                        alert("删除失败！");
+                    });
+                }
+            });
+        }
+    }
+    function addSale(){
+        $.post("user/add",$("#addSaleForm").serialize(),function (data) {
+            if(data){
+                $("#addSaleMsg").html("添加成功！");
+                $("#addSaleMsg").css("color","green");
+            }else{
+                $("#addSaleMsg").html("已存在！添加失败！");
+                $("#addSaleMsg").css("color","red");
+            }
+        });
+
+    }
+    function changeSaleSubmit() {
+        $.post("user/change",$("#changeSaleForm").serialize(), function (data) {
+            if(data){
+                $("#changeSaleMsg").html("修改成功！");
+                $("#changeSaleMsg").css("color","green");
+            }else{
+                $("#changeSaleMsg").html("修改失败！");
+                $("#changeSaleMsg").css("color","red");
+            }
+        });
+    }
 </script>
 </body>
 

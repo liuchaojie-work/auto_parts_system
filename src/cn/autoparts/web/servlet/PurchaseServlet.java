@@ -133,8 +133,7 @@ public class PurchaseServlet extends BaseServlet {
             writeValue(flag, response);
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-        }
-        catch (PurchaseException e) {
+        } catch (PurchaseException e) {
             e.printStackTrace();
         } catch (LocationException e) {
             e.printStackTrace();

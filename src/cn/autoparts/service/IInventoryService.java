@@ -4,6 +4,7 @@ import cn.autoparts.bean.Inventory;
 import cn.autoparts.exception.InventoryException;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 库存
@@ -14,7 +15,7 @@ public interface IInventoryService {
      * @return
      * @throws InventoryException
      */
-    List<Inventory> findAll() throws InventoryException;
+    List<Map<String, Object>> findAll() throws InventoryException;
 
     /**
      * 根据条件查找
@@ -22,7 +23,7 @@ public interface IInventoryService {
      * @return
      * @throws InventoryException
      */
-    List<Inventory> findAllByCondition(String condition) throws InventoryException;
+    List<Map<String, Object>> findAllByCondition(String condition) throws InventoryException;
 
     /**
      * 根据产品id查找
@@ -30,7 +31,7 @@ public interface IInventoryService {
      * @return
      * @throws InventoryException
      */
-    Inventory findByProId(String proId) throws InventoryException;
+    Map<String, Object> findByProId(String proId) throws InventoryException;
 
     /**
      * 增加

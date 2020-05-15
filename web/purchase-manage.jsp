@@ -266,7 +266,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-offset-4 col-sm-8" >
-                                        <input type="submit" class="btn btn-success col-sm-2" onclick="addPurchase()" value="提交"/>
+                                        <input type="button" class="btn btn-success col-sm-2" onclick="addPurchase()" value="提交"/>
                                         <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning" value="重置"/>
                                     </div>
                                 </div>
@@ -656,6 +656,7 @@
                     });
                 }
             });
+
         }
     }
 
@@ -668,6 +669,15 @@
                 $("#addPurchaseMsg").html("已存在！添加失败！");
                 $("#addPurchaseMsg").css("color","red");
             }
+        });
+        $.post("inventory/add",$("#addPurchaseForm").serialize(),function (data) {
+            // if(data){
+            //     $("#addPurchaseMsg").html("添加成功！");
+            //     $("#addPurchaseMsg").css("color","green");
+            // }else{
+            //     $("#addPurchaseMsg").html("已存在！添加失败！");
+            //     $("#addPurchaseMsg").css("color","red");
+            // }
         });
     }
 
