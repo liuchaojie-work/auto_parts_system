@@ -71,11 +71,49 @@
 
             <!-- /.social-auth-links -->
 
-            <a href="#">忘记密码</a><span> | </span><a href="#register" onclick="goRegister();" class="text-center">新用户注册</a>
+            <a href="#" data-toggle="modal" data-target="#resetPassword">忘记密码</a><span> | </span><a href="#register" onclick="goRegister();" class="text-center">新用户注册</a>
         </div>
         <!-- /.login-box-body -->
     </div>
     <!-- /.login-box -->
+
+    <div id="resetPassword" class="modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">重置密码</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form id="resetPasswordForm" class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group" style="text-align: center; ">
+                                <span id="resetPassword-msg"></span>
+                            </div>
+                            <div class="col-sm-10 form-group">
+                                <label class="col-sm-4 control-label">邮箱：</label>
+                                <div class="col-sm-8"  id="email" >
+                                    <input type="text" class="form-control" name="email" placeholder="请输入邮箱...">
+                                    <span class="help-block small msg-info"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-10 form-group">
+                                <div class="col-sm-offset-6 col-sm-2" >
+                                    <input type="button" class="btn btn-info" onclick="resetPassword();" value="发送重置密码邮件">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </div>
@@ -197,6 +235,9 @@
             checkRegisterCheckcode();
         });
 
+        $("#email > input").blur(function () {
+            checkResetPasswordEmail();
+        })
     });
 
     function changeCheckCode(img){
@@ -318,7 +359,6 @@
              return false;
          }else{
              $("#register-email > div").html("");
-
              $.post("user/findByEmail",{"account":email},function (data) {
                  if(null != data){
                      $("#register-email > div").html("邮箱已存在!").css({"fontsize":"8px","color":"red"});
@@ -343,7 +383,7 @@
              return true;
          }
     }
-     
+
     function checkRegisterRePassword() {
          var repassword = $("#register-repassword > input").val();
          var password = $("#register-password > input").val();
@@ -378,6 +418,38 @@
              });
              return true;
          }
+    }
+
+    function checkResetPasswordEmail() {
+        var email = $("#email > input").val();
+        var reg_email = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+        if(null == email || 0 == email.length){
+            $("#register-email > div").html("邮箱不能为空!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else if(!reg_email.test(email)){
+            $("#register-email > div").html("邮箱格式错误!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else{
+            $("#register-email > div").html("");
+            $.post("user/findByEmail",{"account":email},function (data) {
+                if(null == data){
+                    $("#register-email > div").html("邮箱不存在!").css({"fontsize":"8px","color":"red"});
+                    return false;
+                }
+            });
+            return true;
+        }
+    }
+    function resetPassword(){
+        if(checkResetPasswordEmail()){
+            $.post("user/sendResetPasswordEmail",$("#resetPasswordForm").serialize(), function (data) {
+                if(data){
+                    $("#resetPassword-msg").html("重置密码邮件已发送，请根据邮件提示操作!").css({"fontsize":"8px","color":"green"});
+                }else {
+                    $("#resetPassword-msg").html("重置密码邮件发送失败！请稍后再试。").css({"fontsize":"8px","color":"red"});
+                }
+            })
+        }
     }
 
 

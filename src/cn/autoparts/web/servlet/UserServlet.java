@@ -59,6 +59,21 @@ public class UserServlet extends BaseServlet {
         }
     }
 
+    public void resetPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String email = request.getParameter("email");
+        HttpSession session = request.getSession();
+        session.setAttribute("email",email);
+//        request.getRequestDispatcher("/reset-password.jsp").forward(request,response);
+        response.sendRedirect(request.getContextPath()+"/reset-password.jsp");
+    }
+
+    public void sendResetPasswordEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String email = request.getParameter("email");
+        String emailMsg = "请<a href='http://localhost:8080/auto_parts_system/user/resetPassword?email="+ email +"' target='_blank'>点击重置密码</a>";
+        boolean flag = SendMailUtils.sendMail(email, emailMsg, "用户重置密码邮件");
+        writeValue(flag, response);
+    }
+
     public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         Map<String, String[]> params = request.getParameterMap();
         String userId = UUIDUtils.getID("u");
