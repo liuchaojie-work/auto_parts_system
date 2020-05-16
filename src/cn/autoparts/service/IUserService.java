@@ -121,6 +121,14 @@ public interface IUserService {
     boolean changePassword(String account, String newPassword) throws UserException;
 
     /**
+     * 修改激活状态
+     * @param activeCode
+     * @return
+     * @throws UserException
+     */
+    boolean changeActiceStatus(String activeCode) throws UserException;
+
+    /**
      * 根据用户id删除用户
      * @param userId
      * @return

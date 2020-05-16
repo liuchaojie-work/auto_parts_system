@@ -133,6 +133,12 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
+    public boolean changeActiceStatus(String activeCode) throws SQLException {
+        String sql = "update tab_user set activeStatus = 1 where activeCode = ?";
+        return 1 == runner.update(sql, activeCode);
+    }
+
+    @Override
     public boolean deleteByUserId(String userId) throws SQLException {
         String sql = "delete from tab_user where userId = ?";
         return 1 == runner.update(sql, userId);

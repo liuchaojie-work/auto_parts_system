@@ -286,7 +286,7 @@
                                         <label class="col-sm-4 control-label">激活状态：</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="activeStatus" value="0" placeholder="请输入激活状态...">
+                                            <input type="text" class="form-control" name="activeStatus" value="1" placeholder="请输入激活状态...">
                                             <span class="help-block small msg-info" >Help block with success</span>
                                         </div>
                                     </div>

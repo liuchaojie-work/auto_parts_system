@@ -44,7 +44,7 @@
             <p class="login-box-msg">登录系统</p>
 
             <form id="loginForm">
-                <div id="login-msg" style="text-align: center;color: red"></div>
+                <div id="login-error-msg" style="text-align: center;color: red"></div>
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" id="login-account" name="account" placeholder="用户名/手机号/邮箱">
                     <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -63,7 +63,7 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat" >登录</button>
+                        <button type="button" class="btn btn-primary btn-block btn-flat" onclick="login();">登录</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -94,44 +94,51 @@
             <p class="login-box-msg">新用户注册</p>
 
             <form id="registForm">
-                <div class="form-group has-feedback">
-                    <input type="text" class="form-control" name="username" placeholder="用户名">
-                    <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                <div class="form-group" style="text-align: center; ">
+                    <span id="register-error-msg"></span>
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" id="register-username" >
+                    <input type="text" class="form-control" name="username" placeholder="用户名">
+                    <span class="glyphicon glyphicon-user form-control-feedback" ></span>
+                    <div></div>
+                </div>
+                <div class="form-group has-feedback" id="register-phone" >
                     <input type="text" class="form-control" name="phone" placeholder="手机号">
                     <span class="glyphicon glyphicon-phone form-control-feedback"></span>
+                    <div></div>
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" id="register-email" >
                     <input type="email" class="form-control" name="email" placeholder="邮箱">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                    <div></div>
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" id="register-password" >
                     <input type="password" class="form-control" name="password" placeholder="密码">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    <div></div>
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" id="register-repassword" >
                     <input type="password" class="form-control" name="repassword" placeholder="确认密码">
                     <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                    <div></div>
                 </div>
-                <div class="form-group has-feedback">
+                <div class="form-group has-feedback" id="register-checkcode" >
                     <input type="text" class="form-control" style="width: 50%; float: left" name="checkcode" placeholder="验证码">
                     <img id="checkCodeImg" style="margin: 0 10px;"  src="checkCode" onclick="changeCheckCode(this);">
+                    <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                    <div></div>
                 </div>
-                <div class="form-group" style="text-align: center; color: red;">
-                    <span>ERRORINFO</span>
-                </div>
+
                 <div class="row">
                     <div class="col-xs-8">
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox"> 我同意 <a href="#">协议</a>
-                            </label>
-                        </div>
+                        <label >
+                            <input type="checkbox" id="register-checkbox"> 我同意 <a href="#">协议</a>
+                            <div id="checkbox-error-msg"></div>
+                        </label>
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat" >注册</button>
+                        <button type="button" class="btn btn-primary btn-block btn-flat" onclick="register();">注册</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -166,26 +173,71 @@
             checkLoginPassword();
         });
 
-        $("#loginForm").submit(function () {
-            if(checkLoginAccount && checkLoginPassword){
-                var account = $("#login-account").val();
-                var password = $("#login-password").val();
-                $.post("user/login",$("#loginForm").serialize(), function (data) {
-                    if(null != data){
-                        location.href = "${pageContext.request.contextPath}/index.jsp";
-                    }else{
-                        alert("密码有误！");
-                    }
-                });
-            }
+        $("#register-username > input").blur(function () {
+            checkRegisterUsername();
         });
+
+        $("#register-phone > input").blur(function () {
+            checkRegisterPhone();
+        });
+
+        $("#register-email > input").blur(function () {
+            checkRegisterEmail();
+        });
+
+        $("#register-password > input").blur(function () {
+            checkRegisterPassword();
+        });
+
+        $("#register-repassword > input").blur(function () {
+            checkRegisterRePassword();
+        });
+
+        $("#register-checkcode > input").blur(function () {
+            checkRegisterCheckcode();
+        });
+
     });
 
     function changeCheckCode(img){
         img.src="checkCode?"+new Date().getTime();
     }
 
+    function login() {
+        if(checkLoginAccount && checkLoginPassword){
+            var account = $("#login-account").val();
+            var password = $("#login-password").val();
+            $("#login-error-msg").html("");
+            $.post("user/login",$("#loginForm").serialize(), function (data) {
+                if( null == data){
+                    $("#login-error-msg").html("密码错误!").css({"fontsize":"8px","color":"red"});
+                }else if(null != data && "1" != data.activeStatus){
+                    $("#login-error-msg").html("账号未激活!").css({"fontsize":"8px","color":"red"});
+                }else{
+                    location.href = "${pageContext.request.contextPath}/index.jsp";
+                }
+            });
+        }
+    }
 
+    function register() {
+        var checkbox = $("#register-checkbox").is(":checked");
+        if(checkbox){
+            $("#checkbox-error-msg").html("");
+            var flag = checkRegisterUsername && checkRegisterPhone && checkRegisterEmail &&
+                checkRegisterPassword && checkRegisterRePassword && checkRegisterCheckcode;
+            if(flag){
+                $.post("user/register",$("#registForm").serialize(),function (data) {
+                    if(data){
+                        $("#register-error-msg").html("注册成功！请登录邮箱激活！").css({"fontsize":"8px","color":"green"});
+                    }
+                });
+            }
+        }else{
+            $("#checkbox-error-msg").html("请同意协议!").css({"fontsize":"8px","color":"red"});
+            return;
+        }
+    }
     function checkLoginPassword() {
         var password = $("#login-password").val();
         if(null == password || 0 == password.length){
@@ -211,6 +263,118 @@
              }
          });
      }
+
+
+     function checkRegisterUsername() {
+         var username = $("#register-username > input").val();
+         if(null == username || 0 == username.length){
+             $("#register-username > div").html("用户名不能为空!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else{
+             $.post("user/findByUsername",{"account":username}, function (data) {
+                 if(null != data){
+                     $("#register-username > div").html("用户名已存在!").css({"fontsize":"8px","color":"red"});
+                     return false;
+                 }else{
+                     $("#register-username > div").html("");
+                     return true;
+                 }
+             });
+         }
+
+     }
+
+     function checkRegisterPhone() {
+         var phone = $("#register-phone > input").val();
+         var reg_phone = /^[0-9]{11}$/;
+         if(null == phone || 0 == phone.length){
+             $("#register-phone > div").html("手机号码不能为空!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else if(!reg_phone.test(phone)){
+             $("#register-phone > div").html("手机号码必须为11位!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else{
+             $.post("user/findByPhone",{"account":phone},function (data) {
+                 if(null != data){
+                     $("#register-phone > div").html("手机号码已存在!").css({"fontsize":"8px","color":"red"});
+                     return false;
+                 }else{
+                     $("#register-phone > div").html("");
+                     return true;
+                 }
+             });
+         }
+     }
+
+     function checkRegisterEmail() {
+         var email = $("#register-email > input").val();
+         var reg_email = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+         if(null == email || 0 == email.length){
+             $("#register-email > div").html("邮箱不能为空!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else if(!reg_email.test(email)){
+             $("#register-email > div").html("邮箱格式错误!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else{
+             $.post("user/findByEmail",{"account":email},function (data) {
+                 if(null != data){
+                     $("#register-email > div").html("邮箱已存在!").css({"fontsize":"8px","color":"red"});
+                     return false;
+                 }else{
+                     $("#register-email > div").html("");
+                     return true;
+                 }
+             });
+         }
+     }
+
+     function checkRegisterPassword() {
+         var password = $("#register-password > input").val();
+         var reg_password = /^\w{6,12}$/;
+         if(null == password || 0 == password.length){
+             $("#register-password > div").html("密码不能为空!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else if(!reg_password.test(password)){
+             $("#register-password > div").html("密码必须为6-12位!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else{
+             $("#register-password > div").html("");
+             return true;
+         }
+     }
+     
+     function checkRegisterRePassword() {
+         var repassword = $("#register-repassword > input").val();
+         var password = $("#register-password > input").val();
+         var reg_repassword = /^\w{6,12}$/;
+         if(null == repassword || 0 == repassword.length){
+             $("#register-repassword > div").html("密码不能为空!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else if(!reg_repassword.test(repassword)){
+             $("#register-repassword > div").html("密码必须为6-12位!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else if(repassword != password){
+             $("#register-repassword > div").html("两次密码不相同!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else{
+             $("#register-repassword > div").html("");
+             return true;
+         }
+     }
+
+     function checkRegisterCheckcode() {
+         var checkcode = $("#register-checkcode > input").val();
+         $.post("user/checkCode",{"checkcode":checkcode},function (data) {
+            if(!data){
+                $("#register-checkcode > div").html("验证码错误!").css({"fontsize":"8px","color":"red"});
+                return false;
+            } else{
+                $("#register-checkcode > div").html("");
+                return true;
+            }
+         });
+     }
+
 
      function goRegister(){
         $("#login").attr("hidden","hidden");

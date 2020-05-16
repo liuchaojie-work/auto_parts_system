@@ -4,6 +4,7 @@ import cn.autoparts.bean.User;
 import cn.autoparts.exception.UserException;
 import cn.autoparts.service.IUserService;
 import cn.autoparts.service.impl.UserServiceImpl;
+import cn.autoparts.util.SendMailUtils;
 import cn.autoparts.util.UUIDUtils;
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -24,12 +25,10 @@ public class UserServlet extends BaseServlet {
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String account = request.getParameter("account");
         String password = request.getParameter("password");
+        HttpSession session = request.getSession();
         try {
             User byAccountAndPassword = userService.findByAccountAndPassword(account, password);
-            if(null != byAccountAndPassword){
-                HttpSession session = request.getSession();
-                session.setAttribute("user",byAccountAndPassword);
-            }
+            session.setAttribute("user",byAccountAndPassword);
             writeValue(byAccountAndPassword, response);
         } catch (UserException e) {
             e.printStackTrace();
@@ -38,6 +37,52 @@ public class UserServlet extends BaseServlet {
 
     public void exit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         request.getSession().invalidate();
+    }
+
+    public void checkCode(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String checkcode = request.getParameter("checkcode");
+        HttpSession session = request.getSession();
+        String checkcode_server = (String)session.getAttribute("CHECKCODE_SERVER");
+        boolean flag = checkcode_server.equalsIgnoreCase(checkcode);
+        writeValue(flag, response);
+    }
+
+    public void active(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String activeCode = request.getParameter("activeCode");
+        try {
+            boolean flag = userService.changeActiceStatus(activeCode);
+            if(flag){
+                request.getRequestDispatcher("/success.jsp").forward(request,response);
+            }
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        Map<String, String[]> params = request.getParameterMap();
+        String userId = UUIDUtils.getID("u");
+        String activeCode = UUIDUtils.getID("a");
+        User user = new User();
+        user.setUserId(userId);
+        user.setActiveCode(activeCode);
+        user.setIden(0);
+        user.setActiveStatus("0");
+        try {
+            BeanUtils.populate(user,params);
+            boolean flag = userService.add(user);
+            if(flag){
+                String emailMsg = "注册成功！ 请<a href='http://localhost:8080/auto_parts_system/user/active?activeCode="+ activeCode +"' target='_blank'>点击激活</a> 后登录";
+                SendMailUtils.sendMail(user.getEmail(), emailMsg, "用户激活邮件");
+            }
+            writeValue(flag, response);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
     }
 
     public void changePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{

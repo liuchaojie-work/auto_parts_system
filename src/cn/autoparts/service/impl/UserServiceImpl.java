@@ -162,6 +162,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public boolean changeActiceStatus(String activeCode) throws UserException {
+        try {
+            return userDao.changeActiceStatus(activeCode);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserException("修改激活状态失败！");
+        }
+    }
+
+    @Override
     public boolean deleteByUserId(String userId) throws UserException {
         try {
             return userDao.deleteByUserId(userId);

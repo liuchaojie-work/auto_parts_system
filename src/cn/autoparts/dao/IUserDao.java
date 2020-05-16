@@ -124,6 +124,14 @@ public interface IUserDao {
      * @throws SQLException
      */
     boolean changePassword(String account, String newPassword) throws SQLException;
+
+    /**
+     * 修改激活状态
+     * @param activeCode
+     * @return
+     * @throws SQLException
+     */
+    boolean changeActiceStatus(String activeCode) throws SQLException;
     /**
      * 根据用户id删除用户
      * @param userId
