@@ -86,7 +86,7 @@ public class UserServlet extends BaseServlet {
     }
 
     public void changePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        String newPassword = request.getParameter("newPassword");
+        String newPassword = request.getParameter("password");
         String account = request.getParameter("account");
         try {
             boolean flag = userService.changePassword(account, newPassword);
@@ -237,6 +237,8 @@ public class UserServlet extends BaseServlet {
             e.printStackTrace();
         }
     }
+
+
     public void deleteByUserId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
         try {

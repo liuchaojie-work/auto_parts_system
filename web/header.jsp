@@ -60,7 +60,7 @@
                             </li>
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">修改密码</a>
+                                    <a href="#" class="btn btn-default btn-flat" data-toggle="modal" data-target="#changePassword">修改密码</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="#" class="btn btn-default btn-flat" onclick="$.get('user/exit',{},function() {
@@ -94,8 +94,6 @@
                     </div>
                 </c:when>
             </c:choose>
-
-
 
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
@@ -314,3 +312,130 @@
         <!-- /.sidebar -->
     </aside>
     <!-- 导航侧栏 /-->
+    <div id="changePassword" class="modal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改密码</h4>
+                </div>
+
+                <div class="modal-body">
+                    <form id="changePasswordForm" class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group" style="text-align: center; ">
+                                <span id="changePassword-msg"></span>
+                            </div>
+                            <input type="hidden" class="form-control" name="account" value="${user.username}">
+                            <div class="col-sm-10 form-group">
+                                <label class="col-sm-4 control-label">旧密码：</label>
+                                <div class="col-sm-8"  id="oldpassword" >
+                                    <input type="password" class="form-control" placeholder="请输入旧密码...">
+                                    <span class="help-block small msg-info"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-10 form-group">
+                                <label class="col-sm-4 control-label">新密码：</label>
+                                <div class="col-sm-8"  id="password" >
+                                    <input type="password" class="form-control" name="password" placeholder="请输入新密码...">
+                                    <span class="help-block small msg-info"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-10 form-group">
+                                <label class="col-sm-4 control-label">确认密码：</label>
+                                <div class="col-sm-8"  id="repassword" >
+                                    <input type="password" class="form-control" placeholder="请再次输入新密码...">
+                                    <span class="help-block small msg-info"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-10 form-group">
+                                <div class="col-sm-offset-6 col-sm-2" >
+                                    <input type="button" class="btn btn-info" onclick="changePassword();" value="保存">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="dist/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script>
+    $(function () {
+        $("#password > input").blur(function () {
+            checkPassword();
+        });
+
+        $("#repassword > input").blur(function () {
+            checkRePassword();
+        });
+
+        $("#oldpassword > input").blur(function () {
+            checkOldPassword();
+        });
+    });
+
+    function checkOldPassword() {
+        var oldpassword = $("#oldpassword > input").val();
+        $.post("user/findByUsername",{"account":"${user.username}"},function (data) {
+           if(data.password == oldpassword){
+               $("#oldpassword > span").html("");
+               return true;
+           }else {
+               $("#oldpassword > span").html("旧密码错误！").css({"fontsize":"8px","color":"red"});
+               return false;
+           }
+        });
+    }
+    function checkPassword() {
+        var password = $("#password > input").val();
+        var reg_password = /^\w{6,12}$/;
+        if(null == password || 0 == password.length){
+            $("#password > span").html("密码不能为空!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else if(!reg_password.test(password)){
+            $("#password > span").html("密码必须为6-12位!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else{
+            $("#password > span").html("");
+            return true;
+        }
+    }
+
+    function checkRePassword() {
+        var repassword = $("#repassword > input").val();
+        var password = $("#password > input").val();
+        var reg_repassword = /^\w{6,12}$/;
+        if(null == repassword || 0 == repassword.length){
+            $("#repassword > span").html("密码不能为空!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else if(!reg_repassword.test(repassword)){
+            $("#repassword > span").html("密码必须为6-12位!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else if(repassword != password){
+            $("#repassword > span").html("两次密码不相同!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else{
+            $("#repassword > span").html("");
+            return true;
+        }
+    }
+
+    function changePassword() {
+        if(checkOldPassword && checkPassword && checkRePassword){
+            $.post("user/changePassword",$("#changePasswordForm").serialize(), function (data) {
+               if(data){
+                   $("#changePassword-msg").html("修改成功!").css({"fontsize":"8px","color":"green"});
+               } else{
+                   $("#changePassword-msg").html("修改失败!").css({"fontsize":"8px","color":"red"});
+               }
+            });
+        }
+    }
+</script>
