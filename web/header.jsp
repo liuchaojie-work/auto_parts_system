@@ -62,6 +62,11 @@
                                 <div class="pull-left">
                                     <a href="#" class="btn btn-default btn-flat" data-toggle="modal" data-target="#changePassword">修改密码</a>
                                 </div>
+                                <c:if test="${0 eq user.iden}">
+                                    <div class="pull-left" style="margin: 0 20px;">
+                                        <a href="#" class="btn btn-default btn-flat" data-toggle="modal" data-target="#inputInfo" onclick="findInfo('${user.logName}');">完善信息</a>
+                                    </div>
+                                </c:if>
                                 <div class="pull-right">
                                     <a href="#" class="btn btn-default btn-flat" onclick="$.get('user/exit',{},function() {
                                       
@@ -365,6 +370,98 @@
         </div>
     </div>
 
+    <div id="inputInfo" class="modal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">完善信息</h4>
+            </div>
+
+            <div class="modal-body">
+                <form id="inputInfoForm" class="form-horizontal">
+                    <div class="box-body">
+                        <div class="form-group" style="text-align: center; ">
+                            <span id="inputInfo-msg"></span>
+                        </div>
+                        <input type="hidden" class="form-control" name="username" value="${user.username}">
+                        <input type="hidden" class="form-control" name="regTime" value="${user.regTime}">
+
+                        <div class="col-sm-6 form-group">
+                            <label class="col-sm-4 control-label">姓名：</label>
+                            <div class="col-sm-8" id="inputName">
+                                <input type="text" class="form-control" name="name" value="${user.name}" placeholder="请输入姓名...">
+                                <span class="help-block small msg-info"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label class="col-sm-4 control-label">头像：</label>
+                            <div class="col-sm-8" id="inputImg">
+                                <input type="file" class="form-control" name="img" value="${user.img}" placeholder="请选择图片" style="border: 0">
+                                <span class="help-block small msg-info" ></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label class="col-sm-4 control-label">性别：</label>
+                            <div class="col-sm-8">
+                                <div class="form-inline" id="inputGender">
+                                    <c:if test="${'男' eq user.gender or empty user.gender}">
+                                        <div class="radio"><label><input type="radio" name="gender" value="男" checked> 男</label></div>
+                                        <div class="radio"><label><input type="radio" name="gender" value="女"> 女</label></div>
+                                    </c:if>
+                                    <c:if test="${'女' eq user.gender}">
+                                        <div class="radio"><label><input type="radio" name="gender" value="男" > 男</label></div>
+                                        <div class="radio"><label><input type="radio" name="gender" value="女" checked> 女</label></div>
+                                    </c:if>
+                                    <span class="help-block small msg-info" ></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label class="col-sm-4 control-label">地址：</label>
+                            <div class="col-sm-8" id="inputAddress">
+                                <input type="text" class="form-control" name="address" value="${user.address}" placeholder="请输入地址...">
+                                <span class="help-block small msg-info" ></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label class="col-sm-4 control-label">收货地址：</label>
+                            <div class="col-sm-8" id="inputReceiverAdd">
+                                <input type="text" class="form-control" name="receiverAdd" value="${user.receiverAdd}" placeholder="请输入收货地址...">
+                                <span class="help-block small msg-info" ></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label class="col-sm-4 control-label">发货物流：</label>
+                            <div class="col-sm-8" id="inputLogistics">
+                                <select class="form-control select2" id="logisticsSelect" name="logName" style="width: 100%;">
+                                </select>
+                                <span class="help-block small msg-info"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-10 form-group">
+                            <div class="col-sm-offset-6 col-sm-2" >
+                                <input type="button" class="btn btn-info" onclick="inputInfo();" value="保存">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="dist/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script>
     $(function () {
@@ -379,20 +476,93 @@
         $("#oldpassword > input").blur(function () {
             checkOldPassword();
         });
+
+        $("#inputAddress > input").blur(function () {
+            checkAddress();
+        });
+
+        $("#inputName > input").blur(function () {
+            checkName();
+        });
+
+        $("#inputReceiverAdd > input").blur(function () {
+           checkReceiverAdd();
+        });
+
+        $.post("logistics/findAll",{},function (data) {
+            var str1 = "";
+            for(var i = 0; i < data.length; i++){
+                str1+='<option>'+data[i].name+'</option>';
+            }
+            $("#logisticsSelect").html(str1);
+        });
     });
+
+    function findInfo(logName) {
+        $.post("logistics/findAll",{},function (data) {
+            var str1 = "";
+            for(var i = 0; i < data.length; i++){
+                if(data[i].name === logName){
+                    str1+='<option selected>'+data[i].name+'</option>';
+                }else{
+                    str1+='<option>'+data[i].name+'</option>';
+                }
+            }
+            $("#logisticsSelect").html(str1);
+        });
+    }
+    function checkName() {
+        var inputName = $("#inputName > input").val();
+        if(null == inputName || 0 == inputName.length){
+            $("#inputName > span").html("姓名不能为空!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else{
+            $("#inputName > span").html("");
+            return true;
+        }
+    }
+
+    function checkAddress() {
+        var inputAddress = $("#inputAddress > input").val();
+        if(null == inputAddress || 0 == inputAddress.length){
+            $("#inputAddress > span").html("地址不能为空!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else{
+            $("#inputAddress > span").html("");
+            return true;
+        }
+    }
+
+    function checkReceiverAdd() {
+        var inputReceiverAdd = $("#inputReceiverAdd > input").val();
+        if(null == inputReceiverAdd || 0 == inputReceiverAdd.length){
+            $("#inputReceiverAdd > span").html("收货地址不能为空!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else{
+            $("#inputReceiverAdd > span").html("");
+            return true;
+        }
+    }
 
     function checkOldPassword() {
         var oldpassword = $("#oldpassword > input").val();
-        $.post("user/findByUsername",{"account":"${user.username}"},function (data) {
-           if(data.password == oldpassword){
-               $("#oldpassword > span").html("");
-               return true;
-           }else {
-               $("#oldpassword > span").html("旧密码错误！").css({"fontsize":"8px","color":"red"});
-               return false;
-           }
-        });
+        if(null == oldpassword || 0 == oldpassword.length){
+            $("#oldpassword > span").html("旧密码不能为空!").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else{
+            $.post("user/findByUsername",{"account":"${user.username}"},function (data) {
+                if(data.password == oldpassword){
+                    $("#oldpassword > span").html("");
+                    return true;
+                }else {
+                    $("#oldpassword > span").html("旧密码错误!").css({"fontsize":"8px","color":"red"});
+                    return false;
+                }
+            });
+        }
     }
+
+
     function checkPassword() {
         var password = $("#password > input").val();
         var reg_password = /^\w{6,12}$/;
@@ -428,13 +598,27 @@
     }
 
     function changePassword() {
-        if(checkOldPassword && checkPassword && checkRePassword){
+        var flag =checkOldPassword() && checkPassword() && checkRePassword();
+        if(flag){
             $.post("user/changePassword",$("#changePasswordForm").serialize(), function (data) {
                if(data){
-                   $("#changePassword-msg").html("修改成功!").css({"fontsize":"8px","color":"green"});
+                   $("#changePassword-msg").html("修改密码成功!").css({"fontsize":"8px","color":"green"});
                } else{
-                   $("#changePassword-msg").html("修改失败!").css({"fontsize":"8px","color":"red"});
+                   $("#changePassword-msg").html("修改密码失败!").css({"fontsize":"8px","color":"red"});
                }
+            });
+        }
+    }
+    
+    function inputInfo() {
+        var flag = checkName() && checkAddress() && checkReceiverAdd();
+        if(flag){
+            $.post("user/changeByUsername",$("#inputInfoForm").serialize(), function (data) {
+                if(data){
+                    $("#inputInfo-msg").html("保存成功!").css({"fontsize":"8px","color":"green"});
+                } else{
+                    $("#inputInfo-msg").html("保存失败!").css({"fontsize":"8px","color":"red"});
+                }
             });
         }
     }

@@ -117,6 +117,13 @@ public interface IUserDao {
     boolean change(User user) throws SQLException;
 
     /**
+     * 根据用户名完善信息
+     * @param user
+     * @return
+     * @throws SQLException
+     */
+    boolean changeByUsername(User user) throws SQLException;
+    /**
      * 修改密码
      * @param account
      * @param newPassword

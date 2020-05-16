@@ -60,8 +60,11 @@ public class SendMailUtils {
      * @return
      */
     public static boolean sendMail(String email, String emailMsg, String subject){
-        if(StringUtils.isEmpty(email) || StringUtils.isEmpty(emailMsg)){
-            throw new RuntimeException("邮件地址或者邮箱内容为空！发送消息失败!");
+        if(StringUtils.isEmpty(email)){
+            throw new RuntimeException("邮件地址为空！发送消息失败!");
+        }
+        if(StringUtils.isEmpty(emailMsg)){
+            throw new RuntimeException("邮件内容为空！发送消息失败!");
         }
 
         //接收人邮箱地址

@@ -204,28 +204,58 @@
     }
 
     function login() {
-        if(checkLoginAccount && checkLoginPassword){
+        var flag = checkLoginAccount() && checkLoginPassword();
+        if(flag){
             var account = $("#login-account").val();
-            var password = $("#login-password").val();
-            $("#login-error-msg").html("");
-            $.post("user/login",$("#loginForm").serialize(), function (data) {
-                if( null == data){
-                    $("#login-error-msg").html("密码错误!").css({"fontsize":"8px","color":"red"});
-                }else if(null != data && "1" != data.activeStatus){
-                    $("#login-error-msg").html("账号未激活!").css({"fontsize":"8px","color":"red"});
+            $.post("user/findByThreeCondition",{"account":account}, function (Accdata) {
+                if(null == Accdata){
+                    $("#login-error-msg").html("该用户不存在！").css({"fontsize":"8px","color":"red"});
+                    return false;
                 }else{
-                    location.href = "${pageContext.request.contextPath}/index.jsp";
+                    $.post("user/login",$("#loginForm").serialize(), function (data) {
+                        if( null == data){
+                            $("#login-error-msg").html("密码错误!").css({"fontsize":"8px","color":"red"});
+                        }else if(null != data && "1" != data.activeStatus){
+                            $("#login-error-msg").html("账号未激活!").css({"fontsize":"8px","color":"red"});
+                        }else{
+                            location.href = "${pageContext.request.contextPath}/index.jsp";
+                        }
+                    });
                 }
             });
         }
     }
 
+
+    function checkLoginPassword() {
+        var password = $("#login-password").val();
+        if(null == password || 0 == password.length){
+            $("#login-password-msg").html("密码不能为空！").css({"fontsize":"8px","color":"red"});
+            return false;
+        }else {
+            $("#login-password-msg").html("");
+            return true;
+        }
+
+    }
+    function checkLoginAccount() {
+         var account = $("#login-account").val();
+         if(null == account || 0 == account.length){
+             $("#login-account-msg").html("账号不能为空!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else{
+             $("#login-account-msg").html("");
+             return true;
+         }
+
+     }
+
     function register() {
         var checkbox = $("#register-checkbox").is(":checked");
         if(checkbox){
             $("#checkbox-error-msg").html("");
-            var flag = checkRegisterUsername && checkRegisterPhone && checkRegisterEmail &&
-                checkRegisterPassword && checkRegisterRePassword && checkRegisterCheckcode;
+            var flag = checkRegisterUsername() && checkRegisterPhone() && checkRegisterEmail() &&
+                checkRegisterPassword() && checkRegisterRePassword() && checkRegisterCheckcode();
             if(flag){
                 $.post("user/register",$("#registForm").serialize(),function (data) {
                     if(data){
@@ -238,53 +268,26 @@
             return;
         }
     }
-    function checkLoginPassword() {
-        var password = $("#login-password").val();
-        if(null == password || 0 == password.length){
-            $("#login-password-msg").html("密码不能为空！");
-            $("#login-password-msg").css({"fontsize":"8px","color":"red"});
-            return false;
-        }else {
-            $("#login-password-msg").html("");
-            return true;
-        }
 
-    }
-     function checkLoginAccount() {
-         var account = $("#login-account").val();
-         $.post("user/findByThreeCondition",{"account":account}, function (data) {
-             if(data){
-                 $("#login-account-msg").html("");
-                 return true;
-             }else{
-                 $("#login-account-msg").html("该用户不存在！");
-                 $("#login-account-msg").css({"fontsize":"8px","color":"red"});
-                 return false;
-             }
-         });
-     }
-
-
-     function checkRegisterUsername() {
+    function checkRegisterUsername() {
          var username = $("#register-username > input").val();
          if(null == username || 0 == username.length){
              $("#register-username > div").html("用户名不能为空!").css({"fontsize":"8px","color":"red"});
              return false;
          }else{
+             $("#register-username > div").html("");
              $.post("user/findByUsername",{"account":username}, function (data) {
                  if(null != data){
                      $("#register-username > div").html("用户名已存在!").css({"fontsize":"8px","color":"red"});
-                     return false;
-                 }else{
-                     $("#register-username > div").html("");
-                     return true;
                  }
              });
+             return true;
          }
+
 
      }
 
-     function checkRegisterPhone() {
+    function checkRegisterPhone() {
          var phone = $("#register-phone > input").val();
          var reg_phone = /^[0-9]{11}$/;
          if(null == phone || 0 == phone.length){
@@ -294,19 +297,17 @@
              $("#register-phone > div").html("手机号码必须为11位!").css({"fontsize":"8px","color":"red"});
              return false;
          }else{
+             $("#register-phone > div").html("");
              $.post("user/findByPhone",{"account":phone},function (data) {
                  if(null != data){
                      $("#register-phone > div").html("手机号码已存在!").css({"fontsize":"8px","color":"red"});
-                     return false;
-                 }else{
-                     $("#register-phone > div").html("");
-                     return true;
                  }
              });
+             return true;
          }
      }
 
-     function checkRegisterEmail() {
+    function checkRegisterEmail() {
          var email = $("#register-email > input").val();
          var reg_email = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
          if(null == email || 0 == email.length){
@@ -316,19 +317,19 @@
              $("#register-email > div").html("邮箱格式错误!").css({"fontsize":"8px","color":"red"});
              return false;
          }else{
+             $("#register-email > div").html("");
+
              $.post("user/findByEmail",{"account":email},function (data) {
                  if(null != data){
                      $("#register-email > div").html("邮箱已存在!").css({"fontsize":"8px","color":"red"});
                      return false;
-                 }else{
-                     $("#register-email > div").html("");
-                     return true;
                  }
              });
+             return true;
          }
      }
 
-     function checkRegisterPassword() {
+    function checkRegisterPassword() {
          var password = $("#register-password > input").val();
          var reg_password = /^\w{6,12}$/;
          if(null == password || 0 == password.length){
@@ -341,9 +342,9 @@
              $("#register-password > div").html("");
              return true;
          }
-     }
+    }
      
-     function checkRegisterRePassword() {
+    function checkRegisterRePassword() {
          var repassword = $("#register-repassword > input").val();
          var password = $("#register-password > input").val();
          var reg_repassword = /^\w{6,12}$/;
@@ -360,23 +361,27 @@
              $("#register-repassword > div").html("");
              return true;
          }
-     }
+    }
 
-     function checkRegisterCheckcode() {
+    function checkRegisterCheckcode() {
          var checkcode = $("#register-checkcode > input").val();
-         $.post("user/checkCode",{"checkcode":checkcode},function (data) {
-            if(!data){
-                $("#register-checkcode > div").html("验证码错误!").css({"fontsize":"8px","color":"red"});
-                return false;
-            } else{
-                $("#register-checkcode > div").html("");
-                return true;
-            }
-         });
-     }
+         if( null == checkcode || 0 == checkcode.length){
+             $("#register-checkcode > div").html("验证码不能为空!").css({"fontsize":"8px","color":"red"});
+             return false;
+         }else{
+             $("#register-checkcode > div").html("");
+             $.post("user/checkCode",{"checkcode":checkcode},function (data) {
+                 if(!data){
+                     $("#register-checkcode > div").html("验证码错误!").css({"fontsize":"8px","color":"red"});
+                     return false;
+                 }
+             });
+             return true;
+         }
+    }
 
 
-     function goRegister(){
+    function goRegister(){
         $("#login").attr("hidden","hidden");
         $("#register").removeAttr("hidden");
     }

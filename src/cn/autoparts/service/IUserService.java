@@ -110,6 +110,13 @@ public interface IUserService {
      * @throws UserException
      */
     boolean change(User user) throws UserException;
+    /**
+     * 根据用户名完善信息
+     * @param user
+     * @return
+     * @throws UserException
+     */
+    boolean changeByUsername(User user) throws UserException;
 
     /**
      * 修改密码

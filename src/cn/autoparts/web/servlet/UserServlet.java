@@ -238,6 +238,27 @@ public class UserServlet extends BaseServlet {
         }
     }
 
+    public void changeByUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Map<String, String[]> params = request.getParameterMap();
+        User user = new User();
+        try {
+            BeanUtils.populate(user, params);
+            boolean flag = userService.changeByUsername(user);
+            if(flag){
+                String username = request.getParameter("username");
+                User byUsername = userService.findByUsername(username);
+                HttpSession session = request.getSession();
+                session.setAttribute("user",byUsername);
+            }
+            writeValue(flag, response);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void deleteByUserId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");

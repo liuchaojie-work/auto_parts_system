@@ -116,12 +116,21 @@ public class UserDaoImpl implements IUserDao {
     @Override
     public boolean change(User user) throws SQLException {
         String sql = "update tab_user set username = ?, phone = ?, email = ?, activeStatus = ?, " +
-                " img = ?, name = ?, gender = ?,  address = ?, " +
+                " img = ?, regTime = ?, name = ?, gender = ?,  address = ?, " +
                 "receiverAdd = ?, logName = ?, remark = ? where userId = ?";
         Object[] params = {user.getUsername(), user.getPhone(), user.getEmail(),
-                user.getActiveStatus(),user.getImg(),
+                user.getActiveStatus(),user.getImg(),user.getRegTime(),
                 user.getName(), user.getGender(), user.getAddress(),
                 user.getReceiverAdd(), user.getLogName(), user.getRemark(), user.getUserId()};
+        return 1 == runner.update(sql, params);
+    }
+
+    @Override
+    public boolean changeByUsername(User user) throws SQLException {
+        String sql = "update tab_user set regTime = ?, img = ?, name = ?, gender = ?,  address = ?, " +
+                " receiverAdd = ?, logName = ?, remark = ? where username = ?";
+        Object[] params = {user.getRegTime(), user.getImg(), user.getName(), user.getGender(), user.getAddress(),
+                 user.getReceiverAdd(), user.getLogName(), user.getRemark(), user.getUsername()};
         return 1 == runner.update(sql, params);
     }
 

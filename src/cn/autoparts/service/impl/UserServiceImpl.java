@@ -152,6 +152,16 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public boolean changeByUsername(User user) throws UserException {
+        try {
+            return userDao.changeByUsername(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserException("根据用户名修改失败！");
+        }
+    }
+
+    @Override
     public boolean changePassword(String account, String newPassword) throws UserException {
         try {
             return userDao.changePassword(account, newPassword);

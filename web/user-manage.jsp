@@ -230,7 +230,7 @@
                                         <label for="inputCustomerPlace" class="col-sm-4 control-label">邮箱：</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="inputCustomerPlace" name="email" placeholder="请输入产地...">
+                                            <input type="text" class="form-control" id="inputCustomerPlace" name="email" placeholder="请输入邮箱...">
                                             <span class="help-block small msg-info">Help block with success</span>
                                         </div>
                                     </div>
@@ -593,7 +593,7 @@
                 '\n' +
                 '                                <div class="col-sm-6 form-group">\n' +
                 '                                    <label for="inputCustomerPlace" class="col-sm-4 control-label">注册时间：</label>\n' +
-                '                                        <input type="hidden" class="form-control" value="'+ data.regTime +'" placeholder="请输入注册时间...">\n' +
+                '                                        <input type="hidden" class="form-control" name="regTime" value="'+ data.regTime +'" placeholder="请输入注册时间...">\n' +
                 '\n' +
                 '                                    <div class="col-sm-8">\n' +
                 '                                        <input type="text" class="form-control" value="'+ changeTime(data.regTime) +'" disabled placeholder="请输入注册时间...">\n' +
