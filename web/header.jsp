@@ -302,7 +302,7 @@
                         </li>
 
                         <li id="login-info">
-                            <a href="user-manage.jsp">
+                            <a href="loginInfo-manage.jsp">
                                 <i class="fa fa-circle-o"></i> 登录信息记录
                             </a>
                         </li>

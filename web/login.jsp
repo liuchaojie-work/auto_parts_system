@@ -259,7 +259,11 @@
                         }else if(null != data && "1" != data.activeStatus){
                             $("#login-error-msg").html("账号未激活!").css({"fontsize":"8px","color":"red"});
                         }else{
-                            location.href = "${pageContext.request.contextPath}/index.jsp";
+                            $.post("loginInfo/add",{"userId":data.userId}, function (flag) {
+                               if(flag){
+                                   location.href = "${pageContext.request.contextPath}/index.jsp";
+                               }
+                            });
                         }
                     });
                 }

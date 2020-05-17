@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>(单独)汽配销售系统账号管理页面</title>
+    <title>(单独)汽配销售系统登录记录管理页面</title>
     <meta name="description" content="汽配销售">
     <meta name="keywords" content="汽配销售">
 
@@ -46,33 +46,33 @@
 <body class="hold-transition skin-purple sidebar-mini">
 
 <div class="wrapper">
-<jsp:include page="header.jsp"></jsp:include>
+    <jsp:include page="header.jsp"></jsp:include>
     <!-- 内容区域 -->
 
     <div class="content-wrapper">
 
         <div class="tab-pane">
-            <%--    账号展示    --%>
-            <div id="showAllAccount">
-                <!-- 账号内容头部 -->
+            <%--    登录记录展示    --%>
+            <div id="showAllLoginInfo">
+                <!-- 登录记录内容头部 -->
                 <section class="content-header">
                     <h1>
-                        账号展示
+                        登录记录展示
                         <small>数据列表</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-folder"></i> 账号管理</a></li>
-                        <li><a href="#">账号展示</a></li>
+                        <li><a href="#"><i class="fa fa-folder"></i> 登录记录管理</a></li>
+                        <li><a href="#">登录记录展示</a></li>
                         <li class="active">数据列表</li>
                     </ol>
                 </section>
-                <!-- 账号内容头部 /-->
-                <!-- 账号正文区域 -->
+                <!-- 登录记录内容头部 /-->
+                <!-- 登录记录正文区域 -->
                 <section class="content row">
                     <!-- .box-body -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">账号列表</h3>
+                            <h3 class="box-title">登录记录列表</h3>
                         </div>
 
                         <div class="box-body">
@@ -84,38 +84,39 @@
                                 <div class="pull-left">
                                     <div class="form-group form-inline">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllAccountByUserIds()"><i class="fa fa-trash-o"></i> 批量删除</button>
-                                            <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllAccount()"><i class="fa fa-refresh"></i> 刷新</button>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllLoginInfoByNos()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllLoginInfo()"><i class="fa fa-refresh"></i> 刷新</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="box-tools pull-right">
                                     <div class="input-group input-group-sm" style="width: 200px;">
-                                        <input type="text" id="userSearch" name="table_search" class="form-control pull-right" placeholder="Search">
+                                        <input type="text" id="loginInfoSearch" name="table_search" class="form-control pull-right" placeholder="请输入搜索条件...">
 
                                         <div class="input-group-btn">
-                                            <button type="submit" id="search" class="btn btn-default" onclick="userSearch()"><i class="fa fa-search"></i></button>
+                                            <button type="submit" id="search" class="btn btn-default" onclick="loginInfoSearch()"><i class="fa fa-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
                                 <!--工具栏/-->
 
                                 <!--数据列表-->
-                                <table id="user-list" class="table table-bordered table-striped table-hover dataTable">
+                                <table id="loginInfo-list" class="table table-bordered table-striped table-hover dataTable">
                                     <thead>
                                     <tr>
                                         <th class="" style="padding-right:0px;">
-                                            <input id="user-selall" type="checkbox">
+                                            <input id="loginInfo-selall" type="checkbox">
                                         </th>
-                                        <th class="sorting_asc">#</th>
-                                        <th class="sorting_desc">用户id</th>
-                                        <th class="sorting_desc">用户名</th>
-                                        <th class="sorting_asc sorting_asc_disabled">手机号</th>
-                                        <th class="sorting_desc sorting_desc_disabled">邮箱</th>
-                                        <th class="sorting_desc sorting_desc_disabled">姓名</th>
-                                        <th class="sorting_desc sorting_desc_disabled">身份</th>
-                                        <th class="sorting">备注</th>
-                                        <th class="text-center">操作</th>
+                                        <th >#</th>
+                                        <th >编号</th>
+                                        <th >用户id</th>
+                                        <th >姓名</th>
+                                        <th >性别</th>
+                                        <th >手机号</th>
+                                        <th >身份</th>
+                                        <th >登录时间</th>
+                                        <th >备注</th>
+                                        <th >操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -164,7 +165,7 @@
                         <!-- /.box-footer-->
                     </div>
                 </section>
-                <!-- 账号正文区域 /-->
+                <!-- 登录记录正文区域 /-->
             </div>
 
         </div>
@@ -173,7 +174,7 @@
     <!-- @@close -->
     <!-- 内容区域 /-->
     <!-- /.col -->
-<jsp:include page="footer.jsp"></jsp:include>
+    <jsp:include page="footer.jsp"></jsp:include>
 </div>
 <!-- 内容区域 /-->
 
@@ -224,13 +225,14 @@
 <script src="dist/plugins/bootstrap-slider/bootstrap-slider.js"></script>
 <script src="dist/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
 <script src="dist/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="js/date.js"></script>
 <script>
     $(function () {
 
-        if(!$("showAllAccount").attr("hidden")){
-            findAllAccount();
+        if(!$("showAllLoginInfo").attr("hidden")){
+            findAllLoginInfo();
         }
-        selectAllOrNone("#user-selall","#user-list");
+        selectAllOrNone("#loginInfo-selall","#loginInfo-list");
     });
     //全选全不选
     function selectAllOrNone(checkId,tabId) {
@@ -238,10 +240,10 @@
             $(tabId+" tr td input[type='checkbox']").prop("checked",$(checkId).prop("checked"));
         });
     }
-    function deleteAllAccountByUserIds() {
+    function deleteAllLoginInfoByNos() {
         var result = confirm("确定删除所选吗？");
         if(result){
-            var checks = $("#user-list tbody tr td input[type='checkbox']:checked");
+            var checks = $("#loginInfo-list tbody tr td input[type='checkbox']:checked");
             if(0 == checks.length){
                 alert("未选种任何一条!");
                 return false;
@@ -250,13 +252,13 @@
             checks.each(function () {
                 checkedArr.push($(this).val());
             });
-            var userIds = checkedArr.join(",");
-            $.post("user/deleteByUserIds",{"userIds":userIds},function (data) {
+            var nos = checkedArr.join(",");
+            $.post("loginInfo/deleteByNos",{"nos":nos},function (data) {
                 if(data){
                     $(function (){
                         alert("批量删除成功！")
                     });
-                    findAllAccount();
+                    findAllLoginInfo();
                 }else{
                     $(function () {
                         alert("批量删除失败！")
@@ -265,73 +267,76 @@
             });
         }
     }
-    function findAllAccount() {
-        $.post("user/findAll",{},function (data) {
+    function findAllLoginInfo() {
+        $.post("loginInfo/findAll",{},function (data) {
             if(null == data){
-                $("#user-list tbody").html("");
+                $("#loginInfo-list tbody").html("");
                 return;
             }
             var str = "";
             for(var i = 0; i < data.length; i++){
                 var tr =
                     '<tr>\n' +
-                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].userId+'"></td>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].no+'"></td>\n' +
                     '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].no+'</td>\n' +
                     '                                        <td>'+data[i].userId+'</td>\n' +
-                    '                                        <td>'+data[i].username+'</td>\n' +
-                    '                                        <td>'+data[i].phone+'</td>\n' +
-                    '                                        <td>'+data[i].email+'</td>\n' +
                     '                                        <td>'+data[i].name+'</td>\n' +
-                    '                                        <td>'+data[i].iden + '</td>\n' +
+                    '                                        <td>'+data[i].gender+'</td>\n' +
+                    '                                        <td>'+data[i].phone+'</td>\n' +
+                    '                                        <td>'+data[i].iden+'</td>\n' +
+                    '                                        <td>'+changeTime(data[i].time)+'</td>\n' +
                     '                                        <td>'+data[i].remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteAccountByUserId(\''+data[i].userId+'\')" value="删除"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteLoginInfoByNo(\''+data[i].no+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
                 str +=tr;
             }
-            $("#user-list tbody").html(str);
+            $("#loginInfo-list tbody").html(str);
         });
     }
 
-    function userSearch() {
-        var search = $("#userSearch").val();
-        $.post("user/findAllByCondition",{"condition":search},function (data) {
+    function loginInfoSearch() {
+        var search = $("#loginInfoSearch").val();
+        $.post("loginInfo/findByCondition",{"condition":search},function (data) {
             if(null == data){
-                $("#user-list tbody").html("");
+                $("#loginInfo-list tbody").html("");
                 return;
             }
             var str = "";
             for(var i = 0; i < data.length; i++){
-                var tr= '<tr>\n' +
-                '                                        <td><input name="ids" type="checkbox" value="'+data[i].userId+'"></td>\n' +
-                '                                        <td>'+(i+1)+'</td>\n' +
-                '                                        <td>'+data[i].userId+'</td>\n' +
-                '                                        <td>'+data[i].username+'</td>\n' +
-                '                                        <td>'+data[i].phone+'</td>\n' +
-                '                                        <td>'+data[i].email+'</td>\n' +
-                '                                        <td>'+data[i].name+'</td>\n' +
-                '                                        <td>'+data[i].iden+'</td>\n'+
-                '                                        <td>'+data[i].remark+'</td>\n' +
-                '                                        <td class="text-center">\n' +
-                '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteAccountByUserId(\''+data[i].userId+'\')" value="删除"/>\n' +
-                '                                        </td>\n' +
-                '                                    </tr>';
+                var tr=
+                    '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].no+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+data[i].no+'</td>\n' +
+                    '                                        <td>'+data[i].userId+'</td>\n' +
+                    '                                        <td>'+data[i].name+'</td>\n' +
+                    '                                        <td>'+data[i].gender+'</td>\n' +
+                    '                                        <td>'+data[i].phone+'</td>\n' +
+                    '                                        <td>'+data[i].iden+'</td>\n' +
+                    '                                        <td>'+changeTime(data[i].time)+'</td>\n' +
+                    '                                        <td>'+data[i].remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteLoginInfoByNo(\''+data[i].no+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
                 str +=tr;
             }
-            $("#user-list tbody").html(str);
+            $("#loginInfo-list tbody").html(str);
         });
 
     }
-    function deleteAccountByUserId(userId) {
+    function deleteLoginInfoByNo(no) {
         var result = confirm("确定删除吗？");
         if(result){
-            $.post("user/deleteByUserId",{"userId":userId},function (data) {
+            $.post("loginInfo/deleteByNo",{"no":no},function (data) {
                 if(data){
                     $(function (){
                         alert("删除成功！");
                     });
-                    findAllAccount();
+                    findAllLoginInfo();
                 }else{
                     $(function () {
                         alert("删除失败！");
