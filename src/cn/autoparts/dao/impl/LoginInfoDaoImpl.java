@@ -5,6 +5,7 @@ import cn.autoparts.dao.ILoginInfoDao;
 import cn.autoparts.util.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,6 +13,40 @@ import java.util.Map;
 
 public class LoginInfoDaoImpl implements ILoginInfoDao {
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+
+    @Override
+    public int findTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(tab_login_info.no) from tab_user, tab_login_info where tab_login_info.userId = tab_user.userId";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(tab_login_info.no) from tab_user, tab_login_info" +
+                    " where tab_login_info.userId = tab_user.userId and (tab_login_info.no like ? or tab_login_info.userId like ? or tab_user.name like ? " +
+                    " or tab_user.phone like ? or tab_user.gender like ? or tab_user.iden like ? or tab_login_info.time like binary ? or tab_login_info.remark like ? )";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+                    "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> findByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select tab_login_info.no, tab_login_info.userId, tab_user.name, tab_user.phone, " +
+                    " tab_user.gender, tab_user.iden, tab_login_info.time, tab_login_info.remark from tab_user, tab_login_info" +
+                    " where tab_login_info.userId = tab_user.userId limit ?, ?";
+            return runner.query(sql, new MapListHandler(), start, pageSize);
+        }else{
+            String sql = "select tab_login_info.no, tab_login_info.userId, tab_user.name, tab_user.phone, " +
+                    " tab_user.gender, tab_user.iden, tab_login_info.time, tab_login_info.remark from tab_user, tab_login_info" +
+                    " where tab_login_info.userId = tab_user.userId and (tab_login_info.no like ? or tab_login_info.userId like ? or tab_user.name like ? " +
+                    " or tab_user.phone like ? or tab_user.gender like ? or tab_user.iden like ? or tab_login_info.time like binary ? or tab_login_info.remark like ? ) limit ?, ?";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+                    "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", start, pageSize};
+            return runner.query(sql, new MapListHandler(), params);
+        }
+    }
+
     @Override
     public List<Map<String, Object>> findAll() throws SQLException {
         String sql = "select tab_login_info.no, tab_login_info.userId, tab_user.name, tab_user.phone, " +

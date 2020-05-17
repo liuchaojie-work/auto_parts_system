@@ -10,6 +10,25 @@ import java.util.Map;
  * 登录记录
  */
 public interface ILoginInfoDao {
+
+    /**
+     * 查询总记录数
+     * @param condition
+     * @return
+     * @throws SQLException
+     */
+    int findTotalCount(String condition) throws SQLException;
+
+    /**
+     * 分页查询
+     * @param start
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws SQLException
+     */
+    List<Map<String, Object>> findByPage(int start, int pageSize, String condition) throws SQLException;
+
     /**
      * 查找所有记录
      * @return

@@ -1,6 +1,7 @@
 package cn.autoparts.web.servlet;
 
 import cn.autoparts.bean.LoginInfo;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.LoginInfoException;
 import cn.autoparts.service.ILoginInfoService;
 import cn.autoparts.service.impl.LoginInfoServiceImpl;
@@ -17,6 +18,41 @@ import java.util.Map;
 @WebServlet("/loginInfo/*")
 public class LoginInfoServlet extends BaseServlet {
     private ILoginInfoService loginInfoService = new LoginInfoServiceImpl();
+
+    /**
+     * 分页查询
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void pageQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String conditionStr = request.getParameter("condition");
+
+        int currentPage = 0;//当前页码
+        if(null != currentPageStr && 0 != currentPageStr.length()){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+        int pageSize = 0;//每页显示条数
+        if(null != pageSizeStr && 0 != pageSizeStr.length()){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else {
+            pageSize = 5;
+        }
+
+        try {
+            PageBean<Map<String, Object>> mapPageBean = loginInfoService.pageQuery(currentPage, pageSize, conditionStr);
+            writeValue(mapPageBean, response);
+        } catch (LoginInfoException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<Map<String, Object>> all = loginInfoService.findAll();

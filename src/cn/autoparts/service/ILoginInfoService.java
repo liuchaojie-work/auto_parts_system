@@ -1,12 +1,23 @@
 package cn.autoparts.service;
 
 import cn.autoparts.bean.LoginInfo;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.LoginInfoException;
 
 import java.util.List;
 import java.util.Map;
 
 public interface ILoginInfoService {
+
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws LoginInfoException
+     */
+    public PageBean<Map<String, Object>> pageQuery(int currentPage, int pageSize, String condition) throws LoginInfoException;
     /**
      * 查找所有记录
      * @return
