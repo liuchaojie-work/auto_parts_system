@@ -1,5 +1,6 @@
 package cn.autoparts.web.servlet;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.User;
 import cn.autoparts.exception.UserException;
 import cn.autoparts.service.IUserService;
@@ -21,6 +22,86 @@ import java.util.Map;
 @WebServlet("/user/*")
 public class UserServlet extends BaseServlet {
     private IUserService userService = new UserServiceImpl();
+
+    public void pageQueryAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String conditionStr = request.getParameter("condition");
+
+        int currentPage = 0;//当前页码
+        if(null != currentPageStr && 0 != currentPageStr.length()){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+        int pageSize = 0;//每页显示条数
+        if(null != pageSizeStr && 0 != pageSizeStr.length()){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else {
+            pageSize = 5;
+        }
+
+        try {
+            PageBean<User> userPageBean = userService.pageQueryAll(currentPage, pageSize, conditionStr);
+            writeValue(userPageBean, response);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void pageQueryAllAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String conditionStr = request.getParameter("condition");
+
+        int currentPage = 0;//当前页码
+        if(null != currentPageStr && 0 != currentPageStr.length()){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+        int pageSize = 0;//每页显示条数
+        if(null != pageSizeStr && 0 != pageSizeStr.length()){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else {
+            pageSize = 5;
+        }
+
+        try {
+            PageBean<User> userPageBean = userService.pageQueryAllAdmin(currentPage, pageSize, conditionStr);
+            writeValue(userPageBean, response);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void pageQueryAllCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String conditionStr = request.getParameter("condition");
+
+        int currentPage = 0;//当前页码
+        if(null != currentPageStr && 0 != currentPageStr.length()){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+        int pageSize = 0;//每页显示条数
+        if(null != pageSizeStr && 0 != pageSizeStr.length()){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else {
+            pageSize = 5;
+        }
+
+        try {
+            PageBean<User> userPageBean = userService.pageQueryAllCustomer(currentPage, pageSize, conditionStr);
+            writeValue(userPageBean, response);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String account = request.getParameter("account");

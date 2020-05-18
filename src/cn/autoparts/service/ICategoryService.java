@@ -1,11 +1,22 @@
 package cn.autoparts.service;
 
 import cn.autoparts.bean.Category;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.CategoryException;
 
 import java.util.List;
 
 public interface ICategoryService {
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws CategoryException
+     */
+    public PageBean<Category> pageQuery(int currentPage, int pageSize, String condition) throws CategoryException;
+
     /**
      * 查找所有
      * @return

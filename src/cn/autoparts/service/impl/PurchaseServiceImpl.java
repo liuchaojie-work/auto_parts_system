@@ -1,5 +1,6 @@
 package cn.autoparts.service.impl;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.Purchase;
 import cn.autoparts.dao.IPurchaseDao;
 import cn.autoparts.dao.impl.PurchaseDaoImpl;
@@ -11,6 +12,32 @@ import java.util.List;
 
 public class PurchaseServiceImpl implements IPurchaseService {
     IPurchaseDao purchaseDao = new PurchaseDaoImpl();
+
+    @Override
+    public PageBean<Object[]> pageQuery(int currentPage, int pageSize, String condition) throws PurchaseException {
+        PageBean<Object[]> pb = new PageBean<>();
+        //当前页码
+        pb.setCurrentPage(currentPage);
+        //每页显示条数
+        pb.setPageSize(pageSize);
+        try {
+            //总记录数
+            int totalCount = purchaseDao.findTotalCount(condition);
+            pb.setTotalCount(totalCount);
+            //开始的记录数
+            int start = (currentPage - 1) * pageSize;
+            List<Object[]> list = purchaseDao.findByPage(start, pageSize, condition);
+            pb.setList(list);
+            //总页数 = 总记录数/每页显示条数
+            int totalPage = 0 == totalCount % pageSize ? totalCount / pageSize : (totalCount / pageSize + 1);
+            pb.setTotalPage(totalPage);
+            return pb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new PurchaseException("分页查询失败！");
+        }
+    }
+
     @Override
     public List<Object[]> findAll() throws PurchaseException {
         try {

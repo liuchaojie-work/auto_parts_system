@@ -9,6 +9,11 @@ import java.util.List;
  * 支付方式
  */
 public interface IPaymentDao {
+
+    int findTotalCount(String condition) throws SQLException;
+
+    List<Payment> findByPage(int start, int pageSize, String condition) throws SQLException;
+
     /**
      * 查找所有
      * @return

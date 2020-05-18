@@ -6,6 +6,7 @@ import cn.autoparts.util.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,6 +16,31 @@ import java.util.List;
  */
 public class LogisticsDaoImpl implements ILogisticsDao {
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+
+    @Override
+    public int findTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(name) from tab_logistics";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(name) from tab_logistics where name like ? or phone like ? or address like ? or remark like ?";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public List<Logistics> findByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select * from tab_logistics limit ?, ?";
+            return runner.query(sql, new BeanListHandler<Logistics>(Logistics.class), start, pageSize);
+        }else{
+            String sql = "select * from tab_logistics where name like ? or phone like ? or address like ? or remark like ? limit ?, ?";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", start, pageSize};
+            return runner.query(sql, new BeanListHandler<Logistics>(Logistics.class), params);
+        }
+    }
+
     @Override
     public List<Logistics> findAll() throws SQLException {
         String sql = "select * from tab_logistics";

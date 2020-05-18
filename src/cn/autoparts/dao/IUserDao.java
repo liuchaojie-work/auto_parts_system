@@ -9,6 +9,13 @@ import java.util.List;
  * 用户表
  */
 public interface IUserDao {
+    int findAllTotalCount(String condition) throws SQLException;
+    int findAllAdminTotalCount(String condition) throws SQLException;
+    int findAllCustomerTotalCount(String condition) throws SQLException;
+
+    List<User> findAllByPage(int start, int pageSize, String condition) throws SQLException;
+    List<User> findAllAdminByPage(int start, int pageSize, String condition) throws SQLException;
+    List<User> findAllCustomerByPage(int start, int pageSize, String condition) throws SQLException;
     /**
      * 查找所有
      * @return

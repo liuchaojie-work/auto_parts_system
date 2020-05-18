@@ -1,5 +1,6 @@
 package cn.autoparts.service;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.Payment;
 import cn.autoparts.exception.PaymentException;
 
@@ -9,6 +10,17 @@ import java.util.List;
  * 支付方式
  */
 public interface IPaymentService {
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws PaymentException
+     */
+    public PageBean<Payment> pageQuery(int currentPage, int pageSize, String condition) throws PaymentException;
+
+
     /**
      * 查找所有
      * @return

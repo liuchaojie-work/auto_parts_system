@@ -1,6 +1,7 @@
 package cn.autoparts.web.servlet;
 
 import cn.autoparts.bean.Brand;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.BrandException;
 import cn.autoparts.service.IBrandService;
 import cn.autoparts.service.impl.BrandServiceImpl;
@@ -22,6 +23,33 @@ import java.util.Map;
 @WebServlet("/brand/*")
 public class BrandServlet extends BaseServlet {
     private IBrandService brandService = new BrandServiceImpl();
+
+    public void pageQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String conditionStr = request.getParameter("condition");
+
+        int currentPage = 0;//当前页码
+        if(null != currentPageStr && 0 != currentPageStr.length()){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+        int pageSize = 0;//每页显示条数
+        if(null != pageSizeStr && 0 != pageSizeStr.length()){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else {
+            pageSize = 5;
+        }
+
+        try {
+            PageBean<Brand> brandPageBean = brandService.pageQuery(currentPage, pageSize, conditionStr);
+            writeValue(brandPageBean, response);
+        } catch ( BrandException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      * 查找所有

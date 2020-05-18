@@ -1,11 +1,22 @@
 package cn.autoparts.service;
 
 import cn.autoparts.bean.Brand;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.BrandException;
 
 import java.util.List;
 
 public interface IBrandService {
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws BrandException
+     */
+    public PageBean<Brand> pageQuery(int currentPage, int pageSize, String condition) throws BrandException;
+
     /**
      * 查找所有
      * @return

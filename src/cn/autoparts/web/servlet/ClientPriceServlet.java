@@ -2,11 +2,9 @@ package cn.autoparts.web.servlet;
 
 import cn.autoparts.bean.CategoryBrand;
 import cn.autoparts.bean.ClientPrice;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.User;
-import cn.autoparts.exception.CategoryBrandException;
-import cn.autoparts.exception.ClientPriceException;
-import cn.autoparts.exception.ProductException;
-import cn.autoparts.exception.UserException;
+import cn.autoparts.exception.*;
 import cn.autoparts.service.ICategoryBrandService;
 import cn.autoparts.service.IClientPriceService;
 import cn.autoparts.service.IProductService;
@@ -32,6 +30,33 @@ import java.util.Map;
 @WebServlet("/clientPrice/*")
 public class ClientPriceServlet extends BaseServlet {
     private IClientPriceService clientPriceService = new ClientPriceServiceImpl();
+
+    public void pageQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String conditionStr = request.getParameter("condition");
+
+        int currentPage = 0;//当前页码
+        if(null != currentPageStr && 0 != currentPageStr.length()){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+        int pageSize = 0;//每页显示条数
+        if(null != pageSizeStr && 0 != pageSizeStr.length()){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else {
+            pageSize = 5;
+        }
+
+        try {
+            PageBean<Map<String, Object>> mapPageBean = clientPriceService.pageQuery(currentPage, pageSize, conditionStr);
+            writeValue(mapPageBean, response);
+        } catch (ClientPriceException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<Map<String, Object>> all = clientPriceService.findAll();

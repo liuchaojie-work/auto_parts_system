@@ -1,5 +1,6 @@
 package cn.autoparts.service.impl;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.User;
 import cn.autoparts.dao.IUserDao;
 import cn.autoparts.dao.impl.UserDaoImpl;
@@ -11,6 +12,82 @@ import java.util.List;
 
 public class UserServiceImpl implements IUserService {
     private IUserDao userDao = new UserDaoImpl();
+
+    @Override
+    public PageBean<User> pageQueryAll(int currentPage, int pageSize, String condition) throws UserException {
+        PageBean<User> pb = new PageBean<>();
+        //当前页码
+        pb.setCurrentPage(currentPage);
+        //每页显示条数
+        pb.setPageSize(pageSize);
+        try {
+            //总记录数
+            int totalCount = userDao.findAllTotalCount(condition);
+            pb.setTotalCount(totalCount);
+            //开始的记录数
+            int start = (currentPage - 1) * pageSize;
+            List<User> list = userDao.findAllByPage(start, pageSize, condition);
+            pb.setList(list);
+            //总页数 = 总记录数/每页显示条数
+            int totalPage = 0 == totalCount % pageSize ? totalCount / pageSize : (totalCount / pageSize + 1);
+            pb.setTotalPage(totalPage);
+            return pb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserException("分页查询失败！");
+        }
+    }
+
+    @Override
+    public PageBean<User> pageQueryAllAdmin(int currentPage, int pageSize, String condition) throws UserException {
+        PageBean<User> pb = new PageBean<>();
+        //当前页码
+        pb.setCurrentPage(currentPage);
+        //每页显示条数
+        pb.setPageSize(pageSize);
+        try {
+            //总记录数
+            int totalCount = userDao.findAllAdminTotalCount(condition);
+            pb.setTotalCount(totalCount);
+            //开始的记录数
+            int start = (currentPage - 1) * pageSize;
+            List<User> list = userDao.findAllAdminByPage(start, pageSize, condition);
+            pb.setList(list);
+            //总页数 = 总记录数/每页显示条数
+            int totalPage = 0 == totalCount % pageSize ? totalCount / pageSize : (totalCount / pageSize + 1);
+            pb.setTotalPage(totalPage);
+            return pb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserException("分页查询失败！");
+        }
+    }
+
+    @Override
+    public PageBean<User> pageQueryAllCustomer(int currentPage, int pageSize, String condition) throws UserException {
+        PageBean<User> pb = new PageBean<>();
+        //当前页码
+        pb.setCurrentPage(currentPage);
+        //每页显示条数
+        pb.setPageSize(pageSize);
+        try {
+            //总记录数
+            int totalCount = userDao.findAllCustomerTotalCount(condition);
+            pb.setTotalCount(totalCount);
+            //开始的记录数
+            int start = (currentPage - 1) * pageSize;
+            List<User> list = userDao.findAllCustomerByPage(start, pageSize, condition);
+            pb.setList(list);
+            //总页数 = 总记录数/每页显示条数
+            int totalPage = 0 == totalCount % pageSize ? totalCount / pageSize : (totalCount / pageSize + 1);
+            pb.setTotalPage(totalPage);
+            return pb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new UserException("分页查询失败！");
+        }
+    }
+
     @Override
     public List<User> findAll() throws UserException {
         try {

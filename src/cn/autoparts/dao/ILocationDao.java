@@ -9,6 +9,10 @@ import java.util.List;
  * 库位
  */
 public interface ILocationDao {
+    int findTotalCount(String condition) throws SQLException;
+
+    List<Location> findByPage(int start, int pageSize, String condition) throws SQLException;
+
     /**
      * 查找所有
      * @return

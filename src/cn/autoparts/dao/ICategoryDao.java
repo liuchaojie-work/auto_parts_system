@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ICategoryDao {
+    int findTotalCount(String condition) throws SQLException;
+
+    List<Category> findByPage(int start, int pageSize, String condition) throws SQLException;
+
     /**
      * 查找所有
      * @return

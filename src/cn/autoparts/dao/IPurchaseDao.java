@@ -9,6 +9,10 @@ import java.util.List;
  * 进货
  */
 public interface IPurchaseDao {
+    int findTotalCount(String condition) throws SQLException;
+
+    List<Object[]> findByPage(int start, int pageSize, String condition) throws SQLException;
+
     /**
      * 查找所有
      * @return

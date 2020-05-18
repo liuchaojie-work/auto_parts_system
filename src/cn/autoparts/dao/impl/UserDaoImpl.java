@@ -6,12 +6,102 @@ import cn.autoparts.util.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserDaoImpl implements IUserDao {
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+
+    @Override
+    public int findAllTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(userId) from tab_user";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(userId) from tab_user where userId like ? or " +
+                    " username like ? or phone like ? or email like ? or" +
+                    " name like ? or iden like ? or remark like ?";
+            Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
+                    "%" + condition + "%","%" + condition + "%","%" + condition + "%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public int findAllAdminTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(userId) from tab_user where iden = 1 or iden = 999";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(userId) from tab_user where (iden = 1 or iden = 999) and (userId like ? or " +
+                    " username like ? or phone like ? or email like ? or regTime like ? or img like ? or " +
+                    " name like ? or gender like ? or remark like ?)";
+            Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
+                    "%" + condition + "%","%" + condition + "%","%" + condition + "%","%" + condition + "%" ,"%" + condition + "%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public int findAllCustomerTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(userId) from tab_user where iden = 0";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(userId) from tab_user where iden = 0 and (" +
+                    " phone like ? or name like ? or gender like ? or address like ? or receiverAdd like ? or logName like ? or remark like ?)";
+            Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
+                    "%" + condition + "%","%" + condition + "%","%" + condition + "%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public List<User> findAllByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select * from tab_user limit ?, ?";
+            return runner.query(sql, new BeanListHandler<User>(User.class), start, pageSize);
+        }else{
+            String sql = "select * from tab_user where userId like ? or " +
+                    " username like ? or phone like ? or email like ? or" +
+                    " name like ? or iden like ? or remark like ? limit ?, ?";
+            Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
+                    "%" + condition + "%","%" + condition + "%","%" + condition + "%", start, pageSize};
+            return runner.query(sql, new BeanListHandler<User>(User.class), params);
+        }
+    }
+
+    @Override
+    public List<User> findAllAdminByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select * from tab_user where iden = 1 or iden = 999 limit ?, ?";
+            return runner.query(sql, new BeanListHandler<User>(User.class), start, pageSize);
+        }else{
+            String sql = "select * from tab_user where (iden = 1 or iden = 999 )and (userId like ? or " +
+                    " username like ? or phone like ? or email like ? or regTime like ? or img like ? or " +
+                    " name like ? or gender like ? or remark like ?) limit ?, ?";
+            Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
+                    "%" + condition + "%","%" + condition + "%","%" + condition + "%","%" + condition + "%" ,"%" + condition + "%", start, pageSize};
+            return runner.query(sql, new BeanListHandler<User>(User.class), params);
+        }
+    }
+
+    @Override
+    public List<User> findAllCustomerByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select * from tab_user where iden = 0 limit ?, ?";
+            return runner.query(sql, new BeanListHandler<User>(User.class), start, pageSize);
+        }else{
+            String sql = "select * from tab_user where iden = 0 and (" +
+                    " phone like ? or name like ? or gender like ? or address like ? or receiverAdd like ? or logName like ? or remark like ?) limit ?, ?";
+            Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
+                    "%" + condition + "%","%" + condition + "%","%" + condition + "%", start, pageSize};
+            return runner.query(sql, new BeanListHandler<User>(User.class), params);
+        }
+    }
+
     @Override
     public List<User> findAll() throws SQLException {
         String sql = "select * from tab_user";
@@ -83,7 +173,7 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public List<User> findAdminByCondition(String condition) throws SQLException {
-        String sql = "select * from tab_user where iden = 1 and (userId like ? or " +
+        String sql = "select * from tab_user where (iden = 1 or iden = 999 )and (userId like ? or " +
                 " username like ? or phone like ? or email like ? or regTime like ? or img like ? or " +
                 " name like ? or gender like ? or remark like ?)";
         Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",

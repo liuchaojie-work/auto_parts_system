@@ -10,6 +10,10 @@ import java.util.Map;
  * 库存表
  */
 public interface IInventoryDao {
+    int findTotalCount(String condition) throws SQLException;
+
+    List<Map<String, Object>> findByPage(int start, int pageSize, String condition) throws SQLException;
+
     /**
      * 查找所有
      * @return

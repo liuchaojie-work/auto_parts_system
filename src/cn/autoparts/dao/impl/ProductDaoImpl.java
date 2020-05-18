@@ -7,12 +7,51 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayHandler;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class ProductDaoImpl implements IProductDao {
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+
+    @Override
+    public int findTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(tab_product.proId) from tab_product, tab_cate_bra where tab_product.cbId = tab_cate_bra.cbId";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(tab_product.proId) from tab_product, tab_cate_bra " +
+                    "where tab_product.cbId = tab_cate_bra.cbId and " +
+                    "(tab_product.proId like ? or tab_product.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or" +
+                    " tab_product.img like ? or tab_product.descr like ? or tab_product.remark like ?)";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+                    "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public List<Object[]> findByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select tab_product.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname," +
+                    " tab_product.img, tab_product.descr, tab_product.remark " +
+                    " from tab_product, tab_cate_bra "  +
+                    " where tab_product.cbId = tab_cate_bra.cbId limit ?, ?";
+            return runner.query(sql, new ArrayListHandler(), start, pageSize);
+        }else{
+            String sql = "select tab_product.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, "  +
+                    " tab_product.img, tab_product.descr, tab_product.remark "  +
+                    " from tab_product, tab_cate_bra "  +
+                    " where tab_product.cbId = tab_cate_bra.cbId and "  +
+                    " (tab_product.proId like ? or tab_product.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or"  +
+                    " tab_product.img like ? or tab_product.descr like ? or tab_product.remark like ?) limit ?, ?";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+                    "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", start, pageSize};
+            return runner.query(sql, new ArrayListHandler(), params);
+        }
+    }
+
     @Override
     public List<Object[]> findAll() throws SQLException {
         String sql = "select tab_product.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname," +

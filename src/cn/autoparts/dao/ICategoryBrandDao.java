@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ICategoryBrandDao {
+    int findTotalCount(String condition) throws SQLException;
+
+    List<CategoryBrand> findByPage(int start, int pageSize, String condition) throws SQLException;
 
     /**
      * 查找所有

@@ -1,6 +1,7 @@
 package cn.autoparts.service.impl;
 
 import cn.autoparts.bean.CategoryBrand;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.dao.ICategoryBrandDao;
 import cn.autoparts.dao.impl.CategoryBrandDaoImpl;
 import cn.autoparts.exception.CategoryBrandException;
@@ -11,6 +12,32 @@ import java.util.List;
 
 public class CategoryBrandServiceImpl implements ICategoryBrandService {
     ICategoryBrandDao categoryBrandDao = new CategoryBrandDaoImpl();
+
+    @Override
+    public PageBean<CategoryBrand> pageQuery(int currentPage, int pageSize, String condition) throws CategoryBrandException {
+        PageBean<CategoryBrand> pb = new PageBean<>();
+        //当前页码
+        pb.setCurrentPage(currentPage);
+        //每页显示条数
+        pb.setPageSize(pageSize);
+        try {
+            //总记录数
+            int totalCount = categoryBrandDao.findTotalCount(condition);
+            pb.setTotalCount(totalCount);
+            //开始的记录数
+            int start = (currentPage - 1) * pageSize;
+            List<CategoryBrand> list = categoryBrandDao.findByPage(start, pageSize, condition);
+            pb.setList(list);
+            //总页数 = 总记录数/每页显示条数
+            int totalPage = 0 == totalCount % pageSize ? totalCount / pageSize : (totalCount / pageSize + 1);
+            pb.setTotalPage(totalPage);
+            return pb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new CategoryBrandException("分页查询失败！");
+        }
+    }
+
     @Override
     public List<CategoryBrand> findAll() throws CategoryBrandException {
         try {

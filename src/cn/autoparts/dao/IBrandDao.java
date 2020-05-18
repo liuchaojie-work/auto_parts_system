@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface IBrandDao {
 
+    int findTotalCount(String condition) throws SQLException;
+
+    List<Brand> findByPage(int start, int pageSize, String condition) throws SQLException;
     /**
      * 查找所有
      * @return

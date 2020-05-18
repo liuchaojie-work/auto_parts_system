@@ -1,6 +1,7 @@
 package cn.autoparts.service;
 
 import cn.autoparts.bean.Location;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.LocationException;
 
 import java.util.List;
@@ -9,6 +10,16 @@ import java.util.List;
  * 库位
  */
 public interface ILocationService {
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws LocationException
+     */
+    public PageBean<Location> pageQuery(int currentPage, int pageSize, String condition) throws LocationException;
+
     /**
      * 查找所有
      * @return

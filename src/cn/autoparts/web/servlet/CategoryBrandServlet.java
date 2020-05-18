@@ -1,6 +1,7 @@
 package cn.autoparts.web.servlet;
 
 import cn.autoparts.bean.CategoryBrand;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.CategoryBrandException;
 import cn.autoparts.service.ICategoryBrandService;
 import cn.autoparts.service.impl.CategoryBrandServiceImpl;
@@ -20,6 +21,34 @@ import java.util.Map;
 @WebServlet("/categoryBrand/*")
 public class CategoryBrandServlet extends BaseServlet{
     private ICategoryBrandService categoryBrandService = new CategoryBrandServiceImpl();
+
+    public void pageQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String conditionStr = request.getParameter("condition");
+
+        int currentPage = 0;//当前页码
+        if(null != currentPageStr && 0 != currentPageStr.length()){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+        int pageSize = 0;//每页显示条数
+        if(null != pageSizeStr && 0 != pageSizeStr.length()){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else {
+            pageSize = 5;
+        }
+
+        try {
+            PageBean<CategoryBrand> categoryBrandPageBean = categoryBrandService.pageQuery(currentPage, pageSize, conditionStr);
+            writeValue(categoryBrandPageBean, response);
+        } catch (CategoryBrandException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<CategoryBrand> categoryBrands = categoryBrandService.findAll();

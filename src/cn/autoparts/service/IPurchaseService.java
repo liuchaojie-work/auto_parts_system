@@ -1,11 +1,22 @@
 package cn.autoparts.service;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.Purchase;
 import cn.autoparts.exception.PurchaseException;
 
 import java.util.List;
 
 public interface IPurchaseService {
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws PurchaseException
+     */
+    public PageBean<Object[]> pageQuery(int currentPage, int pageSize, String condition) throws PurchaseException;
+
     /**
      * 查找所有
      * @return

@@ -1,5 +1,6 @@
 package cn.autoparts.service.impl;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.Payment;
 import cn.autoparts.dao.IPaymentDao;
 import cn.autoparts.dao.impl.PaymentDaoImpl;
@@ -11,6 +12,32 @@ import java.util.List;
 
 public class PaymentServiceImpl implements IPaymentService {
     private IPaymentDao paymentDao = new PaymentDaoImpl();
+
+    @Override
+    public PageBean<Payment> pageQuery(int currentPage, int pageSize, String condition) throws PaymentException {
+        PageBean<Payment> pb = new PageBean<>();
+        //当前页码
+        pb.setCurrentPage(currentPage);
+        //每页显示条数
+        pb.setPageSize(pageSize);
+        try {
+            //总记录数
+            int totalCount = paymentDao.findTotalCount(condition);
+            pb.setTotalCount(totalCount);
+            //开始的记录数
+            int start = (currentPage - 1) * pageSize;
+            List<Payment> list = paymentDao.findByPage(start, pageSize, condition);
+            pb.setList(list);
+            //总页数 = 总记录数/每页显示条数
+            int totalPage = 0 == totalCount % pageSize ? totalCount / pageSize : (totalCount / pageSize + 1);
+            pb.setTotalPage(totalPage);
+            return pb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new PaymentException("分页查询失败！");
+        }
+    }
+
     @Override
     public List<Payment> findAll() throws PaymentException {
         try {

@@ -6,6 +6,7 @@ import cn.autoparts.util.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,6 +14,48 @@ import java.util.Map;
 
 public class ClientPriceDaoImpl implements IClientPriceDao {
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+
+    @Override
+    public int findTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(tab_client_price.cpNo) from  tab_user, tab_product, tab_cate_bra, tab_client_price where tab_client_price.userId = tab_user.userId and" +
+                    " tab_client_price.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId ";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(tab_client_price.cpNo) from  tab_user, tab_product, tab_cate_bra, tab_client_price where tab_client_price.userId = tab_user.userId and" +
+                    " tab_client_price.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId and ( " +
+                    " tab_user.username like ? or tab_user.name like ? or tab_user.phone like ? or tab_product.typeno like ? or" +
+                    " tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_client_price.price like ? or tab_client_price.time like binary ? " +
+                    " or tab_client_price.remark like ? )";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+                    "%"+ condition +"%","%"+ condition +"%","%"+ condition +"%", "%"+ condition +"%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> findByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql =
+            "select tab_client_price.cpNo, tab_user.username, tab_user.name, tab_user.phone, tab_product.typeno, tab_cate_bra.cname, " +
+                    " tab_cate_bra.bname, tab_client_price.price, tab_client_price.time, tab_client_price.remark " +
+                    " from  tab_user, tab_product, tab_cate_bra, tab_client_price where tab_client_price.userId = tab_user.userId and" +
+                    " tab_client_price.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId limit ?, ?";
+            return runner.query(sql, new MapListHandler(), start, pageSize);
+        }else{
+            String sql = "select tab_client_price.cpNo, tab_user.username, tab_user.name, tab_user.phone, tab_product.typeno, tab_cate_bra.cname, " +
+                    " tab_cate_bra.bname, tab_client_price.price, tab_client_price.time, tab_client_price.remark "  +
+                    " from  tab_user, tab_product, tab_cate_bra, tab_client_price where tab_client_price.userId = tab_user.userId and"  +
+                    " tab_client_price.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId and ( "  +
+                    " tab_user.username like ? or tab_user.name like ? or tab_user.phone like ? or tab_product.typeno like ? or" +
+                    " tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_client_price.price like ? or tab_client_price.time like binary ? "+
+                    " or tab_client_price.remark like ? ) limit ?, ?";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+                    "%"+ condition +"%","%"+ condition +"%","%"+ condition +"%", "%"+ condition +"%",start, pageSize};
+            return runner.query(sql, new MapListHandler(), params);
+        }
+    }
+
     @Override
     public List<Map<String, Object>> findAll() throws SQLException {
         String sql = "select tab_client_price.cpNo, tab_user.username, tab_user.name, tab_user.phone, tab_product.typeno, tab_cate_bra.cname, " +

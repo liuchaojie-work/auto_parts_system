@@ -6,12 +6,54 @@ import cn.autoparts.util.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.ArrayHandler;
 import org.apache.commons.dbutils.handlers.ArrayListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class PurchaseDaoImpl implements IPurchaseDao {
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+
+    @Override
+    public int findTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(tab_purchase.purNo) from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.proId = tab_product.proId and " +
+                    " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(tab_purchase.purNo) from tab_purchase, tab_product, tab_cate_bra, tab_location where (tab_purchase.proId = tab_product.proId and " +
+                    " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? " +
+                    " or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? " +
+                    " or tab_purchase.purchasePrice like ? or tab_purchase.count like ? or tab_purchase.sellPrice like ? " +
+                    " or tab_purchase.time like binary ? or tab_location.loca like ? or tab_purchase.remark like ?)";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+                    "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public List<Object[]> findByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select tab_purchase.purNo, tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname ,tab_purchase.purchasePrice, "  +
+                    " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark " +
+                    " from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.proId = tab_product.proId and "  +
+                    " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no limit ?, ?";
+            return runner.query(sql, new ArrayListHandler(), start, pageSize);
+        }else{
+            String sql =  "select tab_purchase.purNo, tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname ,tab_purchase.purchasePrice, " +
+                    " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark"+
+                    " from tab_purchase, tab_product, tab_cate_bra, tab_location where (tab_purchase.proId = tab_product.proId and " +
+                    " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? " +
+                    " or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? " +
+                    " or tab_purchase.purchasePrice like ? or tab_purchase.count like ? or tab_purchase.sellPrice like ? " +
+                    " or tab_purchase.time like binary ? or tab_location.loca like ? or tab_purchase.remark like ?) limit ?, ?";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+                    "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", start, pageSize};
+            return runner.query(sql, new ArrayListHandler(), params);
+        }
+    }
+
     @Override
     public List<Object[]> findAll() throws SQLException {
         String sql = "select tab_purchase.purNo, tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname ,tab_purchase.purchasePrice, " +

@@ -11,6 +11,11 @@ import java.util.Map;
  */
 public interface IClientPriceDao {
 
+    int findTotalCount(String condition) throws SQLException;
+
+    List<Map<String, Object>> findByPage(int start, int pageSize, String condition) throws SQLException;
+
+
     /**
      * 查找所有
      * @return

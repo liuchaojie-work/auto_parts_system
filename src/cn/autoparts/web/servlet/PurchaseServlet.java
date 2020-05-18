@@ -2,6 +2,7 @@ package cn.autoparts.web.servlet;
 
 import cn.autoparts.bean.CategoryBrand;
 import cn.autoparts.bean.Location;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.Purchase;
 import cn.autoparts.exception.CategoryBrandException;
 import cn.autoparts.exception.LocationException;
@@ -30,6 +31,34 @@ import java.util.Map;
 @WebServlet("/purchase/*")
 public class PurchaseServlet extends BaseServlet {
     private IPurchaseService purchaseService = new PurchaseServiceImpl();
+
+    public void pageQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String conditionStr = request.getParameter("condition");
+
+        int currentPage = 0;//当前页码
+        if(null != currentPageStr && 0 != currentPageStr.length()){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+        int pageSize = 0;//每页显示条数
+        if(null != pageSizeStr && 0 != pageSizeStr.length()){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else {
+            pageSize = 5;
+        }
+
+        try {
+            PageBean<Object[]> pageBean = purchaseService.pageQuery(currentPage, pageSize, conditionStr);
+            writeValue(pageBean, response);
+        } catch (PurchaseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<Object[]> all = purchaseService.findAll();

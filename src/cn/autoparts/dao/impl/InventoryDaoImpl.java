@@ -6,6 +6,7 @@ import cn.autoparts.util.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,6 +14,40 @@ import java.util.Map;
 
 public class InventoryDaoImpl implements IInventoryDao {
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+
+    @Override
+    public int findTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(tab_inventory.proId) from tab_inventory, tab_cate_bra, tab_category, tab_product " +
+                    " where tab_inventory.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId and " +
+                    " tab_category.name = tab_cate_bra.cname";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(tab_inventory.proId) from tab_inventory, tab_cate_bra, tab_category, tab_product where tab_inventory.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId and " +
+                    " tab_category.name = tab_cate_bra.cname and (tab_inventory.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_inventory.count like ?" +
+                    " or tab_category.unit like ? or tab_inventory.remark like ? )";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public List<Map<String, Object>> findByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select tab_inventory.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, tab_inventory.count, tab_category.unit, tab_inventory.remark" +
+                    " from tab_inventory, tab_cate_bra, tab_category, tab_product where tab_inventory.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId and " +
+                    " tab_category.name = tab_cate_bra.cname limit ?, ?";
+            return runner.query(sql, new MapListHandler(), start, pageSize);
+        }else{
+            String sql = "select tab_inventory.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, tab_inventory.count, tab_category.unit, tab_inventory.remark" +
+                    " from tab_inventory, tab_cate_bra, tab_category, tab_product where tab_inventory.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId and " +
+                    " tab_category.name = tab_cate_bra.cname and (tab_inventory.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_inventory.count like ?" +
+                    " or tab_category.unit like ? or tab_inventory.remark like ? ) limit ?, ?";
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", start, pageSize};
+            return runner.query(sql, new MapListHandler(), params);
+        }
+    }
+
     @Override
     public List<Map<String , Object>> findAll() throws SQLException {
         String sql = "select tab_inventory.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, tab_inventory.count, tab_category.unit, tab_inventory.remark" +

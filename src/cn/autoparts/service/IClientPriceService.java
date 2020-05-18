@@ -1,12 +1,24 @@
 package cn.autoparts.service;
 
 import cn.autoparts.bean.ClientPrice;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.ClientPriceException;
 
 import java.util.List;
 import java.util.Map;
 
 public interface IClientPriceService {
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws ClientPriceException
+     */
+    public PageBean<Map<String, Object>> pageQuery(int currentPage, int pageSize, String condition) throws ClientPriceException;
+
+
     /**
      * 查找所有
      * @return

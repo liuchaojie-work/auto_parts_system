@@ -1,11 +1,22 @@
 package cn.autoparts.service;
 
 import cn.autoparts.bean.Logistics;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.LogisticsException;
 
 import java.util.List;
 
 public interface ILogisticsService {
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws LogisticsException
+     */
+    public PageBean<Logistics> pageQuery(int currentPage, int pageSize, String condition) throws LogisticsException;
+
     /**
      * 查找所有
      * @return

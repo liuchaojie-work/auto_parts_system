@@ -9,6 +9,10 @@ import java.util.List;
  * 物流
  */
 public interface ILogisticsDao {
+    int findTotalCount(String condition) throws SQLException;
+
+    List<Logistics> findByPage(int start, int pageSize, String condition) throws SQLException;
+
     /**
      * 查找所有
      * @return

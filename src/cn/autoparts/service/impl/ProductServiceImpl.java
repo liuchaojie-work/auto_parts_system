@@ -1,5 +1,6 @@
 package cn.autoparts.service.impl;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.Product;
 import cn.autoparts.dao.IProductDao;
 import cn.autoparts.dao.impl.ProductDaoImpl;
@@ -11,6 +12,32 @@ import java.util.List;
 
 public class ProductServiceImpl implements IProductService {
     private IProductDao productDao = new ProductDaoImpl();
+
+    @Override
+    public PageBean<Object[]> pageQuery(int currentPage, int pageSize, String condition) throws ProductException {
+        PageBean<Object[]> pb = new PageBean<>();
+        //当前页码
+        pb.setCurrentPage(currentPage);
+        //每页显示条数
+        pb.setPageSize(pageSize);
+        try {
+            //总记录数
+            int totalCount = productDao.findTotalCount(condition);
+            pb.setTotalCount(totalCount);
+            //开始的记录数
+            int start = (currentPage - 1) * pageSize;
+            List<Object[]> list = productDao.findByPage(start, pageSize, condition);
+            pb.setList(list);
+            //总页数 = 总记录数/每页显示条数
+            int totalPage = 0 == totalCount % pageSize ? totalCount / pageSize : (totalCount / pageSize + 1);
+            pb.setTotalPage(totalPage);
+            return pb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ProductException("分页查询失败！");
+        }
+    }
+
     @Override
     public List<Object[]> findAll() throws ProductException {
         try {

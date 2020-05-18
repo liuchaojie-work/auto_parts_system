@@ -6,12 +6,38 @@ import cn.autoparts.util.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class CategoryDaoImpl implements ICategoryDao {
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+
+    @Override
+    public int findTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(name) from tab_category";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(name) from tab_category where name like ? or unit like ? or remark like ?";
+            Object[] params = {"%"+ condition +"%","%"+ condition +"%","%"+ condition +"%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public List<Category> findByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select * from tab_category limit ?, ?";
+            return runner.query(sql, new BeanListHandler<Category>(Category.class), start, pageSize);
+        }else{
+            String sql = "select * from tab_category where name like ? or unit like ? or remark like ? limit ?, ?";
+            Object[] params = {"%"+ condition +"%","%"+ condition +"%","%"+ condition +"%", start, pageSize};
+            return runner.query(sql, new BeanListHandler<Category>(Category.class), params);
+        }
+    }
+
     /**
      * 查找所有
      * @return

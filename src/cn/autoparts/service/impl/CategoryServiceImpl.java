@@ -1,6 +1,7 @@
 package cn.autoparts.service.impl;
 
 import cn.autoparts.bean.Category;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.dao.ICategoryDao;
 import cn.autoparts.dao.impl.CategoryDaoImpl;
 import cn.autoparts.exception.CategoryException;
@@ -11,6 +12,31 @@ import java.util.List;
 
 public class CategoryServiceImpl implements ICategoryService {
     private ICategoryDao categoryDao = new CategoryDaoImpl();
+
+    @Override
+    public PageBean<Category> pageQuery(int currentPage, int pageSize, String condition) throws CategoryException {
+        PageBean<Category> pb = new PageBean<>();
+        //当前页码
+        pb.setCurrentPage(currentPage);
+        //每页显示条数
+        pb.setPageSize(pageSize);
+        try {
+            //总记录数
+            int totalCount = categoryDao.findTotalCount(condition);
+            pb.setTotalCount(totalCount);
+            //开始的记录数
+            int start = (currentPage - 1) * pageSize;
+            List<Category> list = categoryDao.findByPage(start, pageSize, condition);
+            pb.setList(list);
+            //总页数 = 总记录数/每页显示条数
+            int totalPage = 0 == totalCount % pageSize ? totalCount / pageSize : (totalCount / pageSize + 1);
+            pb.setTotalPage(totalPage);
+            return pb;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new CategoryException("分页查询失败！");
+        }
+    }
 
     /**
      * 查找所有类别

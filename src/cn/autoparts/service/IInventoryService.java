@@ -1,6 +1,7 @@
 package cn.autoparts.service;
 
 import cn.autoparts.bean.Inventory;
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.exception.InventoryException;
 
 import java.util.List;
@@ -10,6 +11,16 @@ import java.util.Map;
  * 库存
  */
 public interface IInventoryService {
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws InventoryException
+     */
+    public PageBean<Map<String, Object>> pageQuery(int currentPage, int pageSize, String condition) throws InventoryException;
+
     /**
      * 查找所有
      * @return

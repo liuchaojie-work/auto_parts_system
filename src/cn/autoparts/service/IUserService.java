@@ -1,11 +1,40 @@
 package cn.autoparts.service;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.User;
 import cn.autoparts.exception.UserException;
 
 import java.util.List;
 
 public interface IUserService {
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws UserException
+     */
+    public PageBean<User> pageQueryAll(int currentPage, int pageSize, String condition) throws UserException;
+/**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws UserException
+     */
+    public PageBean<User> pageQueryAllAdmin(int currentPage, int pageSize, String condition) throws UserException;
+/**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws UserException
+     */
+    public PageBean<User> pageQueryAllCustomer(int currentPage, int pageSize, String condition) throws UserException;
+
     /**
      * 查找所有
      * @return

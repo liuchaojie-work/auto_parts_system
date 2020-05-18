@@ -1,5 +1,6 @@
 package cn.autoparts.web.servlet;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.Payment;
 import cn.autoparts.exception.PaymentException;
 import cn.autoparts.service.IPaymentService;
@@ -18,6 +19,34 @@ import java.util.Map;
 @WebServlet("/payment/*")
 public class PaymentServlet extends BaseServlet {
     private IPaymentService paymentService = new PaymentServiceImpl();
+
+    public void pageQuery(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String currentPageStr = request.getParameter("currentPage");
+        String pageSizeStr = request.getParameter("pageSize");
+        String conditionStr = request.getParameter("condition");
+
+        int currentPage = 0;//当前页码
+        if(null != currentPageStr && 0 != currentPageStr.length()){
+            currentPage = Integer.parseInt(currentPageStr);
+        }else{
+            currentPage = 1;
+        }
+        int pageSize = 0;//每页显示条数
+        if(null != pageSizeStr && 0 != pageSizeStr.length()){
+            pageSize = Integer.parseInt(pageSizeStr);
+        }else {
+            pageSize = 5;
+        }
+
+        try {
+            PageBean<Payment> paymentPageBean = paymentService.pageQuery(currentPage, pageSize, conditionStr);
+            writeValue(paymentPageBean, response);
+        } catch (PaymentException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public void findAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             List<Payment> payments = paymentService.findAll();

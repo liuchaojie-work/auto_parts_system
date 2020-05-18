@@ -6,6 +6,7 @@ import cn.autoparts.util.C3P0Utils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -13,6 +14,31 @@ import java.util.List;
 public class PaymentDaoImpl implements IPaymentDao {
 
     private QueryRunner runner = new QueryRunner(C3P0Utils.getDataSource());
+
+    @Override
+    public int findTotalCount(String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select count(payWay) from tab_payment";
+            return ((Long) runner.query(sql, new ScalarHandler())).intValue();
+        }else{
+            String sql = "select count(payWay) from tab_payment where payWay like ? or payStatus like ? or remark like ?";
+            Object[] params = { "%"+ condition +"%",  "%"+ condition +"%", "%"+ condition +"%"};
+            return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
+        }
+    }
+
+    @Override
+    public List<Payment> findByPage(int start, int pageSize, String condition) throws SQLException {
+        if(null == condition || 0 == condition.length()){
+            String sql = "select * from tab_payment limit ?, ?";
+            return runner.query(sql, new BeanListHandler<Payment>(Payment.class), start, pageSize);
+        }else{
+            String sql = "select * from tab_payment where payWay like ? or payStatus like ? or remark like ? limit ?, ?";
+            Object[] params = { "%"+ condition +"%",  "%"+ condition +"%", "%"+ condition +"%", start, pageSize};
+            return runner.query(sql, new BeanListHandler<Payment>(Payment.class), params);
+        }
+    }
+
     @Override
     public List<Payment> findAll() throws SQLException{
         String sql = "select * from tab_payment";

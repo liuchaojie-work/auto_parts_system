@@ -1,5 +1,6 @@
 package cn.autoparts.service;
 
+import cn.autoparts.bean.PageBean;
 import cn.autoparts.bean.Product;
 import cn.autoparts.exception.ProductException;
 
@@ -9,6 +10,17 @@ import java.util.List;
  * 产品
  */
 public interface IProductService {
+
+    /**
+     * 分页查询
+     * @param currentPage
+     * @param pageSize
+     * @param condition
+     * @return
+     * @throws ProductException
+     */
+    public PageBean<Object[]> pageQuery(int currentPage, int pageSize, String condition) throws ProductException;
+
     /**
      * 查找所有
      * @return
