@@ -138,8 +138,8 @@
                         <div class="box-footer">
                             <div class="pull-left">
                                 <div class="form-group form-inline">
-                                    总共2 页，共14 条数据。 每页
-                                    <select class="form-control">
+                                    总共 <span id="totalPage" style="color: red"></span> 页，共 <span id="totalCount" style="color: red"></span> 条数据。 每页
+                                    <select class="form-control" id="pageSize">
                                         <option>5</option>
                                         <option>10</option>
                                         <option>20</option>
@@ -149,23 +149,10 @@
                             </div>
 
                             <div class="box-tools pull-right">
-                                <ul class="pagination">
-                                    <li>
-                                        <a href="#" aria-label="Previous">首页</a>
-                                    </li>
-                                    <li><a href="#">上一页</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">下一页</a></li>
-                                    <li>
-                                        <a href="#" aria-label="Next">尾页</a>
-                                    </li>
+                                <ul class="pagination" id="pageNum">
+
                                 </ul>
                             </div>
-
                         </div>
                         <!-- /.box-footer-->
                     </div>
@@ -383,7 +370,6 @@
             for(var i = 0; i < data.length; i++){
                 $("#addLocationSelect").append('<option>'+data[i].loca+'</option>');
             }
-
         });
 
         $("#addTypenoSelect").blur(function () {
@@ -428,6 +414,10 @@
             $("#addBrandSelect").html(str2);
         });
         selectAllOrNone("#purchase-selall","#purchase-list");
+
+        $("#pageSize").bind('input propertychange', function () {
+            findAllPurchase();
+        });
     });
     //全选全不选
     function selectAllOrNone(checkId,tabId) {
@@ -463,7 +453,7 @@
         }
     }
     function findAllPurchase() {
-        $.post("purchase/findAll",{},function (data) {
+        /*$.post("purchase/findAll",{},function (data) {
             if(null == data){
                 $("#purchase-list tbody").html("");
                 return;
@@ -492,9 +482,83 @@
                 str +=tr;
             }
             $("#purchase-list tbody").html(str);
+        });*/
+        var pageSize = $("#pageSize").val();
+        load(1,pageSize);
+    }
+    function load(currentPage, pageSize, condition) {
+        $.get("purchase/pageQuery",{"currentPage":currentPage, "pageSize":pageSize, "condition":condition}, function (pb) {
+            $("#totalCount").html(pb.totalCount);
+            $("#totalPage").html(pb.totalPage);
+            var lis ="";
+            var firstPage ='<li onclick="javascript:load('+ 1 +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);" aria-label="Previous">首页</a></li>';
+            var beforeNum = (pb.currentPage - 1) < 1 ? 1: (pb.currentPage - 1);
+            var beforePage ='<li onclick="javascript:load('+ beforeNum +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);">上一页</a></li>';
+            lis+=firstPage;
+            lis+=beforePage;
+
+            var begin;
+            var end;
+
+            if(pb.totalPage < 5){
+                begin = 1;
+                end = pb.totalPage;
+            }else{
+                begin = pb.currentPage - 2;
+                end = pb.currentPage + 2;
+                if(begin < 1){
+                    begin = 1;
+                    end = begin + 4;
+                }
+                if(end > pb.totalPage){
+                    end = pb.totalPage;
+                    begin = pb.totalPage - 4;
+                }
+            }
+
+            for(var i = begin; i <= end ;i++){
+                if(pb.currentPage == i){
+                    lis+='<li class="active" onclick="javascript:load('+ i +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);">'+ i +'</a></li>';
+                }else{
+                    lis+='<li onclick="javascript:load('+ i +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);">'+ i +'</a></li>';
+                }
+            }
+            var nextNum = (pb.currentPage + 1) > pb.totalPage ? pb.totalPage: (pb.currentPage + 1);
+            var nextPage='<li onclick="javascript:load('+ nextNum +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);">下一页</a></li>';
+            var lastPage='<li onclick="javascript:load('+ pb.totalPage +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);" aria-label="Next">尾页</a></li>';
+            lis+=nextPage;
+            lis+=lastPage;
+            $("#pageNum").html(lis);
+
+            var info_list = "";
+            for(var i = 0; i < pb.list.length; i++){
+                var listElement = pb.list[i];
+                var tr =
+                    '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+listElement[0]+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+listElement[0]+'</td>\n' +
+                    // '                                        <td>'+data[i][1]+'</td>\n' +
+                    '                                        <td>'+listElement[2]+'</td>\n' +
+                    '                                        <td>'+listElement[3]+'</td>\n' +
+                    '                                        <td>'+listElement[4]+'</td>\n' +
+                    '                                        <td>'+listElement[5]+'</td>\n' +
+                    '                                        <td>'+listElement[6]+'</td>\n' +
+                    '                                        <td>'+listElement[7]+'</td>\n' +
+                    '                                        <td>'+changeTime(listElement[8])+'</td>\n' +
+                    '                                        <td>'+listElement[9]+'</td>\n' +
+                    '                                        <td>'+listElement[10]+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changePurchase"  onclick="findPurchaseByPurNo(\''+listElement[0]+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deletePurchaseByPurNo(\''+listElement[0]+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                info_list+=tr;
+            }
+            $("#purchase-list tbody").html(info_list);
+            window.scrollTo(0,0);
         });
     }
-
     function findPurchaseByPurNo(purNo) {
         $.post("purchase/findByPurNo",{"purNo":purNo},function (data) {
             var str=
@@ -659,7 +723,6 @@
 
         }
     }
-
     function addPurchase(){
         $.post("purchase/add",$("#addPurchaseForm").serialize(),function (data) {
             if(data){
@@ -680,8 +743,6 @@
             // }
         });
     }
-
-
     function changePurchaseSubmit() {
         $.post("purchase/change",$("#changePurchaseForm").serialize(), function (data) {
             if(data){
@@ -696,7 +757,7 @@
 
     function purchaseSearch() {
         var search = $("#purchaseSearch").val();
-        $.post("purchase/findByCondition",{"condition":search},function (data) {
+        /*$.post("purchase/findByCondition",{"condition":search},function (data) {
             if(null == data){
                 $("#purchase-list tbody").html("");
                 return;
@@ -725,7 +786,9 @@
                 str +=tr;
             }
             $("#purchase-list tbody").html(str);
-        });
+        });*/
+        var pageSize = $("#pageSize").val();
+        load(1,pageSize,search);
     }
 
 </script>

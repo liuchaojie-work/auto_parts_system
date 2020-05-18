@@ -36,7 +36,7 @@ public class UserDaoImpl implements IUserDao {
             return ((Long) runner.query(sql, new ScalarHandler())).intValue();
         }else{
             String sql = "select count(userId) from tab_user where (iden = 1 or iden = 999) and (userId like ? or " +
-                    " username like ? or phone like ? or email like ? or regTime like ? or img like ? or " +
+                    " username like ? or phone like ? or email like ? or regTime like binary ? or img like ? or " +
                     " name like ? or gender like ? or remark like ?)";
             Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
                     "%" + condition + "%","%" + condition + "%","%" + condition + "%","%" + condition + "%" ,"%" + condition + "%"};
@@ -80,7 +80,7 @@ public class UserDaoImpl implements IUserDao {
             return runner.query(sql, new BeanListHandler<User>(User.class), start, pageSize);
         }else{
             String sql = "select * from tab_user where (iden = 1 or iden = 999 )and (userId like ? or " +
-                    " username like ? or phone like ? or email like ? or regTime like ? or img like ? or " +
+                    " username like ? or phone like ? or email like ? or regTime like binary ? or img like ? or " +
                     " name like ? or gender like ? or remark like ?) limit ?, ?";
             Object[] params = {"%" + condition + "%", "%" + condition + "%", "%" + condition + "%", "%" + condition + "%",
                     "%" + condition + "%","%" + condition + "%","%" + condition + "%","%" + condition + "%" ,"%" + condition + "%", start, pageSize};

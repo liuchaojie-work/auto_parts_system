@@ -24,7 +24,7 @@ public class InventoryDaoImpl implements IInventoryDao {
             return ((Long) runner.query(sql, new ScalarHandler())).intValue();
         }else{
             String sql = "select count(tab_inventory.proId) from tab_inventory, tab_cate_bra, tab_category, tab_product where tab_inventory.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId and " +
-                    " tab_category.name = tab_cate_bra.cname and (tab_inventory.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_inventory.count like ?" +
+                    " tab_category.name = tab_cate_bra.cname and (tab_product.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_inventory.count like ?" +
                     " or tab_category.unit like ? or tab_inventory.remark like ? )";
             Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
             return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
@@ -41,7 +41,7 @@ public class InventoryDaoImpl implements IInventoryDao {
         }else{
             String sql = "select tab_inventory.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, tab_inventory.count, tab_category.unit, tab_inventory.remark" +
                     " from tab_inventory, tab_cate_bra, tab_category, tab_product where tab_inventory.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId and " +
-                    " tab_category.name = tab_cate_bra.cname and (tab_inventory.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_inventory.count like ?" +
+                    " tab_category.name = tab_cate_bra.cname and (tab_product.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_inventory.count like ?" +
                     " or tab_category.unit like ? or tab_inventory.remark like ? ) limit ?, ?";
             Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", start, pageSize};
             return runner.query(sql, new MapListHandler(), params);
@@ -60,7 +60,7 @@ public class InventoryDaoImpl implements IInventoryDao {
     public List<Map<String , Object>> findAllByCondition(String condition) throws SQLException {
         String sql = "select tab_inventory.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, tab_inventory.count, tab_category.unit, tab_inventory.remark" +
                 " from tab_inventory, tab_cate_bra, tab_category, tab_product where tab_inventory.proId = tab_product.proId and tab_product.cbId = tab_cate_bra.cbId and " +
-                " tab_category.name = tab_cate_bra.cname and (tab_inventory.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_inventory.count like ?" +
+                " tab_category.name = tab_cate_bra.cname and (tab_product.typeno like ? or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_inventory.count like ?" +
                 " or tab_category.unit like ? or tab_inventory.remark like ? )";
         Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
         return runner.query(sql, new MapListHandler(), params);

@@ -131,8 +131,8 @@
                         <div class="box-footer">
                             <div class="pull-left">
                                 <div class="form-group form-inline">
-                                    总共2 页，共14 条数据。 每页
-                                    <select class="form-control">
+                                    总共 <span id="totalPage" style="color: red"></span> 页，共 <span id="totalCount" style="color: red"></span> 条数据。 每页
+                                    <select class="form-control" id="pageSize">
                                         <option>5</option>
                                         <option>10</option>
                                         <option>20</option>
@@ -142,23 +142,10 @@
                             </div>
 
                             <div class="box-tools pull-right">
-                                <ul class="pagination">
-                                    <li>
-                                        <a href="#" aria-label="Previous">首页</a>
-                                    </li>
-                                    <li><a href="#">上一页</a></li>
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#">下一页</a></li>
-                                    <li>
-                                        <a href="#" aria-label="Next">尾页</a>
-                                    </li>
+                                <ul class="pagination" id="pageNum">
+
                                 </ul>
                             </div>
-
                         </div>
                         <!-- /.box-footer-->
                     </div>
@@ -375,6 +362,10 @@
             $("#addBrandSelect").html(str2);
         });
         selectAllOrNone("#categoryBrand-selall","#categoryBrand-list");
+
+        $("#pageSize").bind('input propertychange', function () {
+            findAllCategoryBrand();
+        });
     });
     //全选全不选
     function selectAllOrNone(checkId,tabId) {
@@ -410,7 +401,7 @@
         }
     }
     function findAllCategoryBrand() {
-        $.post("categoryBrand/findAll",{},function (data) {
+        /*$.post("categoryBrand/findAll",{},function (data) {
             if(null == data){
                 $("#categoryBrand-list tbody").html("");
                 return;
@@ -432,9 +423,76 @@
                 str +=tr;
             }
             $("#categoryBrand-list tbody").html(str);
+        });*/
+        var pageSize = $("#pageSize").val();
+        load(1,pageSize);
+    }
+    function load(currentPage, pageSize, condition) {
+        $.get("categoryBrand/pageQuery",{"currentPage":currentPage, "pageSize":pageSize, "condition":condition}, function (pb) {
+            $("#totalCount").html(pb.totalCount);
+            $("#totalPage").html(pb.totalPage);
+            var lis ="";
+            var firstPage ='<li onclick="javascript:load('+ 1 +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);" aria-label="Previous">首页</a></li>';
+            var beforeNum = (pb.currentPage - 1) < 1 ? 1: (pb.currentPage - 1);
+            var beforePage ='<li onclick="javascript:load('+ beforeNum +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);">上一页</a></li>';
+            lis+=firstPage;
+            lis+=beforePage;
+
+            var begin;
+            var end;
+
+            if(pb.totalPage < 5){
+                begin = 1;
+                end = pb.totalPage;
+            }else{
+                begin = pb.currentPage - 2;
+                end = pb.currentPage + 2;
+                if(begin < 1){
+                    begin = 1;
+                    end = begin + 4;
+                }
+                if(end > pb.totalPage){
+                    end = pb.totalPage;
+                    begin = pb.totalPage - 4;
+                }
+            }
+
+            for(var i = begin; i <= end ;i++){
+                if(pb.currentPage == i){
+                    lis+='<li class="active" onclick="javascript:load('+ i +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);">'+ i +'</a></li>';
+                }else{
+                    lis+='<li onclick="javascript:load('+ i +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);">'+ i +'</a></li>';
+                }
+            }
+            var nextNum = (pb.currentPage + 1) > pb.totalPage ? pb.totalPage: (pb.currentPage + 1);
+            var nextPage='<li onclick="javascript:load('+ nextNum +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);">下一页</a></li>';
+            var lastPage='<li onclick="javascript:load('+ pb.totalPage +','+ pb.pageSize +','+ condition +')"><a href="javascript:void(0);" aria-label="Next">尾页</a></li>';
+            lis+=nextPage;
+            lis+=lastPage;
+            $("#pageNum").html(lis);
+
+            var info_list = "";
+            for(var i = 0; i < pb.list.length; i++){
+                var listElement = pb.list[i];
+                var tr =
+                    '<tr>\n' +
+                    '                                        <td><input name="ids" type="checkbox" value="'+listElement.cbId+'"></td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+listElement.cbId+'</td>\n' +
+                    '                                        <td>'+listElement.cname+'</td>\n' +
+                    '                                        <td>'+listElement.bname+'</td>\n' +
+                    '                                        <td>'+listElement.remark+'</td>\n' +
+                    '                                        <td class="text-center">\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changeCategoryBrand"  onclick="findCategoryBrandByCbId(\''+listElement.cbId+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteCategoryBrandByCbId(\''+listElement.cbId+'\')" value="删除"/>\n' +
+                    '                                        </td>\n' +
+                    '                                    </tr>';
+                info_list+=tr;
+            }
+            $("#categoryBrand-list tbody").html(info_list);
+            window.scrollTo(0,0);
         });
     }
-
     function findCategoryBrandByCbId(cbId) {
         $.post("categoryBrand/findByCbId?cbId="+cbId,{},function (data) {
             var str0 = '<label class="col-sm-3 control-label">关联id：</label>\n' +
@@ -491,7 +549,6 @@
             });
         }
     }
-
     function addCategoryBrand(){
         $.post("categoryBrand/add",$("#addCategoryBrandForm").serialize(),function (data) {
             if(data){
@@ -503,8 +560,6 @@
             }
         });
     }
-
-
     function changeCategoryBrandSubmit() {
         $.post("categoryBrand/change",$("#changeCategoryBrandForm").serialize(), function (data) {
             if(data){
@@ -516,10 +571,9 @@
             }
         });
     }
-
     function categoryBrandSearch() {
         var search = $("#categoryBrandSearch").val();
-        $.post("categoryBrand/findByCondition",{"condition":search},function (data) {
+        /*$.post("categoryBrand/findByCondition",{"condition":search},function (data) {
             if(null == data){
                 $("#categoryBrand-list tbody").html("");
                 return;
@@ -541,7 +595,9 @@
                 str +=tr;
             }
             $("#categoryBrand-list tbody").html(str);
-        });
+        });*/
+        var pageSize = $("#pageSize").val();
+        load(1,pageSize,search);
     }
 
 </script>

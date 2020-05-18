@@ -224,7 +224,7 @@
 
         $("#pageSize").bind('input propertychange', function () {
             findAllLoginInfo();
-        })
+        });
     });
     //全选全不选
     function selectAllOrNone(checkId,tabId) {

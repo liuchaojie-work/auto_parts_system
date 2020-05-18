@@ -46,7 +46,7 @@ public class InventoryServlet extends BaseServlet {
         }
 
         try {
-            inventoryService.pageQuery(currentPage, pageSize, conditionStr)
+            PageBean<Map<String, Object>> mapPageBean = inventoryService.pageQuery(currentPage, pageSize, conditionStr);
             writeValue(mapPageBean, response);
         } catch (InventoryException e) {
             e.printStackTrace();

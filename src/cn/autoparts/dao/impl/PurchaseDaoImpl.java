@@ -22,11 +22,10 @@ public class PurchaseDaoImpl implements IPurchaseDao {
             return ((Long) runner.query(sql, new ScalarHandler())).intValue();
         }else{
             String sql = "select count(tab_purchase.purNo) from tab_purchase, tab_product, tab_cate_bra, tab_location where (tab_purchase.proId = tab_product.proId and " +
-                    " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? " +
-                    " or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? " +
-                    " or tab_purchase.purchasePrice like ? or tab_purchase.count like ? or tab_purchase.sellPrice like ? " +
+                    " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? or tab_product.typeno like ? " +
+                    " or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_purchase.purchasePrice like ? or tab_purchase.count like ? or tab_purchase.sellPrice like ? " +
                     " or tab_purchase.time like binary ? or tab_location.loca like ? or tab_purchase.remark like ?)";
-            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
                     "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
             return ((Long) runner.query(sql, new ScalarHandler(), params)).intValue();
         }
@@ -44,11 +43,10 @@ public class PurchaseDaoImpl implements IPurchaseDao {
             String sql =  "select tab_purchase.purNo, tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname ,tab_purchase.purchasePrice, " +
                     " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark"+
                     " from tab_purchase, tab_product, tab_cate_bra, tab_location where (tab_purchase.proId = tab_product.proId and " +
-                    " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? " +
-                    " or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? " +
-                    " or tab_purchase.purchasePrice like ? or tab_purchase.count like ? or tab_purchase.sellPrice like ? " +
+                    " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? or tab_product.typeno like ? " +
+                    " or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_purchase.purchasePrice like ? or tab_purchase.count like ? or tab_purchase.sellPrice like ? " +
                     " or tab_purchase.time like binary ? or tab_location.loca like ? or tab_purchase.remark like ?) limit ?, ?";
-            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+            Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
                     "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", start, pageSize};
             return runner.query(sql, new ArrayListHandler(), params);
         }
@@ -95,11 +93,10 @@ public class PurchaseDaoImpl implements IPurchaseDao {
         String sql =  "select tab_purchase.purNo, tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname ,tab_purchase.purchasePrice, " +
                 " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark"+
                 " from tab_purchase, tab_product, tab_cate_bra, tab_location where (tab_purchase.proId = tab_product.proId and " +
-                " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? " +
-                " or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? " +
-                " or tab_purchase.purchasePrice like ? or tab_purchase.count like ? or tab_purchase.sellPrice like ? " +
+                " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.locNo = tab_location.no) and (tab_purchase.purNo like ? or tab_product.typeno like ?" +
+                " or tab_cate_bra.cname like ? or tab_cate_bra.bname like ? or tab_purchase.purchasePrice like ? or tab_purchase.count like ? or tab_purchase.sellPrice like ? " +
                 " or tab_purchase.time like binary ? or tab_location.loca like ? or tab_purchase.remark like ?)";
-        Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
+        Object[] params = {"%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%",
                             "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%", "%"+ condition +"%"};
         return runner.query(sql, new ArrayListHandler(), params);
     }
