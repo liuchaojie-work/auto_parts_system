@@ -106,7 +106,7 @@
                                     <div class="form-group form-inline">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-default btn-success" title="添加" data-toggle="modal" data-target="#addProduct"><i class="fa fa-file-o"></i> 添加产品</button>
-                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="removeAllProductByProIds()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="removeAllProductByPurNos()"><i class="fa fa-trash-o"></i> 批量删除</button>
                                         </div>
                                     </div>
                                 </div>
@@ -355,148 +355,13 @@
             }
         });
         selectAllOrNone("#sale-selall","#sale-list");
+        selectAllOrNone("#product-selall","#product-list");
     });
 
-    jQuery.cookie = function(name, value, options) {
-        if (typeof value != 'undefined') {
-            options = options || {};
-            if (value === null) {
-                value = '';
-                options = $.extend({}, options);
-                options.expires = -1;
-            }
-            var expires = '';
-            if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
-                var date;
-                if (typeof options.expires == 'number') {
-                    date = new Date();
-                    date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
-                } else {
-                    date = options.expires;
-                }
-                expires = '; expires=' + date.toUTCString();
-            }
-            var path = options.path ? '; path=' + (options.path) : '';
-            var domain = options.domain ? '; domain=' + (options.domain) : '';
-            var secure = options.secure ? '; secure' : '';
-            document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
-        } else {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-    };
-    /*$.extend({
-        cookieHelper: function(name, value, options) {
-            if (typeof value != 'undefined') { // name and value given, set cookie
-                options = options || {};
-                if (value === null) {
-                    value = '';
-                    options.expires = -1;
-                }
-                var expires = '';
-                if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
-                    var date;
-                    if (typeof options.expires == 'number') {
-                        date = new Date();
-                        date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
-                    } else {
-                        date = options.expires;
-                    }
-                    expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
-                }
-                var path = options.path ? '; path=' + options.path : '';
-                var domain = options.domain ? '; domain=' + options.domain : '';
-                var secure = options.secure ? '; secure' : '';
-                document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
-            } else { // only name given, get cookie
-                var cookieValue = null;
-                if (document.cookie && document.cookie != '') {
-                    var cookies = document.cookie.split(';');
-                    for (var i = 0; i < cookies.length; i++) {
-                        var cookie = jQuery.trim(cookies[i]);
-                        // Does this cookie string begin with the name we want?
-                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                            break;
-                        }
-                    }
-                }
-                return cookieValue;
-            }
-        }
-    });*/
     //全选全不选
     function selectAllOrNone(checkId,tabId) {
         $(checkId).click(function () {
             $(tabId+" tr td input[type='checkbox']").prop("checked",$(checkId).prop("checked"));
-        });
-    }
-    function deleteAllSaleByUserIds() {
-        var result = confirm("确定删除所选吗？");
-        if(result){
-            var checks = $("#sale-list tbody tr td input[type='checkbox']:checked");
-            if(0 == checks.length){
-                alert("未选种任何一条!");
-                return false;
-            }
-            var checkedArr = new Array();
-            checks.each(function () {
-                checkedArr.push($(this).val());
-            });
-            var userIds = checkedArr.join(",");
-            $.post("user/deleteByUserIds",{"userIds":userIds},function (data) {
-                if(data){
-                    $(function (){
-                        alert("批量删除成功！")
-                    });
-                    findAllSale();
-                }else{
-                    $(function () {
-                        alert("批量删除失败！")
-                    });
-                }
-            });
-        }
-    }
-
-
-    function saleSearch() {
-        var search = $("#saleSearch").val();
-        $.post("user/findSaleByCondition",{"condition":search},function (data) {
-            if(null == data){
-                $("#sale-list tbody").html("");
-                return;
-            }
-            var str = "";
-            for(var i = 0; i < data.length; i++){
-                var tr = '<tr>\n' +
-                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].userId+'"></td>\n' +
-                    '                                        <td>'+(i+1)+'</td>\n' +
-                    '                                        <td>'+data[i].name+'</td>\n' +
-                    '                                        <td>'+data[i].gender+'</td>\n' +
-                    '                                        <td>'+data[i].phone+'</td>\n' +
-                    '                                        <td>'+data[i].address+'</td>\n' +
-                    '                                        <td>'+data[i].logName+'</td>\n' +
-                    '                                        <td>'+data[i].receiverAdd+'</td>\n' +
-                    '                                        <td>'+data[i].remark+'</td>\n' +
-                    '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changeSale" onclick="findSaleByUserId(\''+data[i].userId+'\')" value="修改"/>\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteSaleByUserId(\''+data[i].userId+'\')" value="删除"/>\n' +
-                    '                                        </td>\n' +
-                    '                                    </tr>';
-                str +=tr;
-            }
-            $("#sale-list tbody").html(str);
         });
     }
 
@@ -574,237 +439,132 @@
     }
 
     function checkedProductByPurNo(purNo) {
+        $("#product-list tbody").html("");
         $.post("purchase/findByPurNo",{"purNo":purNo}, function (productInfo) {
-            var productInfoStr = productInfo.toString();
-            // var productInfoStr = JSON.stringify(productInfo);
-            getCookie = $.post("saleProduct/readySale",{"productInfo":productInfoStr}, function (productMap) {
-                alert(productMap);
-            });
-            /*$.when(getCookie).done(function () {
-                var productMap = $.cookie("productMap");
-                alert(productMap);
-                for(var i = 0; i < productMap.length; i++){
-                    console.log(productMap);
-
-                }
-            })*/
-            /*$("#product-list tbody").append('<tr>\n' +
-                                '                  <td >\n' +
-                                '                  <input name="ids" type="checkbox" />\n' +
-                                '                  </td>\n' +
-                                '                  <td>'+ ($(this).parent().prevAll().length + 1) +'</td>\n' +
-                                '                  <td><input type="hidden" name="typeno" value="'+ data[1] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ data[1] +'"></td>\n' +
-                                '                  <td><input type="hidden" name="cname" value="'+ data[2] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ data[2] +'"></td>\n' +
-                                '                  <td><input type="hidden" name="bname" value="'+ data[3] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ data[3] +'"></td>\n' +
-                                '                  <td><input type="hidden" name="loca" value="'+ data[8] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ data[8] +'"></td>\n' +
-                                '                  <td><input type="text" name="price" style="width: 70px; border: none; background-color: transparent" value="'+ data[6] +'"></td>\n' +
-                                '                  <td><input type="number" name="count" style="width: 50px; border: none; background-color: transparent" value="1"></td>\n' +
-                                '                  <td><input type="hidden" name="unit"  value="'+ data[11] +'"> <input type="text" style="width: 30px; border: none; background-color: transparent" disabled value="'+ data[11] +'"></td>\n' +
-                                '                  <td><input type="text" name="zongji" style="width: 100px; border: none; background-color: transparent"></td>\n' +
-                                '                  <td><input type="text" name="remark" style="width: 50px; border: none; background-color: transparent" value="'+ data[9] +'"> <input type="hidden" name="purNo" value="'+ data[10] +'"></td>\n' +
-                                '                  <td class="text-center"><input type="button" class="btn btn-danger btn-xs" value="删除"></td>\n' +
-                                '               </tr>'
-            );*/
-        });
-
-    }
-    function findSaleByUserId(userId) {
-        $.post("user/findByUserId",{"userId":userId},function (data) {
-            var str=
-                '\n' +
-                '                                <div class="col-sm-12 form-group"  style="text-align: center">\n' +
-                '                                    <label id="changeSaleMsg"></label>\n' +
-                '                                </div>\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSaleUserId" class="col-sm-4 control-label">销售id：</label>\n' +
-                '                                    <input type="hidden" class="form-control" name="userId" value="'+data.userId+'" placeholder="请输入销售id...">\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" name="userId" value="'+data.userId+'" disabled placeholder="请输入销售id...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSaleName" class="col-sm-4 control-label">用户名：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" name="username" value="'+data.username+'" placeholder="请输入用户名...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSaleName" class="col-sm-4 control-label">手机号码：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" name="phone" value="'+data.phone+'" placeholder="请输入手机号码...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSaleFactory" class="col-sm-4 control-label">邮箱：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" name="email" value="'+data.email+'" placeholder="请输入邮箱...">\n' +
-                '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' +
-                '\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">姓名：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" name="name" value="'+data.name+'" placeholder="请输入姓名...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">激活码：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" value="'+data.activeCode+'" disabled placeholder="请输入激活码...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">激活状态：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" name="activeStatus" value="'+data.activeStatus+'" placeholder="请输入激活状态...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">注册时间：</label>\n' +
-                '                                        <input type="hidden" class="form-control" value="'+ data.regTime +'" placeholder="请输入注册时间...">\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" value="'+ changeTime(data.regTime) +'" disabled placeholder="请输入注册时间...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">头像：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="file" name="img" value="'+data.img+'" style="border: 0">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">姓别：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                       <div class="form-inline">\n';
-            if(data.gender === "男"){
-                str += '                                           <div class="radio"><label><input type="radio" name="gender" value="男" checked> 男</label></div>\n' +
-                    '                                           <div class="radio"><label><input type="radio" name="gender" value="女"> 女</label></div>\n' ;
-            }else if(data.gender === "女"){
-                str +='                                           <div class="radio"><label><input type="radio" name="gender" value="男"> 男</label></div>\n' +
-                    '                                           <div class="radio"><label><input type="radio" name="gender" value="女" checked> 女</label></div>\n';
+            if(null != productInfo && 0 != productInfo.toString().length){
+                var productInfoStr = productInfo.toString();
+                // var productInfoStr = JSON.stringify(productInfo);
+                getCookie = $.post("saleProduct/readySale",{"productInfo":productInfoStr}, function (productMap) {
+                    var prodMap = JSON.parse(decodeURIComponent(productMap));
+                    // alert(prodMap);
+                    var i = 0;
+                    $.each(prodMap,function (key, value) {
+                        var proEle = value.toString().split(",");
+                        i += 1;
+                        $("#product-list tbody").append('<tr>\n' +
+                            '              <fieldset>'+
+                            '                  <td >\n' +
+                            '                  <input name="ids" type="checkbox" value=" '+ proEle[10] +'" />\n' +
+                            '                  </td>\n' +
+                            '                  <td>'+ i +'</td>\n' +
+                            '                  <td><input type="hidden" name="typeno" value="'+ proEle[1] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ proEle[1] +'"></td>\n' +
+                            '                  <td><input type="hidden" name="cname" value="'+ proEle[2] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ proEle[2] +'"></td>\n' +
+                            '                  <td><input type="hidden" name="bname" value="'+ proEle[3] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ proEle[3] +'"></td>\n' +
+                            '                  <td><input type="hidden" name="loca" value="'+ proEle[8] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ proEle[8] +'"></td>\n' +
+                            '                  <td><input type="number" name="price" class="price" style="width: 70px; border: none; background-color: transparent" value="'+ proEle[6] +'"></td>\n' +
+                            '                  <td><input type="number" name="count" class="count" style="width: 50px; border: none; background-color: transparent" value="1" ></td>\n' +
+                            '                  <td><input type="hidden" name="unit"  value="'+ proEle[11] +'"> <input type="text" style="width: 30px; border: none; background-color: transparent" disabled value="'+ proEle[11] +'"></td>\n' +
+                            '                  <td><input type="number" name="zongji" class="zongji" style="width: 100px; border: none; background-color: transparent">  </td>\n' +
+                            '                  <td><input type="text" name="remark" style="width: 50px; border: none; background-color: transparent" value="'+ proEle[9] +'"> <input type="hidden" name="purNo" value="'+ proEle[10] +'"></td>\n' +
+                            '                  <td class="text-center"><input type="button" class="btn btn-danger btn-xs" value="删除" onclick="removeByPurNo(\''+ proEle[10]+' \')"></td>\n' +
+                            '               </fieldset>'+
+                            '               </tr>'
+                        );
+                        /*var price = $(this).find(".price").val();
+                        var count = $(this).find(".count").val();
+                        $(this).find(".zongji").val(price*count);*/
+                    })
+                });
+            }else{
+                $("#product-list tbody").html("");
             }
-            str +=
-                '                                       </div>\n' +
-                '                                       <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">地址：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" name="address" value="'+data.address+'" placeholder="请输入地址...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">收货地址：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" name="receiverAdd" value="'+data.receiverAdd+'" placeholder="请输入收货地址...">\n' +
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSalePlace" class="col-sm-4 control-label">发货物流：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                            <select class="form-control select2" id="changeSaleSelect" name="logName" style="width: 100%;">\n' +
-                '                                            </select>'+
-                '                                        <span class="help-block small msg-info">Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' +
-                '                                <div class="col-sm-6 form-group">\n' +
-                '                                    <label for="inputSaleRemark" class="col-sm-4 control-label">备注：</label>\n' +
-                '\n' +
-                '                                    <div class="col-sm-8">\n' +
-                '                                        <input type="text" class="form-control" name="remark" value="'+data.remark+'" placeholder="请输入备注...">\n' +
-                '                                        <span class="help-block small msg-info" >Help block with success</span>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '\n' ;
-            $.post("logistics/findAll",{},function (ldata) {
-                var str2 = "";
-                for(var j = 0; j < ldata.length; j++){
-                    if(data.logName === ldata[j].name){
-                        str2+='<option selected>'+ldata[j].name+'</option>';
-                    }else{
-                        str2+='<option>'+ldata[j].name+'</option>';
-                    }
-                }
-                $("#changeSaleSelect").html(str2);
-            });
-            $("#changeSaleForm .box-body #content").html(str);
         });
 
     }
-    function deleteSaleByUserId(userId) {
-        var result = confirm("确定删除吗？");
+
+    function removeByPurNo(purNo){
+        $("#product-list tbody").html("");
+        $.post("saleProduct/removeSaleByPurNo",{"purNo":purNo},function (productMap) {
+            alert("删除成功！");
+            var prodMap = JSON.parse(decodeURIComponent(productMap));
+            var i = 0;
+            $.each(prodMap,function (key, value) {
+                var proEle = value.toString().split(",");
+                i += 1;
+                $("#product-list tbody").append('<tr>\n' +
+                    '              <fieldset>'+
+                    '                  <td >\n' +
+                    '                  <input name="ids" type="checkbox" value=" '+ proEle[10] +'" />\n' +
+                    '                  </td>\n' +
+                    '                  <td>'+ i +'</td>\n' +
+                    '                  <td><input type="hidden" name="typeno" value="'+ proEle[1] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ proEle[1] +'"></td>\n' +
+                    '                  <td><input type="hidden" name="cname" value="'+ proEle[2] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ proEle[2] +'"></td>\n' +
+                    '                  <td><input type="hidden" name="bname" value="'+ proEle[3] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ proEle[3] +'"></td>\n' +
+                    '                  <td><input type="hidden" name="loca" value="'+ proEle[8] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ proEle[8] +'"></td>\n' +
+                    '                  <td><input type="number" name="price" class="price" style="width: 70px; border: none; background-color: transparent" value="'+ proEle[6] +'"></td>\n' +
+                    '                  <td><input type="number" name="count" class="count" style="width: 50px; border: none; background-color: transparent" value="1" ></td>\n' +
+                    '                  <td><input type="hidden" name="unit"  value="'+ proEle[11] +'"> <input type="text" style="width: 30px; border: none; background-color: transparent" disabled value="'+ proEle[11] +'"></td>\n' +
+                    '                  <td><input type="number" name="zongji" class="zongji" style="width: 100px; border: none; background-color: transparent">  </td>\n' +
+                    '                  <td><input type="text" name="remark" style="width: 50px; border: none; background-color: transparent" value="'+ proEle[9] +'"> <input type="hidden" name="purNo" value="'+ proEle[10] +'"></td>\n' +
+                    '                  <td class="text-center"><input type="button" class="btn btn-danger btn-xs" value="删除" onclick="removeByPurNo(\''+ proEle[10]+' \')"></td>\n' +
+                    '               </fieldset>'+
+                    '               </tr>'
+                );
+                /*var price = $(this).find(".price").val();
+                var count = $(this).find(".count").val();
+                $(this).find(".zongji").val(price*count);*/
+            });
+        });
+    }
+    
+    function removeAllProductByPurNos() {
+        var result = confirm("确定删除所选吗？");
         if(result){
-            $.post("user/deleteByUserId",{"userId":userId},function (data) {
-                if(data){
-                    $(function (){
-                        alert("删除成功！");
-                    });
-                    findAllSale();
-                }else{
-                    $(function () {
-                        alert("删除失败！");
-                    });
-                }
+            var checks = $("#product-list tbody tr td input[type='checkbox']:checked");
+            if(0 == checks.length){
+                alert("未选种任何一条!");
+                return false;
+            }
+            var checkedArr = new Array();
+            checks.each(function () {
+                checkedArr.push($(this).val());
+            });
+            var purNos = checkedArr.join(",");
+            $("#product-list tbody").html("");
+            $.post("saleProduct/removeSaleByPurNos",{"purNos":purNos},function (productMap) {
+                alert("删除成功！");
+                var prodMap = JSON.parse(decodeURIComponent(productMap));
+                var i = 0;
+                $.each(prodMap,function (key, value) {
+                    var proEle = value.toString().split(",");
+                    i += 1;
+                    $("#product-list tbody").append('<tr>\n' +
+                        '              <fieldset>'+
+                        '                  <td >\n' +
+                        '                  <input name="ids" type="checkbox" value=" '+ proEle[10] +'" />\n' +
+                        '                  </td>\n' +
+                        '                  <td>'+ i +'</td>\n' +
+                        '                  <td><input type="hidden" name="typeno" value="'+ proEle[1] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ proEle[1] +'"></td>\n' +
+                        '                  <td><input type="hidden" name="cname" value="'+ proEle[2] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ proEle[2] +'"></td>\n' +
+                        '                  <td><input type="hidden" name="bname" value="'+ proEle[3] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ proEle[3] +'"></td>\n' +
+                        '                  <td><input type="hidden" name="loca" value="'+ proEle[8] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ proEle[8] +'"></td>\n' +
+                        '                  <td><input type="number" name="price" class="price" style="width: 70px; border: none; background-color: transparent" value="'+ proEle[6] +'"></td>\n' +
+                        '                  <td><input type="number" name="count" class="count" style="width: 50px; border: none; background-color: transparent" value="1" ></td>\n' +
+                        '                  <td><input type="hidden" name="unit"  value="'+ proEle[11] +'"> <input type="text" style="width: 30px; border: none; background-color: transparent" disabled value="'+ proEle[11] +'"></td>\n' +
+                        '                  <td><input type="number" name="zongji" class="zongji" style="width: 100px; border: none; background-color: transparent">  </td>\n' +
+                        '                  <td><input type="text" name="remark" style="width: 50px; border: none; background-color: transparent" value="'+ proEle[9] +'"> <input type="hidden" name="purNo" value="'+ proEle[10] +'"></td>\n' +
+                        '                  <td class="text-center"><input type="button" class="btn btn-danger btn-xs" value="删除" onclick="removeByPurNo(\''+ proEle[10]+' \')"></td>\n' +
+                        '               </fieldset>'+
+                        '               </tr>'
+                    );
+                    /*var price = $(this).find(".price").val();
+                    var count = $(this).find(".count").val();
+                    $(this).find(".zongji").val(price*count);*/
+                });
             });
         }
     }
-    function addSale(){
-        $.post("user/add",$("#addSaleForm").serialize(),function (data) {
-            if(data){
-                $("#addSaleMsg").html("添加成功！");
-                $("#addSaleMsg").css("color","green");
-            }else{
-                $("#addSaleMsg").html("已存在！添加失败！");
-                $("#addSaleMsg").css("color","red");
-            }
-        });
-
-    }
-    function changeSaleSubmit() {
-        $.post("user/change",$("#changeSaleForm").serialize(), function (data) {
-            if(data){
-                $("#changeSaleMsg").html("修改成功！");
-                $("#changeSaleMsg").css("color","green");
-            }else{
-                $("#changeSaleMsg").html("修改失败！");
-                $("#changeSaleMsg").css("color","red");
-            }
-        });
-    }
-
-
+    
 </script>
 </body>
 
