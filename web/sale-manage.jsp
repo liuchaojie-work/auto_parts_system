@@ -1,3 +1,4 @@
+<%@ page import="java.net.URLDecoder" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -110,36 +111,39 @@
                                     </div>
                                 </div>
                                 <!--工具栏/-->
+                                <form id="productSellForm">
                                 <!--数据列表-->
-                                <table id="product-list" class="table table-bordered table-striped table-hover dataTable">
-                                    <thead>
-                                    <tr>
-                                        <th class="" style="padding-right:0px;">
-                                            <input id="product-selall" type="checkbox">
-                                        </th>
-                                        <th>#</th>
-                                        <th>产品型号</th>
-                                        <th>产品类别</th>
-                                        <th>产品品牌</th>
-                                        <th>产品单价</th>
-                                        <th>数量</th>
-                                        <th>单位</th>
-                                        <th>总计</th>
-                                        <th>备注</th>
-                                        <th class="text-center">操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
+                                    <table id="product-list" class="table table-bordered table-striped table-hover dataTable">
+                                        <thead>
+                                        <tr>
+                                            <th class="" style="padding-right:0px;">
+                                                <input id="product-selall" type="checkbox">
+                                            </th>
+                                            <th>#</th>
+                                            <th>型号</th>
+                                            <th>类别</th>
+                                            <th>品牌</th>
+                                            <th>库位</th>
+                                            <th>单价</th>
+                                            <th>数量</th>
+                                            <th>单位</th>
+                                            <th>总计</th>
+                                            <th>备注</th>
+                                            <th class="text-center">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
                                 <!--数据列表/-->
+                                </form>
                             </div>
                         </div>
                         <!-- /.box-body -->
 
                         <!-- .box-footer-->
-                        <div class="box-footer">
+                        <%--<div class="box-footer">
                             <div class="pull-left">
                                 <div class="form-group form-inline">
                                     总共2 页，共14 条数据。 每页
@@ -169,7 +173,7 @@
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div>--%>
                         <!-- /.box-footer-->
                     </div>
                 </section>
@@ -273,36 +277,6 @@
 
             </div>
 
-            <%--   销售信息修改    --%>
-            <div id="changeSale" class="modal" role="dialog">
-                <!-- 销售信息修改内容头部 -->
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="findAllSale()">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">销售信息修改</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="changeSaleForm" class="form-horizontal">
-                                <div class="box-body">
-                                    <div id="content">
-
-                                    </div>
-                                    <div class="col-sm-offset-4 col-sm-8" >
-                                        <input type="button" class="btn btn-success col-sm-2" onclick="changeSaleSubmit()" value="提交"/>
-                                        <input type="reset"  style="margin: 0 10px;"  class="btn btn-warning col-sm-2" value="重置"/>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" onclick="findAllSale()" value="返回"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
     </div>
@@ -365,7 +339,6 @@
     $(function () {
 
         if(!$("showAllSale").attr("hidden")){
-            findAllSale();
         }
 
         $.post("logistics/findAll",{},function (data) {
@@ -383,6 +356,85 @@
         });
         selectAllOrNone("#sale-selall","#sale-list");
     });
+
+    jQuery.cookie = function(name, value, options) {
+        if (typeof value != 'undefined') {
+            options = options || {};
+            if (value === null) {
+                value = '';
+                options = $.extend({}, options);
+                options.expires = -1;
+            }
+            var expires = '';
+            if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+                var date;
+                if (typeof options.expires == 'number') {
+                    date = new Date();
+                    date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+                } else {
+                    date = options.expires;
+                }
+                expires = '; expires=' + date.toUTCString();
+            }
+            var path = options.path ? '; path=' + (options.path) : '';
+            var domain = options.domain ? '; domain=' + (options.domain) : '';
+            var secure = options.secure ? '; secure' : '';
+            document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+        } else {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    };
+    /*$.extend({
+        cookieHelper: function(name, value, options) {
+            if (typeof value != 'undefined') { // name and value given, set cookie
+                options = options || {};
+                if (value === null) {
+                    value = '';
+                    options.expires = -1;
+                }
+                var expires = '';
+                if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+                    var date;
+                    if (typeof options.expires == 'number') {
+                        date = new Date();
+                        date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+                    } else {
+                        date = options.expires;
+                    }
+                    expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+                }
+                var path = options.path ? '; path=' + options.path : '';
+                var domain = options.domain ? '; domain=' + options.domain : '';
+                var secure = options.secure ? '; secure' : '';
+                document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+            } else { // only name given, get cookie
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        }
+    });*/
     //全选全不选
     function selectAllOrNone(checkId,tabId) {
         $(checkId).click(function () {
@@ -416,34 +468,7 @@
             });
         }
     }
-    function findAllSale() {
-        $.post("user/findAllSale",{},function (data) {
-            if(null == data){
-                $("#sale-list tbody").html("");
-                return;
-            }
-            var str = "";
-            for(var i = 0; i < data.length; i++){
-                var tr = '<tr>\n' +
-                    '                                        <td><input name="ids" type="checkbox" value="'+data[i].userId+'"></td>\n' +
-                    '                                        <td>'+(i+1)+'</td>\n' +
-                    '                                        <td>'+data[i].name+'</td>\n' +
-                    '                                        <td>'+data[i].gender+'</td>\n' +
-                    '                                        <td>'+data[i].phone+'</td>\n' +
-                    '                                        <td>'+data[i].address+'</td>\n' +
-                    '                                        <td>'+data[i].logName+'</td>\n' +
-                    '                                        <td>'+data[i].receiverAdd+'</td>\n' +
-                    '                                        <td>'+data[i].remark+'</td>\n' +
-                    '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changeSale" onclick="findSaleByUserId(\''+data[i].userId+'\')" value="修改"/>\n' +
-                    '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteSaleByUserId(\''+data[i].userId+'\')" value="删除"/>\n' +
-                    '                                        </td>\n' +
-                    '                                    </tr>';
-                str +=tr;
-            }
-            $("#sale-list tbody").html(str);
-        });
-    }
+
 
     function saleSearch() {
         var search = $("#saleSearch").val();
@@ -525,7 +550,7 @@
                     '                                        <td>'+data[i][9]+'</td>\n' +
                     '                                        <td>'+data[i][10]+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="checkedProductByPurNo(\''+data[i][0]+'\')" value="选中"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-dismiss="modal"  onclick="checkedProductByPurNo(\''+data[i][0]+'\')" value="选中"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';
                 str +=tr;
@@ -545,12 +570,43 @@
                 '                <input type="hidden" name="userId" value="' + userId + '">');
         });
         $("#addProductView").removeAttr("hidden");
-        $("#product-list tbody").html("");
+        /*$("#product-list tbody").html("");*/
     }
 
     function checkedProductByPurNo(purNo) {
-        $.post("")
-        $("#product-list tbody").append('');
+        $.post("purchase/findByPurNo",{"purNo":purNo}, function (productInfo) {
+            var productInfoStr = productInfo.toString();
+            // var productInfoStr = JSON.stringify(productInfo);
+            getCookie = $.post("saleProduct/readySale",{"productInfo":productInfoStr}, function (productMap) {
+                alert(productMap);
+            });
+            /*$.when(getCookie).done(function () {
+                var productMap = $.cookie("productMap");
+                alert(productMap);
+                for(var i = 0; i < productMap.length; i++){
+                    console.log(productMap);
+
+                }
+            })*/
+            /*$("#product-list tbody").append('<tr>\n' +
+                                '                  <td >\n' +
+                                '                  <input name="ids" type="checkbox" />\n' +
+                                '                  </td>\n' +
+                                '                  <td>'+ ($(this).parent().prevAll().length + 1) +'</td>\n' +
+                                '                  <td><input type="hidden" name="typeno" value="'+ data[1] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ data[1] +'"></td>\n' +
+                                '                  <td><input type="hidden" name="cname" value="'+ data[2] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ data[2] +'"></td>\n' +
+                                '                  <td><input type="hidden" name="bname" value="'+ data[3] +'"> <input type="text" disabled style="width: 70px; border: none; background-color: transparent" value="'+ data[3] +'"></td>\n' +
+                                '                  <td><input type="hidden" name="loca" value="'+ data[8] +'"> <input type="text" disabled style="width: 120px; border: none; background-color: transparent" value="'+ data[8] +'"></td>\n' +
+                                '                  <td><input type="text" name="price" style="width: 70px; border: none; background-color: transparent" value="'+ data[6] +'"></td>\n' +
+                                '                  <td><input type="number" name="count" style="width: 50px; border: none; background-color: transparent" value="1"></td>\n' +
+                                '                  <td><input type="hidden" name="unit"  value="'+ data[11] +'"> <input type="text" style="width: 30px; border: none; background-color: transparent" disabled value="'+ data[11] +'"></td>\n' +
+                                '                  <td><input type="text" name="zongji" style="width: 100px; border: none; background-color: transparent"></td>\n' +
+                                '                  <td><input type="text" name="remark" style="width: 50px; border: none; background-color: transparent" value="'+ data[9] +'"> <input type="hidden" name="purNo" value="'+ data[10] +'"></td>\n' +
+                                '                  <td class="text-center"><input type="button" class="btn btn-danger btn-xs" value="删除"></td>\n' +
+                                '               </tr>'
+            );*/
+        });
+
     }
     function findSaleByUserId(userId) {
         $.post("user/findByUserId",{"userId":userId},function (data) {
@@ -747,6 +803,8 @@
             }
         });
     }
+
+
 </script>
 </body>
 

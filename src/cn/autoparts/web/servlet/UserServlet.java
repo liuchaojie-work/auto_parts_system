@@ -251,7 +251,6 @@ public class UserServlet extends BaseServlet {
         String userId = request.getParameter("userId");
         try {
             User byUserId = userService.findByUserId(userId);
-            System.out.println(byUserId.toString());
             writeValue(byUserId, response);
         } catch (UserException e) {
             e.printStackTrace();

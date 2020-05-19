@@ -79,12 +79,13 @@ public class PurchaseDaoImpl implements IPurchaseDao {
         return runner.query(sql, new ArrayListHandler(), proId);
     }
 
+
     @Override
     public Object[] findByPurNo(String purNo) throws SQLException {
         String sql = "select tab_purchase.proId, tab_product.typeno, tab_cate_bra.cname, tab_cate_bra.bname, tab_purchase.purchasePrice, " +
-                " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark"+
-                " from tab_purchase, tab_product, tab_cate_bra, tab_location where tab_purchase.purNo = ? and" +
-                " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.proId = tab_product.proId and tab_purchase.locNo = tab_location.no";
+                " tab_purchase.count, tab_purchase.sellPrice, tab_purchase.time, tab_location.loca, tab_purchase.remark ,tab_purchase.purNo, tab_category.unit"+
+                " from tab_purchase, tab_product, tab_cate_bra, tab_location, tab_category where tab_purchase.purNo = ? and" +
+                " tab_product.cbId = tab_cate_bra.cbId and tab_purchase.proId = tab_product.proId and tab_purchase.locNo = tab_location.no and tab_cate_bra.cname = tab_category.name";
         return runner.query(sql, new ArrayHandler(), purNo);
     }
 

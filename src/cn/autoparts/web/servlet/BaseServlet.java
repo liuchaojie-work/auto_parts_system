@@ -1,6 +1,7 @@
 package cn.autoparts.web.servlet;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
+import java.util.Map;
 
 public class BaseServlet extends HttpServlet {
     @Override
@@ -54,5 +57,20 @@ public class BaseServlet extends HttpServlet {
     public String writeValueAsString(Object obj) throws JsonProcessingException{
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(obj);
+    }
+
+    public Map readValueAsMap(String str) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(str,Map.class);
+//        return mapper.readValue(str, new TypeReference() {
+//        });
+    }
+
+    public List readValueAsList(String str ) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        List list = mapper.readValue(str, new TypeReference() {
+        });
+        return list;
+
     }
 }
