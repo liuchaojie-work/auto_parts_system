@@ -438,7 +438,7 @@
                     '                                        <td>'+listElement.place+'</td>\n' +
                     '                                        <td>'+listElement.remark+'</td>\n' +
                     '                                        <td class="text-center">\n' +
-                    '                                            <input type="button" class="btn btn-info btn-xs" onclick="findBrandByName(\''+listElement.name+'\')" value="修改"/>\n' +
+                    '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#addBrand" onclick="findBrandByName(\''+listElement.name+'\')" value="修改"/>\n' +
                     '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteBrandByName(\''+listElement.name+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
                     '                                    </tr>';

@@ -86,8 +86,8 @@
                 <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
                 <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
               </ol>
-              <div class="carousel-inner">
-                <div class="item active">
+              <div class="carousel-inner" >
+                <%--<div class="item active">
                   <img src="http://placehold.it/900x500/39CCCC/ffffff&text=I+Love+Bootstrap" alt="First slide">
 
                   <div class="carousel-caption">
@@ -107,7 +107,7 @@
                   <div class="carousel-caption">
                     Third Slide
                   </div>
-                </div>
+                </div>--%>
               </div>
               <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                 <span class="fa fa-angle-left"></span>
@@ -366,6 +366,39 @@
       liObj.addClass("active");
     }
   }
+
+
+
+  $(function () {
+    $.post("product/pageQuery",{"currentPage":1,"pageSize":3,"condition":"方向机"},function (product) {
+      var str = '';
+      for(var i = 0; i < product.list.length; i++){
+        var listElement = product.list[i];
+        if(0 == i){
+          str+='<div class="item active">\n' +
+                  '                  <img src="http://placehold.it/900x500/39CCCC/ffffff&text='+ listElement[2]  +'" alt="First slide">\n' +
+                  '\n' +
+                  '                  <div class="carousel-caption">\n' +
+                  listElement[5] +
+                  '                  </div>\n' +
+                  '                </div>';
+        }else{
+          str+='<div class="item">\n' +
+                  '                  <img src="http://placehold.it/900x500/39CCCC/ffffff&text='+ listElement[2]  +'" alt="First slide">\n' +
+                  '\n' +
+                  '                  <div class="carousel-caption">\n' +
+                  listElement[5] +
+                  '                  </div>\n' +
+                  '                </div>';
+        }
+        $("#steering>.carousel-inner").html(str);
+      }
+    });
+
+    $.post("product/pageQuery",{"currentPage":1,"pageSize":3,"condition":"助力泵"},function (product) {
+
+    });
+  });
 
 
   $(document).ready(function() {

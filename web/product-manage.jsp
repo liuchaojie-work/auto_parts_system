@@ -627,7 +627,7 @@
                 '                                        <div class="col-sm-offset-4 col-sm-8" >\n' +
                 '                                            <input type="button" class="btn btn-success col-sm-2" onclick="changeProductSubmit()" value="提交" />\n' +
                 '                                            <input type="reset" style="margin-left: 10px" class="btn btn-warning col-sm-2" value="重置"/>\n' +
-                '                                        </div>'
+                '                                        </div>';
             $("#changeProductForm .box-body").html(str);
 
             $.post("category/findAll",{},function (categoryData) {

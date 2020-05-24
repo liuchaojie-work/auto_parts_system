@@ -136,7 +136,8 @@
 
                                         </tbody>
                                     </table>
-                                <!--数据列表/-->
+                                    <button id="btn-input" type="button" class="btn btn-info" title="提交" >提交</button>
+                                    <!--数据列表/-->
                                 </form>
                             </div>
                         </div>
@@ -356,6 +357,11 @@
         });
         selectAllOrNone("#sale-selall","#sale-list");
         selectAllOrNone("#product-selall","#product-list");
+
+
+        $("#btn-input").onclick(function () {
+
+        });
     });
 
     //全选全不选
