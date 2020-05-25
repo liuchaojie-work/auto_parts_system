@@ -84,8 +84,12 @@
                                 <div class="pull-left">
                                     <div class="form-group form-inline">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-default btn-success" title="新增" data-toggle="modal" data-target="#addProduct" ><i class="fa fa-file-o"></i> 新增</button>
-                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllProductByProIds()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <c:choose>
+                                                <c:when test="${1 eq user.iden or 999 eq user.iden}">
+                                                    <button type="button" class="btn btn-default btn-success" title="新增" data-toggle="modal" data-target="#addProduct" ><i class="fa fa-file-o"></i> 新增</button>
+                                                    <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllProductByProIds()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                                </c:when>
+                                            </c:choose>
                                             <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllProduct()"><i class="fa fa-refresh"></i> 刷新</button>
                                         </div>
                                     </div>
@@ -109,14 +113,22 @@
                                             <input id="product-selall" type="checkbox">
                                         </th>
                                         <th class="sorting_asc">#</th>
-                                        <th class="sorting_desc">产品id</th>
+                                        <c:choose>
+                                            <c:when test="${1 eq user.iden or 999 eq user.iden}">
+                                                <th class="sorting_desc">产品id</th>
+                                            </c:when>
+                                        </c:choose>
                                         <th class="sorting_asc sorting_asc_disabled">产品型号</th>
                                         <th class="sorting_desc sorting_desc_disabled">产品类别</th>
                                         <th class="sorting_desc sorting_desc_disabled">产品品牌</th>
                                         <th class="sorting">产品图片地址</th>
                                         <th class="sorting">产品描述</th>
                                         <th class="sorting">备注</th>
-                                        <th class="text-center">操作</th>
+                                        <c:choose>
+                                            <c:when test="${1 eq user.iden or 999 eq user.iden}">
+                                                <th class="text-center">操作</th>
+                                            </c:when>
+                                        </c:choose>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -500,18 +512,22 @@
                 var tr =
                     '<tr>\n' +
                     '                                        <td><input name="ids" type="checkbox" value="'+listElement[0]+'"></td>\n' +
-                    '                                        <td>'+(i+1)+'</td>\n' +
+                    '                                        <td>'+(i+1)+'</td>\n'+
+                    ' <c:choose><c:when test="${1 eq user.iden or 999 eq user.iden}">'+
                     '                                        <td>'+listElement[0]+'</td>\n' +
+                    '</c:when></c:choose>'+
                     '                                        <td>'+listElement[1]+'</td>\n' +
                     '                                        <td>'+listElement[2]+'</td>\n' +
                     '                                        <td>'+listElement[3]+'</td>\n' +
                     '                                        <td>'+listElement[4]+'</td>\n' +
                     '                                        <td>'+listElement[5]+'</td>\n' +
                     '                                        <td>'+listElement[6]+'</td>\n' +
+                    ' <c:choose><c:when test="${1 eq user.iden or 999 eq user.iden}">'+
                     '                                        <td class="text-center">\n' +
                     '                                            <input type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#changeProduct" onclick="findProductByProId(\''+listElement[0]+'\')" value="修改"/>\n' +
                     '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteProductByProId(\''+listElement[0]+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
+                    '</c:when></c:choose>'+
                     '                                    </tr>';
                 info_list+=tr;
             }

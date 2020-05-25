@@ -111,203 +111,264 @@
                     </a>
                 </li>
                 <!-- 菜单 -->
-                <!--    产品管理开始    -->
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-folder"></i>
-                        <span>产品管理</span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-
-                        <li id="brand">
-                            <a href="brand-manage.jsp?#showAllBrand" onclick="findAllBrand();">
-                                <i class="fa fa-circle-o"></i> 品牌
+                <c:choose>
+                    <c:when test="${1 eq user.iden or 999 eq user.iden}">
+                        <!--    产品管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>产品管理</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
-                        </li>
+                            <ul class="treeview-menu">
 
-                        <li id="category">
-                            <a href="category-manage.jsp?#showAllCategory" onclick="findAllCategory();">
-                                <i class="fa fa-circle-o"></i> 类别
+                                <li id="brand">
+                                    <a href="brand-manage.jsp?#showAllBrand" onclick="findAllBrand();">
+                                        <i class="fa fa-circle-o"></i> 品牌
+                                    </a>
+                                </li>
+
+                                <li id="category">
+                                    <a href="category-manage.jsp?#showAllCategory" onclick="findAllCategory();">
+                                        <i class="fa fa-circle-o"></i> 类别
+                                    </a>
+                                </li>
+
+                                <li id="category-brand">
+                                    <a href="category-brand-manage.jsp?#showAllCategoryBrand" onclick="findAllCategoryBrand();">
+                                        <i class="fa fa-circle-o"></i> 品牌和类别关联
+                                    </a>
+                                </li>
+
+                                <li id="product">
+                                    <a href="product-manage.jsp?#showAllProduct" onclick="findAllProduct();">
+                                        <i class="fa fa-circle-o"></i> 产品
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!--    产品管理结束    -->
+                        <!--    销售管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>销售管理</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
-                        </li>
+                            <ul class="treeview-menu">
 
-                        <li id="category-brand">
-                            <a href="category-brand-manage.jsp?#showAllCategoryBrand" onclick="findAllCategoryBrand();">
-                                <i class="fa fa-circle-o"></i> 品牌和类别关联
+                                <li id="payment">
+                                    <a href="payment-manage.jsp#showAllPayment">
+                                        <i class="fa fa-circle-o"></i> 支付方式
+                                    </a>
+                                </li>
+
+                                <li id="pro-sell">
+                                    <a href="sale-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 销售
+                                    </a>
+                                </li>
+
+                                <li id="sell">
+                                    <a href="sale-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 销售表单
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!--    销售管理结束    -->
+                        <!--    进货管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>进货管理</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
-                        </li>
+                            <ul class="treeview-menu">
 
-                        <li id="product">
-                            <a href="product-manage.jsp?#showAllProduct" onclick="findAllProduct();">
-                                <i class="fa fa-circle-o"></i> 产品
+                                <li id="location">
+                                    <a href="location-manage.jsp#showAllLocation">
+                                        <i class="fa fa-circle-o"></i> 库位
+                                    </a>
+                                </li>
+
+                                <li id="client-price">
+                                    <a href="clientPrice-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 部分客户价格表
+                                    </a>
+                                </li>
+
+                                <li id="purchase">
+                                    <a href="purchase-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 进货
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!--    进货管理结束    -->
+                        <!--    库存管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>库存管理</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
+                            <ul class="treeview-menu">
+
+                                <li id="inventory">
+                                    <a href="inventory-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 库存
+                                    </a>
+                                </li>
+
+                            </ul>
                         </li>
-
-                    </ul>
-                </li>
-                <!--    产品管理结束    -->
-                <!--    销售管理开始    -->
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-folder"></i>
-                        <span>销售管理</span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-
-                        <li id="payment">
-                            <a href="payment-manage.jsp#showAllPayment">
-                                <i class="fa fa-circle-o"></i> 支付方式
+                        <!--    对账管理结束    -->
+                        <!--    对账管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>对账管理</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
-                        </li>
+                            <ul class="treeview-menu">
 
-                        <li id="pro-sell">
-                            <a href="sale-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 销售
+                                <li id="pay-list">
+                                    <a href="reconciliation-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 付款记录
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!--    对账管理结束    -->
+                        <!--    购物车管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>购物车管理</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
-                        </li>
+                            <ul class="treeview-menu">
 
-                        <li id="sell">
-                            <a href="sale-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 销售表单
+                                <li id="cart">
+                                    <a href="cart-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 预订单
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!--    购物车管理结束    -->
+                        <!--    用户管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>用户管理</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
+                            <ul class="treeview-menu">
+
+                                <li id="logistics">
+                                    <a href="logistics-manage.jsp?#showAllLogistics">
+                                        <i class="fa fa-circle-o"></i> 物流
+                                    </a>
+                                </li>
+
+                                <c:choose>
+                                    <c:when test="${999 eq user.iden}">
+                                        <li id="user">
+                                            <a href="account-manage.jsp">
+                                                <i class="fa fa-circle-o"></i> 账号
+                                            </a>
+                                        </li>
+                                    </c:when>
+                                </c:choose>
+
+                                <li id="customer">
+                                    <a href="user-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 客户
+                                    </a>
+                                </li>
+
+                                <c:choose>
+                                    <c:when test="${999 eq user.iden}">
+                                        <li id="admin">
+                                            <a href="admin-manage.jsp">
+                                                <i class="fa fa-circle-o"></i> 管理员
+                                            </a>
+                                        </li>
+                                    </c:when>
+                                </c:choose>
+
+                                <li id="login-info">
+                                    <a href="loginInfo-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 登录信息记录
+                                    </a>
+                                </li>
+
+                            </ul>
                         </li>
-
-                    </ul>
-                </li>
-                <!--    销售管理结束    -->
-
-                <!--    进货管理开始    -->
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-folder"></i>
-                        <span>进货管理</span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-
-                        <li id="location">
-                            <a href="location-manage.jsp#showAllLocation">
-                                <i class="fa fa-circle-o"></i> 库位
+                        <!--    用户管理结束    -->
+                    </c:when>
+                    <c:when test="${0 eq user.iden}">
+                        <!--    产品管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>产品</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
-                        </li>
+                            <ul class="treeview-menu">
 
-                        <li id="client-price">
-                            <a href="clientPrice-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 部分客户价格表
+                                <li>
+                                    <a href="product-manage.jsp?#showAllProduct" onclick="findAllProduct();">
+                                        <i class="fa fa-circle-o"></i> 产品
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!--    产品管理结束    -->
+                        <!--    购物车管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>购物车</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
+                            <ul class="treeview-menu">
+                                <li>
+                                    <a href="cart-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 预订单
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-
-                        <li id="purchase">
-                            <a href="purchase-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 进货
+                        <!--    购物车管理结束    -->
+                        <!--    对账管理开始    -->
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i>
+                                <span>对账</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                             </a>
+                            <ul class="treeview-menu">
+
+                                <li>
+                                    <a href="reconciliation-manage.jsp">
+                                        <i class="fa fa-circle-o"></i> 付款记录
+                                    </a>
+                                </li>
+
+                            </ul>
                         </li>
-
-                    </ul>
-                </li>
-                <!--    进货管理结束    -->
-
-                <!--    库存管理开始    -->
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-folder"></i>
-                        <span>库存管理</span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-
-                        <li id="inventory">
-                            <a href="inventory-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 库存
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-                <!--    对账管理结束    -->
-
-                <!--    对账管理开始    -->
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-folder"></i>
-                        <span>对账管理</span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-
-                        <li id="pay-list">
-                            <a href="reconciliation-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 付款记录
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-                <!--    对账管理结束    -->
-
-                <!--    购物车管理开始    -->
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-folder"></i>
-                        <span>购物车管理</span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-
-                        <li id="cart">
-                            <a href="cart-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 预订单
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-                <!--    购物车管理结束    -->
-
-                <!--    用户管理开始    -->
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-folder"></i>
-                        <span>用户管理</span>
-                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-
-                        <li id="logistics">
-                            <a href="logistics-manage.jsp?#showAllLogistics">
-                                <i class="fa fa-circle-o"></i> 物流
-                            </a>
-                        </li>
-
-                        <li id="user">
-                            <a href="account-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 账号
-                            </a>
-                        </li>
-
-                        <li id="customer">
-                            <a href="user-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 客户
-                            </a>
-                        </li>
-
-                        <li id="admin">
-                            <a href="admin-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 管理员
-                            </a>
-                        </li>
-
-                        <li id="login-info">
-                            <a href="loginInfo-manage.jsp">
-                                <i class="fa fa-circle-o"></i> 登录信息记录
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-                <!--    用户管理结束    -->
+                        <!--    对账管理结束    -->
+                    </c:when>
+                </c:choose>
                 <!-- 菜单 /-->
 
             </ul>

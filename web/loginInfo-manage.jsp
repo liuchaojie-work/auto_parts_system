@@ -84,7 +84,11 @@
                                 <div class="pull-left">
                                     <div class="form-group form-inline">
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllLoginInfoByNos()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                            <c:choose>
+                                                <c:when test="${999 eq user.iden}">
+                                                    <button type="button" class="btn btn-default btn-danger" title="批量删除" onclick="deleteAllLoginInfoByNos()"><i class="fa fa-trash-o"></i> 批量删除</button>
+                                                </c:when>
+                                            </c:choose>
                                             <button type="button" class="btn btn-default btn-info" title="刷新" onclick="findAllLoginInfo()"><i class="fa fa-refresh"></i> 刷新</button>
                                         </div>
                                     </div>
@@ -116,7 +120,11 @@
                                         <th >身份</th>
                                         <th >登录时间</th>
                                         <th >备注</th>
-                                        <th >操作</th>
+                                        <c:choose>
+                                            <c:when test="${999 eq user.iden}">
+                                                <th >操作</th>
+                                            </c:when>
+                                        </c:choose>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -353,9 +361,11 @@
                     '                                        <td>'+listElement.iden+'</td>\n' +
                     '                                        <td>'+changeTime(listElement.time)+'</td>\n' +
                     '                                        <td>'+listElement.remark+'</td>\n' +
+                    ' <c:choose><c:when test="${999 eq user.iden}">'+
                     '                                        <td class="text-center">\n' +
                     '                                            <input type="button" class="btn btn-danger btn-xs" onclick="deleteLoginInfoByNo(\''+listElement.no+'\')" value="删除"/>\n' +
                     '                                        </td>\n' +
+                    ' </c:when></c:choose>'+
                     '                                    </tr>';
                 info_list+=tr;
             }
