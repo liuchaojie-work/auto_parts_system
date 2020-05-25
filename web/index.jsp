@@ -135,7 +135,7 @@
                 <li data-target="#carousel-example-generic" data-slide-to="2" class=""></li>
               </ol>
               <div class="carousel-inner">
-                <div class="item active">
+                <%--<div class="item active">
                   <img src="http://placehold.it/900x500/39CCCC/ffffff&text=I+Love+Bootstrap" alt="First slide">
 
                   <div class="carousel-caption">
@@ -155,7 +155,7 @@
                   <div class="carousel-caption">
                     Third Slide
                   </div>
-                </div>
+                </div>--%>
               </div>
               <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                 <span class="fa fa-angle-left"></span>
@@ -184,8 +184,9 @@
     </section>
     <!-- 内容头部 /-->
     <!-- 正文区域 -->
-    <section class="content row">
-      <div class="col-md-6">
+    <section id="moreProduct" class="content row">
+      <div id="products"></div>
+      <%--<div class="col-md-6">
         <div class="attachment-block clearfix">
           <img class="attachment-img" src="dist/img/photo1.png" alt="Attachment Image">
 
@@ -200,97 +201,28 @@
           <!-- /.attachment-pushed -->
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="attachment-block clearfix">
-          <img class="attachment-img" src="dist/img/photo1.png" alt="Attachment Image">
-
-          <div class="attachment-pushed">
-            <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Lorem ipsum text generator</a></h4>
-
-            <div class="attachment-text">
-              Description about the attachment can be placed here. Lorem Ipsum is simply dummy text of the printing and typesetting industry... <a href="#">more</a>
-            </div>
-            <!-- /.attachment-text -->
+      --%>
+      <%--<div class="col-md-12">
+        <div class="pull-left">
+          <div class="form-group form-inline">
+            总共 <span id="totalPage" style="color: red"></span> 页，共 <span id="totalCount" style="color: red"></span> 条数据。 每页
+            <select class="form-control" id="pageSize">
+              <option>5</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+            </select> 条
           </div>
-          <!-- /.attachment-pushed -->
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="attachment-block clearfix">
-          <img class="attachment-img" src="dist/img/photo1.png" alt="Attachment Image">
 
-          <div class="attachment-pushed">
-            <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Lorem ipsum text generator</a></h4>
+        <div class="box-tools pull-right">
+          <ul class="pagination" id="pageNum">
 
-            <div class="attachment-text">
-              Description about the attachment can be placed here. Lorem Ipsum is simply dummy text of the printing and typesetting industry... <a href="#">more</a>
-            </div>
-            <!-- /.attachment-text -->
-          </div>
-          <!-- /.attachment-pushed -->
+          </ul>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="attachment-block clearfix">
-          <img class="attachment-img" src="dist/img/photo1.png" alt="Attachment Image">
-
-          <div class="attachment-pushed">
-            <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Lorem ipsum text generator</a></h4>
-
-            <div class="attachment-text">
-              Description about the attachment can be placed here. Lorem Ipsum is simply dummy text of the printing and typesetting industry... <a href="#">more</a>
-            </div>
-            <!-- /.attachment-text -->
-          </div>
-          <!-- /.attachment-pushed -->
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="attachment-block clearfix">
-          <img class="attachment-img" src="dist/img/photo1.png" alt="Attachment Image">
-
-          <div class="attachment-pushed">
-            <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Lorem ipsum text generator</a></h4>
-
-            <div class="attachment-text">
-              Description about the attachment can be placed here. Lorem Ipsum is simply dummy text of the printing and typesetting industry... <a href="#">more</a>
-            </div>
-            <!-- /.attachment-text -->
-          </div>
-          <!-- /.attachment-pushed -->
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="attachment-block clearfix">
-          <img class="attachment-img" src="dist/img/photo1.png" alt="Attachment Image">
-
-          <div class="attachment-pushed">
-            <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Lorem ipsum text generator</a></h4>
-
-            <div class="attachment-text">
-              Description about the attachment can be placed here. Lorem Ipsum is simply dummy text of the printing and typesetting industry... <a href="#">more</a>
-            </div>
-            <!-- /.attachment-text -->
-          </div>
-          <!-- /.attachment-pushed -->
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="attachment-block clearfix">
-          <img class="attachment-img" src="dist/img/photo1.png" alt="Attachment Image">
-
-          <div class="attachment-pushed">
-            <h4 class="attachment-heading"><a href="http://www.lipsum.com/">Lorem ipsum text generator</a></h4>
-
-            <div class="attachment-text">
-              Description about the attachment can be placed here. Lorem Ipsum is simply dummy text of the printing and typesetting industry... <a href="#">more</a>
-            </div>
-            <!-- /.attachment-text -->
-          </div>
-          <!-- /.attachment-pushed -->
-        </div>
-      </div>
+      </div>--%>
     </section>
+
     <!-- 正文区域 /-->
   </div>
   <!-- @@close -->
@@ -367,16 +299,15 @@
     }
   }
 
-
-
   $(function () {
+    loadProduct(1,5);
     $.post("product/pageQuery",{"currentPage":1,"pageSize":3,"condition":"方向机"},function (product) {
       var str = '';
       for(var i = 0; i < product.list.length; i++){
         var listElement = product.list[i];
         if(0 == i){
           str+='<div class="item active">\n' +
-                  '                  <img src="http://placehold.it/900x500/39CCCC/ffffff&text='+ listElement[2]  +'" alt="First slide">\n' +
+                  '                  <img src="'+ listElement[4] +'" alt="First slide">\n' +
                   '\n' +
                   '                  <div class="carousel-caption">\n' +
                   listElement[5] +
@@ -384,7 +315,7 @@
                   '                </div>';
         }else{
           str+='<div class="item">\n' +
-                  '                  <img src="http://placehold.it/900x500/39CCCC/ffffff&text='+ listElement[2]  +'" alt="First slide">\n' +
+                  '                  <img src="'+ listElement[4]  +'" alt="First slide">\n' +
                   '\n' +
                   '                  <div class="carousel-caption">\n' +
                   listElement[5] +
@@ -396,9 +327,64 @@
     });
 
     $.post("product/pageQuery",{"currentPage":1,"pageSize":3,"condition":"助力泵"},function (product) {
-
+      var str = '';
+      for(var i = 0; i < product.list.length; i++){
+        var listElement = product.list[i];
+        if(0 == i){
+          str+='<div class="item active">\n' +
+                  '                  <img src="'+ listElement[4] +'" alt="First slide">\n' +
+                  '\n' +
+                  '                  <div class="carousel-caption">\n' +
+                  listElement[5] +
+                  '                  </div>\n' +
+                  '                </div>';
+        }else{
+          str+='<div class="item">\n' +
+                  '                  <img src="'+ listElement[4]  +'" alt="First slide">\n' +
+                  '\n' +
+                  '                  <div class="carousel-caption">\n' +
+                  listElement[5] +
+                  '                  </div>\n' +
+                  '                </div>';
+        }
+        $("#booster-pump>.carousel-inner").html(str);
+      }
     });
   });
+
+  var count = 5;
+  function findMore(){
+    count+=5;
+    loadProduct(1,count,"");
+  }
+
+  function loadProduct(currentPage,pageSize,condition){
+    $.post("product/pageQuery",{"currentPage":currentPage,"pageSize":pageSize,"condition":condition},function (product) {
+      var str = '';
+      for(var j = 0; j < product.list.length; j++){
+        var listElement = product.list[j];
+        str+='<div class="col-md-6">\n' +
+                '          <div class="attachment-block clearfix">\n' +
+                '            <img class="attachment-img" src="'+ listElement[4] +'" alt="Attachment Image">\n' +
+                '\n' +
+                '            <div class="attachment-pushed">\n' +
+                '              <h4 class="attachment-heading"><a href="http://www.lipsum.com/">'+ listElement[1]+listElement[3]+listElement[2] +'</a></h4>\n' +
+                '\n' +
+                '                  <div class="attachment-text">\n' +
+                '          '+ listElement[5] +'... <a href="#">more</a>\n' +
+                '                  </div>\n' +
+                '            </div>\n' +
+                '          </div>\n' +
+                '      </div>';
+
+      }
+      str+='<div class="col-md-6">\n' +
+              '       <a id="more" style="font-size: 60px;" onclick="findMore()">more...</a>'+
+              '      </div>';
+      $("#moreProduct>#products").html(str);
+    });
+  }
+
 
 
   $(document).ready(function() {
