@@ -15,7 +15,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <title>(单独)汽配销售系统后台首页</title>
+  <title>XX汽配销售系统首页</title>
   <meta name="description" content="汽配销售">
   <meta name="keywords" content="汽配销售">
 

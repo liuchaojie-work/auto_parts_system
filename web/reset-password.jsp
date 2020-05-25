@@ -12,7 +12,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>重置密码</title>
+    <title>XX汽配系统重置密码</title>
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <%
         String path = request.getContextPath();

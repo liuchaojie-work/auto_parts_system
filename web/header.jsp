@@ -16,7 +16,14 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><strong>汽配</strong></span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><strong>汽配</strong>后台管理</span>
+            <c:choose>
+                <c:when test="${empty user}">
+                    <span class="logo-lg"><strong>XX汽配</strong></span>
+                </c:when>
+                <c:when test="${not empty user}">
+                    <span class="logo-lg"><strong>XX汽配</strong>后台管理</span>
+                </c:when>
+            </c:choose>
         </a>
 
 
@@ -55,7 +62,7 @@
                                         <c:if test="${0 eq user.iden}"> 客户</c:if>
                                         <c:if test="${1 eq user.iden}"> 管理员</c:if>
                                         <c:if test="${999 eq user.iden}"> 超级管理员</c:if>
-                                    <small>最后登录 11:20AM</small>
+                                    <%--<small>最后登录 11:20AM</small>--%>
                                 </p>
                             </li>
                             <li class="user-footer">
